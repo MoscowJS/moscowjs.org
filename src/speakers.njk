@@ -1,0 +1,36 @@
+---
+layout: base.layout.njk
+---
+
+{# <pre>{{ db.speakers | stringify | safe }}</pre> #}
+<div>
+  <div class="main-container center w-container">
+    <h1>Докладчики</h1>
+    <div class="w-dyn-list">
+      <div class="speakers w-dyn-items">
+
+        {% for speaker in db.speakers %}
+          <div class="speaker-dynamic-item w-dyn-item">
+            <img
+              {% if speaker.photo %}
+                src="{{ speaker.photo[0].url }}"
+              {% endif %}
+
+              alt="{{ speaker.name }}"
+              class="speaker-avatar"
+            />
+              <a href="/speaker/{{ speaker.name }}" class="speaker-name">
+                {{ speaker.name }}
+              </a
+            >
+            <div class="speaker-company">{{ speaker.company }}</div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

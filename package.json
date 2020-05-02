@@ -1,0 +1,29 @@
+{
+  "name": "moscowjs.org",
+  "version": "1.0.0",
+  "description": "MoscowJS site",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx @11ty/eleventy",
+    "start": "npx @11ty/eleventy --serve",
+    "debug": "DEBUG=Eleventy* npx @11ty/eleventy",
+    "lint": "lint-staged"
+  },
+  "keywords": [],
+  "author": "Mikhail Garbuzov <madmxg@gmail.com> (https://twitter.com/madmxg)",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "airtable": "^0.8.1",
+    "luxon": "^1.23.0"
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+  data-wf-domain="www.moscowjs.org"
+  data-wf-page="57d56b6240df51d26a4ae7d0"
+  data-wf-site="57d56b6240df51d26a4ae7cf"
+  lang="ru"
+>
+  <head>
+
+    {% include "head.layout.html" %}
+
+  </head>
+  <body class="body">
+
+    {% include "nav.layout.html" %}
+
+    {{ content | safe }}
+
+    <div>
+      <div class="main-container w-container">
+        <h1 class="subheader">Для докладчиков</h1>
+        <p>
+          Мы всегда рады новым докладам. Чтобы стать докладчиком на нашем
+          митапе, нужно заполнить специальную форму. Мы подготовили список
+          пожеланий для докладчиков, чтобы повысить качество докладов.
+          Ознакомиться с ним можно
+          <a target="_blank" href="https://github.com/MoscowJS/speaker#speaker"
+            >ЗДЕСЬ</a
+          >.
+        </p>
+        <div class="center">
+          <a
+            href="https://airtable.com/shrGPkCJs9XFW3pCJ"
+            target="_blank"
+            class="signup-button-for-speakers w-button"
+            >ХОЧУ СТАТЬ ДОКЛАДЧИКОМ</a
+          >
+        </div>
+      </div>
+    </div>
+
+    {% include "footer.layout.html" %}
+
+    {% include "footer-scripts.layout.html" %}
+
+  </body>
+</html>

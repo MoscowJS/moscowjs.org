@@ -1,0 +1,22 @@
+---
+layout: base.layout.njk
+---
+
+{# <pre>{{ db.events | stringify | safe }}</pre> #}
+<div>
+  <div class="main-container center w-container">
+    <h1>События</h1>
+    <div class="w-dyn-list">
+      <div class="w-dyn-items">
+        {% for event in db.events %}
+          <div class="event-dynamic-item w-dyn-item">
+            <a href="/event/{{ event.slug }}" class="event-name">{{ event.title }}</a>
+            <div class="event-linker">в</div>
+            <a href="/venue/{{ event.company.slug }}" class="event-host">{{ event.company.name }}</a>
+            <p class="event-date">{{ event.date | toDateFormat("d EEEE, HH:mm") }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
