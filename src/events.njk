@@ -2,13 +2,13 @@
 layout: base.layout.njk
 ---
 
-{# <pre>{{ db.events | stringify | safe }}</pre> #}
+{# <pre>{{ airtable.events | stringify | safe }}</pre> #}
 <div>
   <div class="main-container center w-container">
     <h1>События</h1>
     <div class="w-dyn-list">
       <div class="w-dyn-items">
-        {% for event in db.events %}
+        {% for event in airtable.events %}
           <div class="event-dynamic-item w-dyn-item">
             <a href="/event/{{ event.slug }}" class="event-name">{{ event.title }}</a>
             <div class="event-linker">в</div>

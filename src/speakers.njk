@@ -2,14 +2,14 @@
 layout: base.layout.njk
 ---
 
-{# <pre>{{ db.speakers | stringify | safe }}</pre> #}
+{# <pre>{{ airtable.speakers | stringify | safe }}</pre> #}
 <div>
   <div class="main-container center w-container">
     <h1>Докладчики</h1>
     <div class="w-dyn-list">
       <div class="speakers w-dyn-items">
 
-        {% for speaker in db.speakers %}
+        {% for speaker in airtable.speakers %}
           <div class="speaker-dynamic-item w-dyn-item">
             <img
               {% if speaker.photo %}
