@@ -18,6 +18,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          NODE_ENV: production
           AIRTABLE_API_BASE: ${{ secrets.AIRTABLE_API_BASE }}
           AIRTABLE_API_TOKEN: ${{ secrets.AIRTABLE_API_TOKEN }}
 

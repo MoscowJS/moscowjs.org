@@ -10,9 +10,9 @@ layout: base.layout.njk
       <div class="w-dyn-items">
         {% for event in airtable.events %}
           <div class="event-dynamic-item w-dyn-item">
-            <a href="/events/{{ event.slug }}/" class="event-name">{{ event.title }}</a>
+            <a href="{{ config.vhost }}/events/{{ event.slug }}/" class="event-name">{{ event.title }}</a>
             <div class="event-linker">в</div>
-            <a href="/venues/{{ event.company.slug }}/" class="event-host">{{ event.company.name }}</a>
+            <a href="{{ config.vhost }}/venues/{{ event.company.slug }}/" class="event-host">{{ event.company.name }}</a>
             <p class="event-date">{{ event.date | toDateFormat("d EEEE, HH:mm") }}</p>
           </div>
         {% endfor %}
