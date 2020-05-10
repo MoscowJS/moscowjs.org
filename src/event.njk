@@ -1,0 +1,215 @@
+---
+layout: base.layout.njk
+
+pagination:
+  data: airtable.events
+  size: 1
+  alias: event
+permalink: events/{{ event.slug }}/
+---
+
+{# <pre>{{ event | stringify | safe }}</pre> #}
+
+<div>
+  <div class="main-container w-container">
+    <div class="w-row">
+      <div class="w-col w-col-6">
+        <h1>
+          {{ event.title }}
+        </h1>
+      </div>
+      <div class="w-clearfix w-col w-col-6">
+      {# TODO: Add timepad url #}
+      {% if event %}
+        <a
+          href="{{ event.slug }}"
+          target="_blank"
+          class="signup-button w-button"
+        >
+          ЗАРЕГИСТРИРОВАТЬСЯ
+        </a
+        >
+      {% else %}
+        <div class="signup-button">
+          РЕГИСТРАЦИЯ ЗАКРЫТА
+        </div>
+      {% endif %}
+      </div>
+    </div>
+    <div class="event-date">
+      {{ event.date }}
+    </div>
+    <div class="event-announcement w-richtext">
+      <p>
+        Описание {{ event.title }}
+      </p>
+    </div>
+    <div class="w-dyn-list">
+      <div class="w-dyn-items">
+        <div class="talk w-dyn-item">
+          <div class="w-row">
+            <div class="speaker-column w-col w-col-3">
+              <img
+                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4.jpeg"
+                alt=""
+                sizes="100px"
+                srcset="
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-500.jpeg   500w,
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-800.jpeg   800w,
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-1080.jpeg 1080w,
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4.jpeg        1251w
+                "
+                class="speaker-avatar"
+              /><a href="/speaker/aleksey-popkov" class="speaker-name">Алексей Попков</a>
+              <div class="speaker-company">Яндекс</div>
+            </div>
+            <div class="w-col w-col-9">
+              <a href="/talk/kak-razrabatyvat-proekt-kotoryy-vse-nenavidyat" class="talk-name"
+                >Как разрабатывать проект, который все ненавидят</a
+              >
+              <p>
+                Два года мы переписываем внутренний сервис. За это время мы столкнулись со
+                множеством технических сложностей, но сегодня не об этом. Поговорим о том, как жить
+                с пользователями, которые искренне ненавидят сервис и то, насколько плохо он
+                работает.
+              </p>
+              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >СЛАЙДЫ</a
+              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >ВИДЕО</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="talk w-dyn-item">
+          <div class="w-row">
+            <div class="speaker-column w-col w-col-3">
+              <img
+                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e4a6b34a448be1af03ecac7_43063eb0.jpeg"
+                alt=""
+                class="speaker-avatar"
+              /><a href="/speaker/leonid-vinnichenko" class="speaker-name">Леонид Винниченко</a>
+              <div class="speaker-company">Align Technology</div>
+            </div>
+            <div class="w-col w-col-9">
+              <a href="/talk/shaders-in-three-js" class="talk-name"
+                >Использование кастомных материалов в three.js</a
+              >
+              <p>
+                Three.js - один из базовых инструментов для работы с 3D-графикой, который создаёт
+                комфортное окружение для решения 95% задач. В своём докладе я расскажу, как нам
+                пришлось выйти из этой зоны комфорта, почему это было нужно и как нам в этом помогли
+                шейдерные материалы.
+              </p>
+              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >СЛАЙДЫ</a
+              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >ВИДЕО</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="talk w-dyn-item">
+          <div class="w-row">
+            <div class="speaker-column w-col w-col-3">
+              <img
+                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33.png"
+                alt=""
+                sizes="100px"
+                srcset="
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33-p-500.png 500w,
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33-p-800.png 800w,
+                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33.png       943w
+                "
+                class="speaker-avatar"
+              /><a href="/speaker/vladislav-tarasov" class="speaker-name">Владислав Тарасов</a>
+              <div class="speaker-company">Mail.ru Group</div>
+            </div>
+            <div class="w-col w-col-9">
+              <a href="/talk/kak-my-delali-glubokiy-offlayn" class="talk-name"
+                >Как мы делали глубокий оффлайн</a
+              >
+              <p>
+                1) Почему все обязаны закладываться на offline-first при проектировании. 2) Какие
+                есть проблемы и сложности с реализацией оффлайна. 3) Про один из вариант реализации
+                CRUD в оффлайне. 4) Немного про готовые инструменты.
+              </p>
+              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >СЛАЙДЫ</a
+              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
+                >ВИДЕО</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h1>Площадка</h1>
+    <div class="w-row">
+      <div class="w-col w-col-8">
+        <a href="/venues/{{ event.company.slug }}/" class="venue-name">
+          {{ event.company.name }}
+        </a>
+        <p>Даниловская Мануфактура, корпус Loft</p>
+      </div>
+      <div class="w-col w-col-4">
+        <img
+          src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d661d971fb7e5fccd4e9_Align_Digital_Primary.png"
+          alt=""
+          class="venue-image"
+        />
+      </div>
+    </div>
+    <p class="venue-address-margined">
+      Варшавское шоссе, 9, стр. 1Б, Москва, 117105 (Даниловская Мануфактура, корпус Loft)
+    </p>
+    <img src="" alt="" class="venue-map w-dyn-bind-empty" />
+    <div class="comments w-embed w-script">
+      <div id="disqus_thread">
+        <iframe
+          id="dsq-app8509"
+          name="dsq-app8509"
+          allowtransparency="true"
+          frameborder="0"
+          scrolling="no"
+          tabindex="0"
+          title="Disqus"
+          width="100%"
+          src="https://disqus.com/embed/comments/?base=default&amp;f=moscowjs-meetup&amp;t_u=https%3A%2F%2Fwww.moscowjs.org%2Fevent%2Fmoscowjs-48&amp;t_d=%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B5%3A%20MoscowJS%2048&amp;t_t=%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B5%3A%20MoscowJS%2048&amp;s_o=default#version=e3e68fc7a03276261f27761776efca55"
+          style="
+            width: 1px !important;
+            min-width: 100% !important;
+            border: none !important;
+            overflow: hidden !important;
+            height: 681px !important;
+          "
+          horizontalscrolling="no"
+          verticalscrolling="no"
+        ></iframe>
+      </div>
+      <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
+        /*
+        var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function () {
+          // DON'T EDIT BELOW THIS LINE
+          var d = document,
+            s = d.createElement('script');
+          s.src = '//moscowjs-meetup.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>
+        Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
