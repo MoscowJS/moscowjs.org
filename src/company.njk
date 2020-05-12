@@ -1,0 +1,29 @@
+---
+layout: base.layout.njk
+
+pagination:
+  data: airtable.companies
+  size: 1
+  alias: company
+permalink: companies/{{ company.slug }}/
+---
+
+{# <pre>{{ company | stringify | safe }}</pre> #}
+
+<div>
+  <div class="main-container center w-container">
+    <h1>
+      {{ company.name }}
+    </h1>
+    <h2>
+      Площадки
+    </h2>
+
+    {% for venue in company.venues %}
+      {% include "venue.layout.njk" %}
+    {% endfor %}
+  </div>
+</div>
+
+
+

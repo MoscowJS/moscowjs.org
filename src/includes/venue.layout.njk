@@ -1,0 +1,51 @@
+<div id="{{ venue.slug }}">
+  <h3>
+    {{ venue.name }}
+  </h3>
+
+  <br />
+
+  {% if venue.subway %}
+    <strong>
+      Метро:
+    </strong>
+    {{ venue.subway }}
+    <br />
+  {% endif %}
+
+  {% if venue.address %}
+    <strong>
+      Адрес:
+    </strong>
+    {{ venue.address }}
+    <br />
+  {% endif %}
+
+  {% if venue.addressNotes %}
+    <strong>
+      Информация:
+    </strong>
+    {{ venue.addressNotes }}
+    <br />
+  {% endif %}
+
+
+
+  {% if venue.map.length > 0 %}
+    <strong>Как добраться до площадки:</strong>
+    <br />
+
+    {% for map in venue.map %}
+        <a href="{{ map.url }}" target="_blank">
+          <img
+            src="{{ map.thumbnails.full.url }}"
+            alt="Схема: как добраться до площадки {{ venue.name }}"
+          >
+        </a>
+      {% endfor %}
+  {% endif %}
+
+  <br />
+  <br />
+
+</div>
