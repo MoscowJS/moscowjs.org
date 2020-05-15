@@ -7,14 +7,36 @@ function normalize(record) {
     id: record.getId(),
     name: record.get('Name'),
     photo: record.get('Photo'),
+    about: record.get('About'),
     company: record.get('Company'),
+    email: record.get('Email'),
+    skype: record.get('Skype'),
+    personalLink: record.get('Personal link'),
+    github: record.get('Github / Bitbucket'),
+    twitter: record.get('Twitter'),
+    talks: record.get('Talks'),
   };
 }
 
 function loadSpeakers() {
   return airtableClient('Speakers')
     .select({
-      fields: ['Name', 'Photo', 'Company'],
+      fields: [
+        'Name',
+        'Photo',
+        'About',
+        'Company',
+        'Email',
+        'Skype',
+        'Personal link',
+        'Github / Bitbucket',
+        'Twitter',
+        'Talks',
+      ],
+      sort: [
+        { field: 'Count', direction: 'desc' },
+        { field: 'Meetup', direction: 'desc' },
+      ],
     })
     .all()
     .then((events) => {

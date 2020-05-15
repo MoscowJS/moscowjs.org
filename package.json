@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "airtable": "^0.8.1",
-    "luxon": "^1.23.0"
+    "luxon": "^1.23.0",
+    "slugify": "^1.4.0"
   }
 }

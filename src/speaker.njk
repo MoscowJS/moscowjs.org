@@ -1,0 +1,82 @@
+---
+layout: base.layout.njk
+
+pagination:
+  data: airtable.speakers
+  size: 1
+  alias: speaker
+permalink: speakers/{{ speaker.name | slugify }}/
+---
+
+{# <pre>{{ speaker | stringify | safe }}</pre> #}
+
+<div>
+  <div class="main-container w-container">
+    <div class="w-row">
+      <div class="speaker-column w-col w-col-4 w-col-medium-6">
+        <img
+          src="{{ speaker.photo[0].url }}"
+          alt="{{ speaker.name }}"
+          class="speaker-avatar big"
+        />
+      </div>
+      <div class="w-col w-col-8 w-col-medium-6">
+        <h1 class="speaker-name big">{{ speaker.name }}</h1>
+        <div class="speaker-about w-richtext">
+          <p>
+            {{ speaker.about }}
+          </p>
+          <p>‍</p>
+        </div>
+        <div class="item">
+          <div class="term">Компания:</div>
+          <div class="definition">{{ speaker.company }}</div>
+        </div>
+        <div class="item">
+          <div class="term">Должность:</div>
+          <div class="definition">???</div>
+        </div>
+        <div class="item">
+          <div class="term">Email:</div>
+          <div class="definition">{{ speaker.email }}</div>
+        </div>
+        <div class="item">
+          <div class="term">Skype:</div>
+          <div class="definition">{{ speaker.skype }}</div>
+        </div>
+        <div class="item">
+          <div class="term">Сайт:</div>
+          <a href="{{ speaker.personalLink }}" class="definition">{{ speaker.personalLink }}</a>
+        </div>
+        <div class="item">
+          <div class="term">Github:</div>
+          <a href="{{ speaker.github }}" class="definition">{{ speaker.github }}</a>
+        </div>
+        <div class="item">
+          <div class="term">Twitter:</div>
+          <a href="{{ speaker.twitter }}" class="definition">{{ speaker.twitter }}</a>
+        </div>
+      </div>
+    </div>
+    <div class="center">
+      <h2>Доклады</h2>
+      <div class="w-dyn-list">
+        <div class="w-dyn-items">
+
+          {% for talk in speaker.talks %}
+            <div class="talk-link-container w-dyn-item">
+              <a href="#" class="talk-link">
+                {{ talk }}
+              </a>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
