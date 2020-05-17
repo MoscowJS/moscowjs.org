@@ -1,0 +1,21 @@
+---
+layout: base.layout.njk
+
+pagination:
+  data: airtable.talks
+  size: 1
+  alias: talk
+permalink: talks/{{ talk.title | slugify }}/
+---
+
+{# <pre>{{ talk | stringify | safe }}</pre> #}
+
+<div>
+  <div class="main-container w-container">
+    <h1>{{ talk.title }}</h1>
+  </div>
+</div>
+
+
+
+

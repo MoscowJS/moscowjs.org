@@ -2,7 +2,7 @@
 
 const airtableClient = require('./airtable.client');
 
-function normalize(record, maps) {
+function normalize(record) {
   return {
     id: record.getId(),
     slug: record.get('Slug'),

@@ -46,102 +46,11 @@ permalink: events/{{ event.slug }}/
     </div>
     <div class="w-dyn-list">
       <div class="w-dyn-items">
-        <div class="talk w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-3">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4.jpeg"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-500.jpeg   500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-800.jpeg   800w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4-p-1080.jpeg 1080w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43dbf0dac6e07c023c392b_FFpAwh-DyZ4.jpeg        1251w
-                "
-                class="speaker-avatar"
-              /><a href="/speaker/aleksey-popkov" class="speaker-name">Алексей Попков</a>
-              <div class="speaker-company">Яндекс</div>
-            </div>
-            <div class="w-col w-col-9">
-              <a href="/talk/kak-razrabatyvat-proekt-kotoryy-vse-nenavidyat" class="talk-name"
-                >Как разрабатывать проект, который все ненавидят</a
-              >
-              <p>
-                Два года мы переписываем внутренний сервис. За это время мы столкнулись со
-                множеством технических сложностей, но сегодня не об этом. Поговорим о том, как жить
-                с пользователями, которые искренне ненавидят сервис и то, насколько плохо он
-                работает.
-              </p>
-              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >СЛАЙДЫ</a
-              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >ВИДЕО</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="talk w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-3">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e4a6b34a448be1af03ecac7_43063eb0.jpeg"
-                alt=""
-                class="speaker-avatar"
-              /><a href="/speaker/leonid-vinnichenko" class="speaker-name">Леонид Винниченко</a>
-              <div class="speaker-company">Align Technology</div>
-            </div>
-            <div class="w-col w-col-9">
-              <a href="/talk/shaders-in-three-js" class="talk-name"
-                >Использование кастомных материалов в three.js</a
-              >
-              <p>
-                Three.js - один из базовых инструментов для работы с 3D-графикой, который создаёт
-                комфортное окружение для решения 95% задач. В своём докладе я расскажу, как нам
-                пришлось выйти из этой зоны комфорта, почему это было нужно и как нам в этом помогли
-                шейдерные материалы.
-              </p>
-              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >СЛАЙДЫ</a
-              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >ВИДЕО</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="talk w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-3">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33.png"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33-p-500.png 500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33-p-800.png 800w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d72d48a3b5afe284b4ba_image_2020-02-11_18-02-33.png       943w
-                "
-                class="speaker-avatar"
-              /><a href="/speaker/vladislav-tarasov" class="speaker-name">Владислав Тарасов</a>
-              <div class="speaker-company">Mail.ru Group</div>
-            </div>
-            <div class="w-col w-col-9">
-              <a href="/talk/kak-my-delali-glubokiy-offlayn" class="talk-name"
-                >Как мы делали глубокий оффлайн</a
-              >
-              <p>
-                1) Почему все обязаны закладываться на offline-first при проектировании. 2) Какие
-                есть проблемы и сложности с реализацией оффлайна. 3) Про один из вариант реализации
-                CRUD в оффлайне. 4) Немного про готовые инструменты.
-              </p>
-              <a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >СЛАЙДЫ</a
-              ><a target="_blank" href="#" class="button-margin w-condition-invisible w-button"
-                >ВИДЕО</a
-              >
-            </div>
-          </div>
-        </div>
+
+        {% for talk in event.talks %}
+          {% include "meetup-talk.layout.njk" %}
+        {% endfor %}
+
       </div>
     </div>
     <h1>Площадка</h1>

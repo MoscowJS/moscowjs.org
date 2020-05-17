@@ -1,0 +1,28 @@
+<div class="talk w-dyn-item">
+  <div class="w-row">
+    <div class="speaker-column w-col w-col-3">
+      <img
+        src="{{ talk.speakers[0].photo[0].url }}"
+        alt="{{ talk.speakers[0].name }}"
+        sizes="100px"
+        class="speaker-avatar"
+      />
+      <a href="{{ config.vhost }}/speakers/{{ talk.speakers[0].name | slugify }}/" class="speaker-name">
+        {{ talk.speakers[0].name }}
+      </a>
+      <div class="speaker-company">
+        {{ talk.speakers[0].company }}
+      </div>
+    </div>
+    <div class="w-col w-col-9">
+      <a href="{{ config.vhost }}/talks/{{ talk.title | slugify }}/" class="talk-name">
+        {{ talk.title }}
+      </a>
+      <p>
+        {{ talk.theses }}
+      </p>
+      <a target="_blank" href="#" class="button-margin w-condition-invisible w-button">СЛАЙДЫ</a>
+      <a target="_blank" href="#" class="button-margin w-condition-invisible w-button">ВИДЕО</a>
+    </div>
+  </div>
+</div>
