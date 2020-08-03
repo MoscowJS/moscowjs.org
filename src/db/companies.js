@@ -2,18 +2,32 @@
 
 const airtableClient = require('./airtable.client');
 
-function normalize(record, { venuesMap }) {
-  const venuesValue = Array.isArray(record.get('Venues')) ? record.get('Venues') : [];
-  const venues = venuesValue
-    .filter((venue) => venuesMap.has(venue))
-    .map((venue) => venuesMap.get(venue));
+class Company {
+  constructor(record, maps) {
+    this.record = record;
+    this.maps = maps;
+  }
 
-  return {
-    id: record.getId(),
-    slug: record.get('Slug'),
-    name: record.get('Name'),
-    venues,
-  };
+  get id() {
+    return this.record.getId();
+  }
+
+  get slug() {
+    return this.record.get('Slug');
+  }
+
+  get name() {
+    return this.record.get('Name');
+  }
+
+  get venues() {
+    const venuesValue = this.record.get('Venues');
+    const venues = Array.isArray(venuesValue) ? venuesValue : [];
+
+    return venues
+      .filter((venue) => this.maps.venuesMap.has(venue))
+      .map((venue) => this.maps.venuesMap.get(venue));
+  }
 }
 
 function loadCompanies(maps) {
@@ -23,15 +37,13 @@ function loadCompanies(maps) {
     })
     .all()
     .then((companies) => {
-      const map = new Map();
+      maps.companiesMap = new Map();
 
-      const records = companies.map((company) => {
-        const record = normalize(company, maps);
-        map.set(record.id, record);
-        return record;
+      return companies.map((record) => {
+        const company = new Company(record, maps);
+        maps.companiesMap.set(company.id, company);
+        return company;
       });
-
-      return { records, map };
     });
 }
 

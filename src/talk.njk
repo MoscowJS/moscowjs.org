@@ -5,7 +5,7 @@ pagination:
   data: airtable.talks
   size: 1
   alias: talk
-permalink: talks/{{ talk.title | slugify }}/
+permalink: talks/{{ talk.slug }}/
 ---
 
 {# <pre>{{ talk | stringify | safe }}</pre> #}

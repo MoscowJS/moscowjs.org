@@ -22,7 +22,7 @@ layout: base.layout.njk
               alt="{{ speaker.name }}"
               class="speaker-avatar"
             />
-              <a href="{{ config.vhost }}/speakers/{{ speaker.name | slugify }}/" class="speaker-name">
+              <a href="{{ config.vhost }}/speakers/{{ speaker.slug }}/" class="speaker-name">
                 {{ speaker.name }}
               </a
             >

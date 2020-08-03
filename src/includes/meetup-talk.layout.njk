@@ -7,7 +7,7 @@
         sizes="100px"
         class="speaker-avatar"
       />
-      <a href="{{ config.vhost }}/speakers/{{ talk.speakers[0].name | slugify }}/" class="speaker-name">
+      <a href="{{ config.vhost }}/speakers/{{ talk.speakers[0].slug }}/" class="speaker-name">
         {{ talk.speakers[0].name }}
       </a>
       <div class="speaker-company">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="w-col w-col-9">
-      <a href="{{ config.vhost }}/talks/{{ talk.title | slugify }}/" class="talk-name">
+      <a href="{{ config.vhost }}/talks/{{ talk.slug }}/" class="talk-name">
         {{ talk.title }}
       </a>
       <p>

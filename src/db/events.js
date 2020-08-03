@@ -2,30 +2,72 @@
 
 const airtableClient = require('./airtable.client');
 
-function normalize(record, { companiesMap, venuesMap, talksMap }) {
-  const companies = record.get('Company');
-  const venues = record.get('Venue');
-  const talksValue = Array.isArray(record.get('Talks')) ? record.get('Talks') : [];
+class Event {
+  constructor(record, maps) {
+    this.record = record;
+    this.maps = maps;
 
-  const company =
-    Array.isArray(companies) && companies.length && companiesMap.has(companies[0])
-      ? companiesMap.get(companies[0])
-      : {};
-  const venue =
-    Array.isArray(venues) && venues.length && venuesMap.has(venues[0])
-      ? venuesMap.get(venues[0])
-      : {};
-  const talks = talksValue.filter((talk) => talksMap.has(talk)).map((talk) => talksMap.get(talk));
+    // company,
+  }
 
-  return {
-    id: record.getId(),
-    slug: record.get('Slug'),
-    title: record.get('Title'),
-    date: record.get('Date'),
-    talks,
-    venue,
-    company,
-  };
+  get id() {
+    return this.record.getId();
+  }
+
+  get slug() {
+    return this.record.get('Slug');
+  }
+
+  get title() {
+    return this.record.get('Title');
+  }
+
+  get date() {
+    return this.record.get('Date');
+  }
+
+  get talks() {
+    const talksValue = this.record.get('Talks');
+    const talks = Array.isArray(talksValue) ? talksValue : [];
+
+    return talks
+      .filter((talk) => this.maps.talksMap.has(talk))
+      .map((talk) => this.maps.talksMap.get(talk));
+  }
+
+  get venues() {
+    const venuesValue = this.record.get('Venues');
+    const venues = Array.isArray(venuesValue) ? venuesValue : [];
+
+    if (venues.length === 0) {
+      return {};
+    }
+
+    const [venue] = venues;
+
+    if (!this.maps.companiesMap.has(venue)) {
+      return {};
+    }
+
+    return this.maps.venuesMap.get(venue);
+  }
+
+  get company() {
+    const companyValue = this.record.get('Company');
+    const companies = Array.isArray(companyValue) ? companyValue : [];
+
+    if (companies.length === 0) {
+      return {};
+    }
+
+    const [company] = companies;
+
+    if (!this.maps.companiesMap.has(company)) {
+      return {};
+    }
+
+    return this.maps.companiesMap.get(company);
+  }
 }
 
 function loadEvents(maps) {
@@ -37,15 +79,13 @@ function loadEvents(maps) {
     })
     .all()
     .then((events) => {
-      const map = new Map();
+      maps.eventsMap = new Map();
 
-      const records = events.map((event) => {
-        const record = normalize(event, maps);
-        map.set(record.id, record);
-        return record;
+      return events.map((record) => {
+        const event = new Event(record, maps);
+        maps.eventsMap.set(event.id, event);
+        return event;
       });
-
-      return { records, map };
     });
 }
 

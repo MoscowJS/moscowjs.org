@@ -9,26 +9,19 @@ const { loadSpeakers } = require('../db/speakers');
 module.exports = async function () {
   const maps = {};
 
-  const speakers = await loadSpeakers();
-
-  maps.speakersMap = speakers.map;
-
-  const [talks, venues] = await Promise.all([loadTalks(maps), loadVenues(maps)]);
-
-  maps.talksMap = talks.map;
-  maps.venuesMap = venues.map;
-
-  const companies = await loadCompanies(maps);
-
-  maps.companiesMap = companies.map;
-
-  const events = await loadEvents(maps);
+  const [talks, events, venues, speakers, companies] = await Promise.all([
+    loadTalks(maps),
+    loadEvents(maps),
+    loadVenues(maps),
+    loadSpeakers(maps),
+    loadCompanies(maps),
+  ]);
 
   return {
-    talks: talks.records,
-    venues: venues.records,
-    events: events.records,
-    speakers: speakers.records,
-    companies: companies.records,
+    talks,
+    events,
+    venues,
+    speakers,
+    companies,
   };
 };

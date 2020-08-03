@@ -56,7 +56,7 @@ permalink: events/{{ event.slug }}/
     <h1>Площадка</h1>
     <div class="w-row">
       <div class="w-col w-col-8">
-        <a href="/venues/{{ event.company.slug }}/" class="venue-name">
+        <a href="{{ config.vhost }}/companies/{{ event.company.slug }}/" class="venue-name">
           {{ event.company.name }}
         </a>
         <p>Даниловская Мануфактура, корпус Loft</p>

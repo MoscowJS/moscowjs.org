@@ -1,24 +1,64 @@
 'use strict';
 
+const slugify = require('slugify');
 const airtableClient = require('./airtable.client');
 
-function normalize(record) {
-  return {
-    id: record.getId(),
-    name: record.get('Name'),
-    photo: record.get('Photo'),
-    about: record.get('About'),
-    company: record.get('Company'),
-    email: record.get('Email'),
-    skype: record.get('Skype'),
-    personalLink: record.get('Personal link'),
-    github: record.get('Github / Bitbucket'),
-    twitter: record.get('Twitter'),
-    talks: record.get('Talks'),
-  };
+class Speaker {
+  constructor(record, maps) {
+    this.record = record;
+    this.maps = maps;
+  }
+
+  get id() {
+    return this.record.getId();
+  }
+
+  get slug() {
+    return slugify(this.name, { lower: true });
+  }
+
+  get name() {
+    return this.record.get('Name');
+  }
+
+  get photo() {
+    return this.record.get('Photo');
+  }
+
+  get about() {
+    return this.record.get('About');
+  }
+
+  get company() {
+    return this.record.get('Company');
+  }
+
+  get email() {
+    return this.record.get('Email');
+  }
+
+  get skype() {
+    return this.record.get('Skype');
+  }
+
+  get personalLink() {
+    return this.record.get('Personal link');
+  }
+
+  get github() {
+    return this.record.get('Github / Bitbucket');
+  }
+
+  get twitter() {
+    return this.record.get('Twitter');
+  }
+
+  get talks() {
+    return this.record.get('Talks');
+  }
 }
 
-function loadSpeakers() {
+function loadSpeakers(maps) {
   return airtableClient('Speakers')
     .select({
       fields: [
@@ -40,15 +80,13 @@ function loadSpeakers() {
     })
     .all()
     .then((events) => {
-      const map = new Map();
+      maps.speakersMap = new Map();
 
-      const records = events.map((event) => {
-        const record = normalize(event);
-        map.set(record.id, record);
-        return record;
+      return events.map((record) => {
+        const speaker = new Speaker(record, maps);
+        maps.speakersMap.set(speaker.id, speaker);
+        return speaker;
       });
-
-      return { records, map };
     });
 }
 

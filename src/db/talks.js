@@ -1,21 +1,47 @@
 'use strict';
 
+const slugify = require('slugify');
+
 const airtableClient = require('./airtable.client');
 
-function normalize(record, { speakersMap }) {
-  const speakersValue = Array.isArray(record.get('Speakers')) ? record.get('Speakers') : [];
-  const speakers = speakersValue
-    .filter((speaker) => speakersMap.has(speaker))
-    .map((speaker) => speakersMap.get(speaker));
+class Talk {
+  constructor(record, maps) {
+    this.record = record;
+    this.maps = maps;
+  }
 
-  return {
-    id: record.getId(),
-    title: record.get('Title'),
-    theses: record.get('Theses'),
-    company: record.get('Company'),
-    meetup: record.get('Meetup'),
-    speakers,
-  };
+  get id() {
+    return this.record.getId();
+  }
+
+  get slug() {
+    return slugify(this.title, { lower: true });
+  }
+
+  get title() {
+    return this.record.get('Title');
+  }
+
+  get theses() {
+    return this.record.get('Theses');
+  }
+
+  get company() {
+    return this.record.get('Company');
+  }
+
+  get meetup() {
+    return this.record.get('Meetup');
+  }
+
+  get speakers() {
+    const speakersValue = this.record.get('Speakers');
+    const speakers = Array.isArray(speakersValue) ? speakersValue : [];
+
+    return speakers
+      .filter((speaker) => this.maps.speakersMap.has(speaker))
+      .map((speaker) => this.maps.speakersMap.get(speaker));
+  }
 }
 
 function loadTalks(maps) {
@@ -27,15 +53,13 @@ function loadTalks(maps) {
     })
     .all()
     .then((talks) => {
-      const map = new Map();
+      maps.talksMap = new Map();
 
-      const records = talks.map((talk) => {
-        const record = normalize(talk, maps);
-        map.set(record.id, record);
-        return record;
+      return talks.map((record) => {
+        const talk = new Talk(record, maps);
+        maps.talksMap.set(talk.id, talk);
+        return talk;
       });
-
-      return { records, map };
     });
 }
 

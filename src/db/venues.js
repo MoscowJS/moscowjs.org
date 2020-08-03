@@ -2,34 +2,55 @@
 
 const airtableClient = require('./airtable.client');
 
-function normalize(record) {
-  return {
-    id: record.getId(),
-    slug: record.get('Slug'),
-    name: record.get('Name'),
-    address: record.get('Address'),
-    addressNotes: record.get('Address notes'),
-    subway: record.get('Subway'),
-    map: record.get('Map'),
-  };
+class Venue {
+  constructor(record, maps) {
+    this.record = record;
+    this.maps = maps;
+  }
+
+  get id() {
+    return this.record.getId();
+  }
+
+  get slug() {
+    return this.record.get('Slug');
+  }
+
+  get name() {
+    return this.record.get('Name');
+  }
+
+  get address() {
+    return this.record.get('Address');
+  }
+
+  get addressNotes() {
+    return this.record.get('Address notes');
+  }
+
+  get subway() {
+    return this.record.get('Subway');
+  }
+
+  get map() {
+    return this.record.get('Map');
+  }
 }
 
-function loadVenues() {
+function loadVenues(maps) {
   return airtableClient('Venues')
     .select({
       fields: ['Slug', 'Name', 'Address', 'Subway', 'Address notes', 'Map'],
     })
     .all()
     .then((venues) => {
-      const map = new Map();
+      maps.venuesMap = new Map();
 
-      const records = venues.map((venue) => {
-        const record = normalize(venue, {});
-        map.set(record.id, record);
-        return record;
+      return venues.map((record) => {
+        const venue = new Venue(record, maps);
+        maps.venuesMap.set(venue.id, venue);
+        return venue;
       });
-
-      return { records, map };
     });
 }
 
