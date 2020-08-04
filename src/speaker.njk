@@ -28,50 +28,81 @@ permalink: speakers/{{ speaker.slug }}/
           </p>
           <p>‍</p>
         </div>
-        <div class="item">
-          <div class="term">Компания:</div>
-          <div class="definition">{{ speaker.company }}</div>
-        </div>
-        <div class="item">
-          <div class="term">Должность:</div>
-          <div class="definition">???</div>
-        </div>
-        <div class="item">
-          <div class="term">Email:</div>
-          <div class="definition">{{ speaker.email }}</div>
-        </div>
-        <div class="item">
-          <div class="term">Skype:</div>
-          <div class="definition">{{ speaker.skype }}</div>
-        </div>
-        <div class="item">
-          <div class="term">Сайт:</div>
-          <a href="{{ speaker.personalLink }}" class="definition">{{ speaker.personalLink }}</a>
-        </div>
-        <div class="item">
-          <div class="term">Github:</div>
-          <a href="{{ speaker.github }}" class="definition">{{ speaker.github }}</a>
-        </div>
-        <div class="item">
-          <div class="term">Twitter:</div>
-          <a href="{{ speaker.twitter }}" class="definition">{{ speaker.twitter }}</a>
-        </div>
+
+        {% if speaker.company %}
+          <div class="item">
+            <div class="term">Компания:</div>
+            <div class="definition">{{ speaker.company }}</div>
+          </div>
+        {% endif %}
+
+        {% if speaker.email %}
+          <div class="item">
+            <div class="term">Email:</div>
+            <div class="definition">{{ speaker.email }}</div>
+          </div>
+        {% endif %}
+
+        {% if speaker.skype %}
+          <div class="item">
+            <div class="term">Skype:</div>
+            <div class="definition">{{ speaker.skype }}</div>
+          </div>
+        {% endif %}
+
+        {% if speaker.personalLink %}
+          <div class="item">
+            <div class="term">Сайт:</div>
+            <a href="{{ speaker.personalLink }}" class="definition">{{ speaker.personalLink }}</a>
+          </div>
+        {% endif %}
+
+        {% if speaker.github %}
+          <div class="item">
+            <div class="term">Github:</div>
+            <a href="{{ speaker.github }}" class="definition">{{ speaker.github }}</a>
+          </div>
+        {% endif %}
+
+        {% if speaker.twitter %}
+          <div class="item">
+            <div class="term">Twitter:</div>
+            <a href="https://twitter.com/{{ speaker.twitter }}" class="definition">@{{ speaker.twitter }}</a>
+          </div>
+        {% endif %}
+
+        {% if speaker.telegram %}
+          <div class="item">
+            <div class="term">Telegram:</div>
+            <a href="https://t.me/{{ speaker.telegram }}" class="definition">@{{ speaker.telegram }}</a>
+          </div>
+        {% endif %}
+
       </div>
     </div>
+
     <div class="center">
       <h2>Доклады</h2>
       <div class="w-dyn-list">
-        <div class="w-dyn-items">
 
-          {% for talk in speaker.talks %}
-            <div class="talk-link-container w-dyn-item">
-              <a href="{{ config.vhost }}/talks/{{ talk.slug }}/" class="talk-link">
-                {{ talk.title }}
-              </a>
-            </div>
-          {% endfor %}
+        {% if speaker.talks.length === 0 %}
+          <div class="w-dyn-empty">
+            <div>Нет ни одного доклада</div>
+          </div>
+        {% else %}
+          <div class="w-dyn-items">
 
-        </div>
+            {% for talk in speaker.talks %}
+              <div class="talk-link-container w-dyn-item">
+                <a href="{{ config.vhost }}/talks/{{ talk.slug }}/" class="talk-link">
+                  {{ talk.title }}
+                </a>
+              </div>
+            {% endfor %}
+
+          </div>
+        {% endif %}
+
       </div>
     </div>
   </div>

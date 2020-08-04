@@ -5,9 +5,11 @@ module.exports = function (eleventyConfig) {
     cb(null, JSON.stringify(value, null, 2)),
   );
 
-  eleventyConfig.addNunjucksAsyncFilter('toDateFormat', (value, format, cb) =>
-    cb(null, DateTime.fromISO(value).setZone('Europe/Moscow').toFormat(format)),
-  );
+  eleventyConfig.addNunjucksAsyncFilter('toDateFormat', (value, format, cb) => {
+    const date = DateTime.fromISO(value).setLocale('ru').setZone('Europe/Moscow');
+    const formated = date.isValid ? date.toFormat(format) : '';
+    cb(null, formated);
+  });
 
   return {
     dir: {

@@ -36,13 +36,14 @@
     <br />
 
     {% for map in venue.map %}
-        <a href="{{ map.url }}" target="_blank">
-          <img
-            src="{{ map.thumbnails.full.url }}"
-            alt="Схема: как добраться до площадки {{ venue.name }}"
-          >
-        </a>
-      {% endfor %}
+      <a href="{{ map.url }}" target="_blank">
+        <img
+          src="{{ map.thumbnails.full.url }}"
+          alt="Схема: как добраться до площадки {{ venue.name }}"
+        >
+      </a>
+    {% endfor %}
+    
   {% endif %}
 
   <br />

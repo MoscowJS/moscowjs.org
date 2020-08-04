@@ -26,6 +26,10 @@ class Event {
     return this.record.get('Date');
   }
 
+  get longAnnouncement() {
+    return this.record.get('Long Announcement');
+  }
+
   get talks() {
     const talksValue = this.record.get('Talks');
     const talks = Array.isArray(talksValue) ? talksValue : [];
@@ -35,8 +39,8 @@ class Event {
       .map((talk) => this.maps.talksMap.get(talk));
   }
 
-  get venues() {
-    const venuesValue = this.record.get('Venues');
+  get venue() {
+    const venuesValue = this.record.get('Venue');
     const venues = Array.isArray(venuesValue) ? venuesValue : [];
 
     if (venues.length === 0) {
@@ -45,7 +49,7 @@ class Event {
 
     const [venue] = venues;
 
-    if (!this.maps.companiesMap.has(venue)) {
+    if (!this.maps.venuesMap.has(venue)) {
       return {};
     }
 
@@ -73,7 +77,7 @@ class Event {
 function loadEvents(maps) {
   return airtableClient('Meetups')
     .select({
-      fields: ['Slug', 'Title', 'Company', 'Talks', 'Venue', 'Date'],
+      fields: ['Slug', 'Title', 'Company', 'Talks', 'Venue', 'Long Announcement', 'Date'],
       filterByFormula: 'OR({Статус} = "Подготовка", {Статус} = "Завершен")',
       sort: [{ field: 'Date', direction: 'desc' }],
     })

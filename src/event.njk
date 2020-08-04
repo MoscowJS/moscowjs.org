@@ -37,11 +37,11 @@ permalink: events/{{ event.slug }}/
       </div>
     </div>
     <div class="event-date">
-      {{ event.date }}
+      {{ event.date | toDateFormat("d MMMM yyyy, HH:mm") }}
     </div>
     <div class="event-announcement w-richtext">
       <p>
-        Описание {{ event.title }}
+        {{ event.longAnnouncement | safe }}
       </p>
     </div>
     <div class="w-dyn-list">
@@ -59,66 +59,27 @@ permalink: events/{{ event.slug }}/
         <a href="{{ config.vhost }}/companies/{{ event.company.slug }}/" class="venue-name">
           {{ event.company.name }}
         </a>
-        <p>Даниловская Мануфактура, корпус Loft</p>
-      </div>
-      <div class="w-col w-col-4">
-        <img
-          src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e43d661d971fb7e5fccd4e9_Align_Digital_Primary.png"
-          alt=""
-          class="venue-image"
-        />
+        <p>
+          {{ event.venue.name }}
+        </p>
       </div>
     </div>
+
     <p class="venue-address-margined">
-      Варшавское шоссе, 9, стр. 1Б, Москва, 117105 (Даниловская Мануфактура, корпус Loft)
+      {{ event.venue.address }}
     </p>
-    <img src="" alt="" class="venue-map w-dyn-bind-empty" />
-    <div class="comments w-embed w-script">
-      <div id="disqus_thread">
-        <iframe
-          id="dsq-app8509"
-          name="dsq-app8509"
-          allowtransparency="true"
-          frameborder="0"
-          scrolling="no"
-          tabindex="0"
-          title="Disqus"
-          width="100%"
-          src="https://disqus.com/embed/comments/?base=default&amp;f=moscowjs-meetup&amp;t_u=https%3A%2F%2Fwww.moscowjs.org%2Fevent%2Fmoscowjs-48&amp;t_d=%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B5%3A%20MoscowJS%2048&amp;t_t=%D0%A1%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D0%B5%3A%20MoscowJS%2048&amp;s_o=default#version=e3e68fc7a03276261f27761776efca55"
-          style="
-            width: 1px !important;
-            min-width: 100% !important;
-            border: none !important;
-            overflow: hidden !important;
-            height: 681px !important;
-          "
-          horizontalscrolling="no"
-          verticalscrolling="no"
-        ></iframe>
-      </div>
-      <script>
-        /**
-         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables */
-        /*
-        var disqus_config = function () {
-            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-        };
-        */
-        (function () {
-          // DON'T EDIT BELOW THIS LINE
-          var d = document,
-            s = d.createElement('script');
-          s.src = '//moscowjs-meetup.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-        })();
-      </script>
-      <noscript>
-        Please enable JavaScript to view the
-        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-      </noscript>
-    </div>
+
+    {% if event.venue.map.length > 0 %}
+
+        {% for map in event.venue.map %}
+          <img
+            src="{{ map.thumbnails.full.url }}"
+            alt="Схема: как добраться до площадки {{ event.company.name }}({{ event.venue.name }})"
+            class="venue-image"
+          >
+        {% endfor %}
+
+    {% endif %}
+
   </div>
 </div>

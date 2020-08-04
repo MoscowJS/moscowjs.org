@@ -46,11 +46,18 @@ class Speaker {
   }
 
   get github() {
-    return this.record.get('Github / Bitbucket');
+    const githubValue = this.record.get('Github / Bitbucket');
+    return typeof githubValue === 'string' && githubValue.startsWith('http')
+      ? githubValue
+      : `https://github.com/${githubValue}`;
   }
 
   get twitter() {
     return this.record.get('Twitter');
+  }
+
+  get telegram() {
+    return this.record.get('Telegram');
   }
 
   get talks() {
@@ -76,6 +83,7 @@ function loadSpeakers(maps) {
         'Personal link',
         'Github / Bitbucket',
         'Twitter',
+        'Telegram',
         'Talks',
       ],
       sort: [

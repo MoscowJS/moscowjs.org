@@ -32,7 +32,7 @@ layout: base.layout.njk
               {{ event.company.name }}
             </a>
             <p class="event-date">
-              {{ event.date | toDateFormat("d EEEE, HH:mm") }}
+              {{ event.date | toDateFormat("d MMMM yyyy, HH:mm") }}
             </p>
           </div>
         {% endfor %}
