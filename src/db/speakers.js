@@ -54,7 +54,12 @@ class Speaker {
   }
 
   get talks() {
-    return this.record.get('Talks');
+    const talksValue = this.record.get('Talks');
+    const talks = Array.isArray(talksValue) ? talksValue : [];
+
+    return talks
+      .filter((talk) => this.maps.talksMap.has(talk))
+      .map((talk) => this.maps.talksMap.get(talk));
   }
 }
 
@@ -79,10 +84,10 @@ function loadSpeakers(maps) {
       ],
     })
     .all()
-    .then((events) => {
+    .then((speakers) => {
       maps.speakersMap = new Map();
 
-      return events.map((record) => {
+      return speakers.map((record) => {
         const speaker = new Speaker(record, maps);
         maps.speakersMap.set(speaker.id, speaker);
         return speaker;

@@ -12,7 +12,52 @@ permalink: talks/{{ talk.slug }}/
 
 <div>
   <div class="main-container w-container">
-    <h1>{{ talk.title }}</h1>
+    <div class="w-row">
+
+      <div class="speaker-column w-col w-col-4 w-col-medium-6">
+
+        {% for speaker in talk.speakers %}
+          <div class="speaker-card">
+            <img
+              {% if speaker.photo %}
+                src="{{ speaker.photo[0].url }}"
+              {% endif %}
+
+              alt="{{ speaker.name }}"
+              class="speaker-avatar"
+            />
+            <a href="{{ config.vhost }}/speakers/{{ speaker.slug }}/" class="speaker-name">
+              {{ speaker.name }}
+            </a>
+            <div class="speaker-company">
+              {{ speaker.company }}
+            </div>
+          </div>
+        {% endfor %}
+
+        {% for event in talk.events %}
+          <div class="event-card">
+            <a href="{{ config.vhost }}/events/{{ event.slug }}/" class="talk-event">{{ event.title }}</a>
+          </div>
+        {% endfor %}
+
+      </div>
+
+      <div class="w-col w-col-8 w-col-medium-6">
+        <h1>
+          {{ talk.title }}
+        </h1>
+        <p>
+          {{ talk.theses }}
+        </p>
+        <a href="#TODO:" target="_blank" class="button-margin w-button">
+          СЛАЙДЫ
+        </a>
+        <a href="#TODO:" target="_blank" class="button-margin w-button">
+          ВИДЕО
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 

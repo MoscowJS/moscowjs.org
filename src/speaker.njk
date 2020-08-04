@@ -65,8 +65,8 @@ permalink: speakers/{{ speaker.slug }}/
 
           {% for talk in speaker.talks %}
             <div class="talk-link-container w-dyn-item">
-              <a href="#" class="talk-link">
-                {{ talk }}
+              <a href="{{ config.vhost }}/talks/{{ talk.slug }}/" class="talk-link">
+                {{ talk.title }}
               </a>
             </div>
           {% endfor %}

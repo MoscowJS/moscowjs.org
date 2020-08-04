@@ -30,8 +30,13 @@ class Talk {
     return this.record.get('Company');
   }
 
-  get meetup() {
-    return this.record.get('Meetup');
+  get events() {
+    const eventValue = this.record.get('Meetup');
+    const events = Array.isArray(eventValue) ? eventValue : [];
+
+    return events
+      .filter((event) => this.maps.eventsMap.has(event))
+      .map((event) => this.maps.eventsMap.get(event));
   }
 
   get speakers() {
