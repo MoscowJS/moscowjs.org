@@ -15,7 +15,7 @@ class Talk {
   }
 
   get slug() {
-    return slugify(this.title, { lower: true });
+    return slugify(this.title, { lower: true, strict: true });
   }
 
   get title() {

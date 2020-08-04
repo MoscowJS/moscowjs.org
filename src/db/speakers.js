@@ -14,7 +14,7 @@ class Speaker {
   }
 
   get slug() {
-    return slugify(this.name, { lower: true });
+    return slugify(this.name, { lower: true, strict: true });
   }
 
   get name() {

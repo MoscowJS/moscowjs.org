@@ -1,5 +1,4 @@
 const { DateTime } = require('luxon');
-const slugify = require('slugify');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksAsyncFilter('stringify', (value, cb) =>
