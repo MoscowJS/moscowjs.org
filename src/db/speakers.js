@@ -47,9 +47,15 @@ class Speaker {
 
   get github() {
     const githubValue = this.record.get('Github / Bitbucket');
-    return typeof githubValue === 'string' && githubValue.startsWith('http')
-      ? githubValue
-      : `https://github.com/${githubValue}`;
+
+    if (
+      typeof githubValue === 'undefined' ||
+      (typeof githubValue === 'string' && githubValue.startsWith('http'))
+    ) {
+      return githubValue;
+    }
+
+    return `https://github.com/${githubValue}`;
   }
 
   get twitter() {
