@@ -2,6 +2,15 @@
 layout: base.layout.njk
 ---
 
+{% set venueAnchor = "" %}
+{% set event = airtable.events | getLastEvent %}
+
+{% if event.venue.slug %}
+  {% set venueAnchor = "#" + event.venue.slug %}
+{% endif %}
+
+{# <pre>{{ event | stringify | safe }}</pre> #}
+
 <div>
   <div class="hero-image">
     <div class="w-container">
@@ -21,13 +30,21 @@ layout: base.layout.njk
         <div class="event w-dyn-item">
           <div class="w-row">
             <div class="event-column w-col w-col-9 w-col-stack">
-              <a href="/event/moscowjs-49" class="event-name"
-                >MoscowJS 49</a
+              <a
+                href="{{ config.vhost }}/events/{{ event.slug }}/"
+                class="event-name"
               >
+                {{ event.title }}
+              </a>
               <div class="event-linker">
                 в
               </div>
-              <a href="/venue/kaspersky" class="event-host">Kaspersky</a>
+              <a
+                href="{{ config.vhost }}/companies/{{ event.company.slug }}/{{ venueAnchor }}"
+                class="event-host"
+              >
+                {{ event.company.name }}
+              </a>
             </div>
             <div class="w-clearfix w-col w-col-3 w-col-stack">
               <a
@@ -42,59 +59,14 @@ layout: base.layout.njk
               </div>
             </div>
           </div>
-          <div class="event-date">26 марта 2020, 19:00</div>
+          <div class="event-date">
+            {{ event.date | toDateFormat("d MMMM yyyy, HH:mm") }}
+          </div>
           <div class="event-address">
-            Ленинградское шоссе, 39 А строение 2
+            {{ event.venue.address }}
           </div>
           <div class="event-announcement w-richtext">
-            <p>
-              Следующая встреча MoscowJS пройдёт в офисе &quot;Лаборатория
-              Касперского&quot; 26 марта.
-              <br />
-              <br />
-              Не забудьте паспорт или другое удостоверение личности.
-              <br />
-              <br />
-              <strong>Расписание:</strong>
-              <br />
-            </p>
-            <p>
-              <strong>19:00</strong>
-              — Регистрация и кофе-брейк
-            </p>
-            <p>
-              <strong>19:15 </strong>
-              Открытие
-            </p>
-            <p>
-              <strong>19:30 &quot;Babel &amp; DX&quot; </strong>
-              Павел Ремизов (Offside Gaming)
-              <br />
-              <strong
-                >20:05 &quot;Concurrent Mode: монтируй, конкурируй,
-                обновляй&quot;
-              </strong>
-              Григорий Бизюкин (Яндекс)
-            </p>
-            <p>
-              <strong>20:40 </strong>
-              Перерыв
-            </p>
-            <p>
-              <strong>20:55 &quot;Work-life imbalance&quot; </strong>
-              Гордей Левченко (BTS-Digital)
-            </p>
-            <p>
-              <strong>21:40 </strong>
-              Закрытие
-            </p>
-            <p>
-              <strong>22:00</strong>
-              Afterparty
-            </p>
-            <p>‍</p>
-            <p>‍</p>
-            <p>‍</p>
+            {{ event.longAnnouncement | safe }}
           </div>
         </div>
       </div>

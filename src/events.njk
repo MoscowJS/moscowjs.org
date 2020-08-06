@@ -24,7 +24,9 @@ layout: base.layout.njk
             >
               {{ event.title }}
             </a>
-            <div class="event-linker">в</div>
+            <div class="event-linker">
+              в
+            </div>
             <a
               href="{{ config.vhost }}/companies/{{ event.company.slug }}/{{ venueAnchor }}"
               class="event-host"

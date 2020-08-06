@@ -40,9 +40,7 @@ permalink: events/{{ event.slug }}/
       {{ event.date | toDateFormat("d MMMM yyyy, HH:mm") }}
     </div>
     <div class="event-announcement w-richtext">
-      <p>
-        {{ event.longAnnouncement | safe }}
-      </p>
+      {{ event.longAnnouncement | safe }}
     </div>
     <div class="w-dyn-list">
       <div class="w-dyn-items">

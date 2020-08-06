@@ -6,8 +6,6 @@ class Event {
   constructor(record, maps) {
     this.record = record;
     this.maps = maps;
-
-    // company,
   }
 
   get id() {
@@ -28,6 +26,10 @@ class Event {
 
   get longAnnouncement() {
     return this.record.get('Long Announcement');
+  }
+
+  get status() {
+    return this.record.get('Статус');
   }
 
   get talks() {
@@ -77,8 +79,8 @@ class Event {
 function loadEvents(maps) {
   return airtableClient('Meetups')
     .select({
-      fields: ['Slug', 'Title', 'Company', 'Talks', 'Venue', 'Long Announcement', 'Date'],
-      filterByFormula: 'OR({Статус} = "Подготовка", {Статус} = "Завершен")',
+      fields: ['Slug', 'Title', 'Company', 'Talks', 'Venue', 'Long Announcement', 'Date', 'Статус'],
+      filterByFormula: 'OR({Статус} = "Анонс", {Статус} = "Завершен")',
       sort: [{ field: 'Date', direction: 'desc' }],
     })
     .all()

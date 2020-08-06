@@ -1,14 +1,22 @@
 const { DateTime } = require('luxon');
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addNunjucksAsyncFilter('stringify', (value, cb) =>
-    cb(null, JSON.stringify(value, null, 2)),
-  );
+  eleventyConfig.addNunjucksFilter('stringify', (value) => {
+    return JSON.stringify(value, null, 2);
+  });
 
-  eleventyConfig.addNunjucksAsyncFilter('toDateFormat', (value, format, cb) => {
+  eleventyConfig.addNunjucksFilter('getLastEvent', (events) => {
+    const announced = events.find((status) => status === 'Анонс');
+    if (typeof announced !== 'undefined') {
+      return announced;
+    }
+    return events[0];
+  });
+
+  eleventyConfig.addNunjucksFilter('toDateFormat', (value, format) => {
     const date = DateTime.fromISO(value).setLocale('ru').setZone('Europe/Moscow');
     const formated = date.isValid ? date.toFormat(format) : '';
-    cb(null, formated);
+    return formated;
   });
 
   return {
