@@ -2,234 +2,51 @@
 layout: base.layout.njk
 ---
 
-{# <pre>{{ airtable.meetups | stringify | safe }}</pre> #}
+{# <pre>{{ airtable.contacts | stringify | safe }}</pre> #}
+
 
 <div>
   <div class="main-container w-container">
-    <h1>Контакты</h1>
+    <h1>
+      Контакты
+    </h1>
     <p>
       Для связи с организаторами желательно использовать почту:
-      <a
-        href="mailto:team@moscowjs.ru?subject=MoscowJS%20%D0%92%D0%BE%D0%BF%D1%80%D0%BE%D1%81"
-        >team@moscowjs.org</a
-      >
+      <a href="mailto:team@moscowjs.ru?subject=MoscowJS%20%D0%92%D0%BE%D0%BF%D1%80%D0%BE%D1%81">
+        team@moscowjs.org
+      </a>
     </p>
     <h1>Организаторы</h1>
     <div class="w-dyn-list">
       <div class="w-dyn-items">
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e85e72034ae5659f6daf9ff_2020-04-02%2016.22.29.jpg"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e85e72034ae5659f6daf9ff_2020-04-02%2016.22.29-p-500.jpeg 500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e85e72034ae5659f6daf9ff_2020-04-02%2016.22.29.jpg        640w
-                "
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/evgeniy-kubyshin" class="speaker-name"
-                >Евгений Кубышин</a
-              >
-              <p class="speaker-about">
-                Senior iOS developer Alibaba Group / Aliexpress. В прошлом
-                front-end developer. Организовывал митапы MoscowJS с 5-го по 8-й
-                в Yandex.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e611df00168602b81966498_photo_2019-12-23_15-01-21.jpg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/kami" class="speaker-name">Даниил Коновал</a>
-              <p class="speaker-about">
-                Frontend-developer on Vue.js + Vuetify. Love Node.js.
-              </p>
+
+        {% for contact in airtable.contacts %}
+          <div class="speaker-item w-dyn-item">
+            <div class="w-row">
+              <div class="speaker-column w-col w-col-2">
+                <img
+                  {% if contact.speaker.photo %}
+                    src="{{ contact.speaker.photo[0].url }}"
+                  {% endif %}
+                  alt="{{ contact.displayName }}"
+                  class="speaker-avatar"
+                />
+              </div>
+              <div class="w-col w-col-10">
+                <a
+                  href="{{ config.vhost }}/speakers/{{ contact.speaker.slug }}/"
+                  class="speaker-name"
+                >
+                  {{ contact.displayName }}
+                </a>
+                <p class="speaker-about">
+                  {{ contact.speaker.about }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e2b03612cc5e5760f1cd95b_vadjs.jpg"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e2b03612cc5e5760f1cd95b_vadjs-p-500.jpeg 500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e2b03612cc5e5760f1cd95b_vadjs-p-800.jpeg 800w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5e2b03612cc5e5760f1cd95b_vadjs.jpg        939w
-                "
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/vadim-zhamkov" class="speaker-name"
-                >Вадим Жамков</a
-              >
-              <p class="speaker-about">Frontend Tech Leader в ВТБ Факторинг</p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc6582935c853dae6d2472_photo_2019-11-13%2023.18.50.jpeg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/pavel-vostrikov" class="speaker-name"
-                >Павел Востриков</a
-              >
-              <p class="speaker-about">
-                Software Architect @ Kaspersky, Node.js member: Package
-                Maintenance Team, Windows Platform Team Open Source contributor
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc637ed3e5f146098bb816_photo_2019-11-13%2023.10.59.jpeg"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc637ed3e5f146098bb816_photo_2019-11-13%2023.10.59-p-500.jpeg   500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc637ed3e5f146098bb816_photo_2019-11-13%2023.10.59-p-800.jpeg   800w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc637ed3e5f146098bb816_photo_2019-11-13%2023.10.59-p-1080.jpeg 1080w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc637ed3e5f146098bb816_photo_2019-11-13%2023.10.59.jpeg        1280w
-                "
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/siprikova-alyona" class="speaker-name"
-                >Алёна Сиприкова</a
-              >
-              <p class="speaker-about">Пою в хоре и пишу на JavaScript.</p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5dcc633097badd41b9088f4d_photo_2019-11-13%2023.10.10.jpeg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/dmitriy-korolev" class="speaker-name"
-                >Дмитрий Королев</a
-              >
-              <p class="speaker-about">
-                Руководитель группы разработки в Tinkoff.ru. По образованию
-                врач, по призванию решатель проблем.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5bed1fd346f9fe648b1123cf_rubanov.jpg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/sergey-rubanov" class="speaker-name"
-                >Сергей Рубанов</a
-              >
-              <p class="speaker-about">Работаю Серёжей в BeerJS</p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/5a8a8d2a37147b0001ae6bb9_shmakov.jpg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/dmitriy-shmakov" class="speaker-name"
-                >Дмитрий Шмаков​</a
-              >
-              <p class="speaker-about">
-                They call me Dima, but you can call me tonight. Фронтэндер. Не
-                Ким Чен Ын, но был в Северной Корее (и ещё 15 странах). Пойдём
-                пить крафтовое пиво и слушать джаз? И если ты готов пробежать со
-                мной марафон в Иране в следующем году, то welcome!
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/58ce6a4259307c777630835f_olga_kobetc%5B1%5D.jpg"
-                alt=""
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/olga-kobets" class="speaker-name"
-                >Ольга Кобец</a
-              >
-              <p class="speaker-about">
-                Хожу на конференции и рисую скетчноуты по докладам, программирую
-                на тикетах, люблю JS
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="speaker-item w-dyn-item">
-          <div class="w-row">
-            <div class="speaker-column w-col w-col-2">
-              <img
-                src="https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/59271f1a4657e1632fb11094_tenphi-photo.png"
-                alt=""
-                sizes="100px"
-                srcset="
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/59271f1a4657e1632fb11094_tenphi-photo-p-500.png   500w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/59271f1a4657e1632fb11094_tenphi-photo-p-800.png   800w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/59271f1a4657e1632fb11094_tenphi-photo-p-1080.png 1080w,
-                  https://uploads-ssl.webflow.com/57d56d9306a91cb76ab1a654/59271f1a4657e1632fb11094_tenphi-photo.png        1272w
-                "
-                class="speaker-avatar"
-              />
-            </div>
-            <div class="w-col w-col-10">
-              <a href="/speaker/andrey-yamanov" class="speaker-name"
-                >Андрей Яманов</a
-              >
-              <p class="speaker-about w-dyn-bind-empty"></p>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
+
       </div>
     </div>
   </div>
