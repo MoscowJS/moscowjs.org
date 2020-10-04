@@ -1,8 +1,12 @@
 name: Deploy moscowjs.org site
+
 on:
-  push:
+  workflow_dispatch:
+  pull_request:
     branches:
       - master
+    types: [closed]
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
