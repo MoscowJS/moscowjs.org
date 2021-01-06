@@ -15,7 +15,12 @@ export const TalkSingleSpeaker: FunctionComponent<{ talk: TalkData }> = ({
     <Item key={talk.Title}>
       <Item.ImageContainer size="small">
         <SquarePhoto>
-          <img src={speaker.Photo[0].thumbnails.large.url} alt={speaker.Name} />
+          {speaker.Photo && (
+            <img
+              src={speaker.Photo[0].thumbnails.large.url}
+              alt={speaker.Name}
+            />
+          )}
         </SquarePhoto>
       </Item.ImageContainer>
       <Item.Content>

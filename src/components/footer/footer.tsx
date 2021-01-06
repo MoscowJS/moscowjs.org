@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { Layout } from "../../uikit";
-import { rhythm } from "../../utils/typography";
-import { Telegram } from "../../images/icons/telegram";
-import { Facebook, Instagram, Twitter, Youtube } from "react-feather";
-import { Link } from "gatsby";
+import React from "react"
+import styled from "styled-components"
+import { Layout } from "../../uikit"
+import { rhythm } from "../../utils/typography"
+import { Telegram } from "../../images/icons/telegram"
+import { Facebook, Instagram, Twitter, Youtube } from "react-feather"
+import { Link } from "gatsby"
 
 const FooterContainer = styled(Layout.Container)`
   margin-bottom: ${rhythm(1)};

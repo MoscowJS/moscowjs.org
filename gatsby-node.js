@@ -52,11 +52,11 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  result.data.allAirtablespeakers.nodes.forEach(({ data, id }) => {
-    createPage({
-      path: speakerPath(data.Name),
-      component: path.resolve(`./src/templates/speaker.tsx`),
-      context: { id },
-    })
-  })
+  // result.data.allAirtablespeakers.nodes.forEach(({ data, id }) => {
+  //   createPage({
+  //     path: speakerPath(data.Name),
+  //     component: path.resolve(`./src/templates/speaker.tsx`),
+  //     context: { id },
+  //   })
+  // })
 }

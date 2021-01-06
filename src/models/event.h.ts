@@ -15,7 +15,7 @@ export type EventData = {
   Short_Announcement: string
   Slug: string
   Stream_link?: string
-  Talks: Array<{ data: TalkData }>
+  Talks?: Array<{ data: TalkData }>
   Title: string
   Type: string
   Video_link?: string

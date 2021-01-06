@@ -4,11 +4,11 @@ import { TalkData } from "./talk.h"
 
 export type SpeakerData = {
   Name: string
-  Photo: AirtableImage[]
+  Photo?: AirtableImage[]
   Company: string
   About: string
   Email: string
-  Talks: Array<{ data: TalkData }>
+  Talks?: Array<{ data: TalkData }>
   Telegram: string
   Personal_link: string
   Github___Bitbucket: string

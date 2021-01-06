@@ -99,15 +99,19 @@ export const Event: FunctionComponent<EventProps> = ({
         <>
           <Markdown>{event.Long_Announcement}</Markdown>
 
-          <h3>О чем будем говорить</h3>
+          {event.Talks && (
+            <>
+              <h3>О чем будем говорить</h3>
 
-          {event.Talks.map(({ data }) => {
-            if (data.Speakers.length > 1) {
-              return <TalkMultipleSpeaker talk={data} />
-            }
+              {event.Talks.map(({ data }) => {
+                if (data.Speakers.length > 1) {
+                  return <TalkMultipleSpeaker talk={data} />
+                }
 
-            return <TalkSingleSpeaker talk={data} />
-          })}
+                return <TalkSingleSpeaker talk={data} />
+              })}
+            </>
+          )}
         </>
       )}
     </article>

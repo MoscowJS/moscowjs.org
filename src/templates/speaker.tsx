@@ -14,10 +14,10 @@ const MeetupPage: FunctionComponent<
 > = ({ data, location }) => {
   return (
     <Layout>
-      <SEO title={data.airtablemeetups.data.Title} />
+      {/* <SEO title={data.airtablemeetups.data.Title} /> */}
       <Header location={location} />
       <Layout.Container as="main">
-        <Event event={data.airtablemeetups.data} />
+        {/* <Event event={data.airtablemeetups.data} /> */}
       </Layout.Container>
       <Footer />
     </Layout>
@@ -26,54 +26,9 @@ const MeetupPage: FunctionComponent<
 
 export const query = graphql`
   query($id: String!) {
-    airtablemeetups(id: { eq: $id }) {
+    airtablespeakers(id: { eq: $id }) {
       data {
-        Address
-        Company {
-          data {
-            Name
-            Slug
-          }
-        }
-        Completed
-        Date(locale: "ru", formatString: "LLL")
-        Formatted_title
-        Long_Announcement
-        Publish
-        Registration_link
-        Short_Announcement
-        Slug
-        Stream_link
-        Talks {
-          data {
-            Title
-            Slides_URL
-            Theses
-            Record
-            Speakers {
-              data {
-                Name
-                Company
-                Photo {
-                  thumbnails {
-                    large {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        Title
-        Type
-        Video_link
-        Venue {
-          data {
-            Slug
-            Name
-          }
-        }
+        Name
       }
     }
   }

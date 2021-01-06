@@ -35,7 +35,12 @@ export const TalkMultipleSpeaker: FunctionComponent<{ talk: TalkData }> = ({
           return (
             <Speaker key={data.Name}>
               <SquarePhoto>
-                <img src={data.Photo[0].thumbnails.large.url} alt={data.Name} />
+                {data.Photo && (
+                  <img
+                    src={data.Photo[0].thumbnails.large.url}
+                    alt={data.Name}
+                  />
+                )}
               </SquarePhoto>
               <p>
                 <Link to={speakerPath(data.Name)}>{data.Name}</Link>
