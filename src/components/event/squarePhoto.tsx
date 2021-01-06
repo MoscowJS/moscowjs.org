@@ -10,13 +10,21 @@ export const SquarePhoto = styled.div`
   margin-bottom: ${rhythm(1)};
 
   img {
-    width: 100%;
-    vertical-align: top;
     position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    height: 100%;
+    vertical-align: top;
     object-fit: cover;
     filter: grayscale(1);
+  }
+
+  svg {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
   }
 `

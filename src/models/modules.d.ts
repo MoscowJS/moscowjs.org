@@ -12,3 +12,8 @@ declare module "*.svg" {
   const value: string
   export = value
 }
+
+declare module "remark-slug" {
+  const value: any
+  export = value
+}

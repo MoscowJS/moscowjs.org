@@ -1,10 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 import { Layout } from "../../uikit"
+import { NavigationData } from "../../models/navigation.h"
+import { pagePath } from "../../utils/paths"
 import { rhythm } from "../../utils/typography"
 import { Telegram } from "../../images/icons/telegram"
 import { Facebook, Instagram, Twitter, Youtube } from "react-feather"
-import { Link } from "gatsby"
+import { graphql, Link, useStaticQuery } from "gatsby"
 
 const FooterContainer = styled(Layout.Container)`
   margin-bottom: ${rhythm(1)};
@@ -34,16 +36,55 @@ const IconLink = styled.a`
 `
 
 export const Footer = () => {
+  const {
+    allAirtablenavigation: { nodes },
+  } = useStaticQuery<{
+    allAirtablenavigation: {
+      nodes: Array<{
+        data: NavigationData
+      }>
+    }
+  }>(graphql`
+    {
+      allAirtablenavigation(
+        filter: {
+          data: { navigation: { eq: "footer-left" }, show: { eq: true } }
+        }
+        sort: { fields: data___order, order: ASC }
+      ) {
+        nodes {
+          data {
+            customUrl
+            slug
+            title
+          }
+        }
+      }
+    }
+  `)
+
+  const navigation = nodes.map(({ data }) => ({
+    external: !!data.customUrl,
+    url: data.customUrl || pagePath(data.slug[0]),
+    title: data.title,
+  }))
+
   return (
     <FooterContainer as="footer">
       <Column>
         <div>© 2011 — {new Date().getFullYear()}, MoscowJS Team</div>
         <nav>
-          <Link to="/contacts/">Контакты организаторов</Link>
-          <br />
-          <Link to="/coc/">Правила поведения</Link>
-          <br />
-          <Link to="/pc/">Промокоды MoscowJS</Link>
+          {navigation.map(({ external, url, title }) => {
+            return (
+              <div key={url}>
+                {external ? (
+                  <a href={url}>{title}</a>
+                ) : (
+                  <Link to={url}>{title}</Link>
+                )}
+              </div>
+            )
+          })}
         </nav>
       </Column>
 

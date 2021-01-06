@@ -5,7 +5,6 @@ require("dotenv").config({
 require("ts-node").register()
 
 module.exports = {
-  pathPrefix: "/moscowjs",
   siteMetadata: {
     title: `MoscowJS`,
     description: `Регулярные встречи JavaScript-разработчиков в Москве. Обсуждаем фреймворки, инструменты и процессы. Делимся знаниями и личным опытом в неформальной обстановке.`,
@@ -84,7 +83,7 @@ module.exports = {
             tableName: `Speakers`,
             tableView: `moscowjs.org`,
             queryName: "speakers",
-            tableLinks: ["Meetup", "Talks"],
+            tableLinks: ["Talks"],
             separateNodeType: true,
           },
           {

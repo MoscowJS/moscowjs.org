@@ -1,5 +1,10 @@
 const path = require(`path`)
-const { eventPath, pagePath, speakerPath } = require("./src/utils/paths.ts")
+const {
+  eventPath,
+  pagePath,
+  speakerPath,
+  talkPath,
+} = require("./src/utils/paths.ts")
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -25,13 +30,22 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
       allAirtablespeakers {
+        totalCount
         nodes {
           id
           data {
             Name
           }
         }
+      }
+      allAirtabletalks {
         totalCount
+        nodes {
+          id
+          data {
+            Title
+          }
+        }
       }
     }
   `)
@@ -52,11 +66,19 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  // result.data.allAirtablespeakers.nodes.forEach(({ data, id }) => {
-  //   createPage({
-  //     path: speakerPath(data.Name),
-  //     component: path.resolve(`./src/templates/speaker.tsx`),
-  //     context: { id },
-  //   })
-  // })
+  result.data.allAirtablespeakers.nodes.forEach(({ data, id }) => {
+    createPage({
+      path: speakerPath(data.Name),
+      component: path.resolve(`./src/templates/speaker.tsx`),
+      context: { id },
+    })
+  })
+
+  result.data.allAirtabletalks.nodes.forEach(({ data, id }) => {
+    createPage({
+      path: talkPath(data.Title),
+      component: path.resolve(`./src/templates/talk.tsx`),
+      context: { id },
+    })
+  })
 }

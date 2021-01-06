@@ -37,21 +37,24 @@ const MenuContainer = styled.nav`
   grid-area: navigation;
 `
 
-const MenuLink = styled(Link)<{
+const MenuLink = styled.div<{
   $current: boolean
 }>`
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: 0.8rem;
-  line-height: ${rhythm(2)};
-  font-weight: 300;
-
   display: inline-block;
-  padding: 0 ${rhythm(0.5)};
 
-  background-color: ${({ $current }) =>
-    $current ? "var(--primary-color)" : "none"};
-  color: ${({ $current }) => ($current ? "#000" : "var(--primary-text)")};
+  a {
+    display: inline-block;
+    padding: 0 ${rhythm(0.5)};
+
+    background-color: ${({ $current }) =>
+      $current ? "var(--primary-color)" : "none"};
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.8rem;
+    line-height: ${rhythm(2)};
+    font-weight: 300;
+    color: ${({ $current }) => ($current ? "#000" : "var(--primary-text)")};
+  }
 `
 
 const HeaderContainer = styled.header`
@@ -64,41 +67,36 @@ export const Header: FunctionComponent<{
   location: PageProps["location"]
 }> = ({ location }) => {
   const {
-    allAirtablenavigation: { edges },
+    allAirtablenavigation: { nodes },
   } = useStaticQuery<{
     allAirtablenavigation: {
-      edges: Array<{
-        node: {
-          data: NavigationData
-        }
+      nodes: Array<{
+        data: NavigationData
       }>
     }
   }>(graphql`
     {
       allAirtablenavigation(
         filter: { data: { navigation: { eq: "header" }, show: { eq: true } } }
+        sort: { fields: data___order, order: ASC }
       ) {
-        edges {
-          node {
-            data {
-              title
-              slug
-              order
-            }
+        nodes {
+          data {
+            customUrl
+            slug
+            title
           }
         }
       }
     }
   `)
 
-  const navigation = edges
-    .map(({ node }) => ({
-      url: pagePath(node.data.slug[0]),
-      title: node.data.title,
-      current: pagePath(node.data.slug[0]) === location.pathname,
-      order: node.data.order,
-    }))
-    .sort((a, b) => a.order - b.order)
+  const navigation = nodes.map(({ data }) => ({
+    external: !!data.customUrl,
+    url: data.customUrl || pagePath(data.slug[0]),
+    title: data.title,
+    current: pagePath(data.slug[0]) === location.pathname,
+  }))
 
   return (
     <HeaderContainer>
@@ -109,9 +107,13 @@ export const Header: FunctionComponent<{
           </HeaderTitle>
         </HeaderLink>
         <MenuContainer role="navigation">
-          {navigation.map(({ url, title, current }) => (
-            <MenuLink to={url} $current={current} key={url}>
-              {title}
+          {navigation.map(({ external, url, title, current }) => (
+            <MenuLink $current={current} key={url}>
+              {external ? (
+                <a href={url}>{title}</a>
+              ) : (
+                <Link to={url}>{title}</Link>
+              )}
             </MenuLink>
           ))}
         </MenuContainer>

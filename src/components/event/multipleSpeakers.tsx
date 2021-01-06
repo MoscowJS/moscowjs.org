@@ -6,6 +6,7 @@ import { rhythm } from "../../utils/typography"
 import { speakerPath, talkPath } from "../../utils/paths"
 import { TalkData } from "../../models/talk.h"
 import { Link } from "gatsby"
+import { UserX } from "react-feather"
 
 const Speaker = styled.div`
   flex: 1 1 0;
@@ -35,10 +36,17 @@ export const TalkMultipleSpeaker: FunctionComponent<{ talk: TalkData }> = ({
           return (
             <Speaker key={data.Name}>
               <SquarePhoto>
-                {data.Photo && (
+                {data.Photo ? (
                   <img
                     src={data.Photo[0].thumbnails.large.url}
                     alt={data.Name}
+                  />
+                ) : (
+                  <UserX
+                    size="100%"
+                    css={`
+                      color: var(--text-color);
+                    `}
                   />
                 )}
               </SquarePhoto>

@@ -7,7 +7,7 @@ import { Header } from "../components/header/header"
 import { Layout } from "../uikit/layout/layout"
 import { graphql, PageProps } from "gatsby"
 
-const MeetupPage: FunctionComponent<
+const SpeakerPage: FunctionComponent<
   PageProps<{
     airtablemeetups: { data: EventData }
   }>
@@ -34,4 +34,4 @@ export const query = graphql`
   }
 `
 
-export default MeetupPage
+export default SpeakerPage

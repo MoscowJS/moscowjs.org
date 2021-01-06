@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react"
 import ReactMarkdown from "react-markdown"
+import slug from "remark-slug"
+import toc from "remark-toc"
 import { Link } from "gatsby"
 
 const renderers: any = {
@@ -17,14 +19,32 @@ const renderers: any = {
 
     return <a href={link.href}>{link.children}</a>
   },
+  heading: (data: { level: number; node: any; children: any }) => {
+    return React.createElement(
+      `h${data.level}`,
+      { id: data.node.data.id },
+      data.children
+    )
+  },
 }
 
 export const Markdown: FunctionComponent<{
   children?: string
   markdown?: string
 }> = ({ children, markdown }) => {
+  const plugins: any[] = [
+    slug,
+    [
+      toc,
+      {
+        heading: "Содержание",
+        tight: true,
+      },
+    ],
+  ]
+
   return (
-    <ReactMarkdown renderers={renderers}>
+    <ReactMarkdown plugins={plugins} renderers={renderers}>
       {children || markdown || ""}
     </ReactMarkdown>
   )

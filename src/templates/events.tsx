@@ -9,7 +9,7 @@ import { Markdown } from "../components/markdown/markdown"
 import { PagesData } from "../models/pages.h"
 import { graphql, PageProps, useStaticQuery } from "gatsby"
 
-const MeetupPage: FunctionComponent<
+const EventsPage: FunctionComponent<
   PageProps<{
     airtablepages: { data: PagesData }
     allAirtablemeetups: {
@@ -99,4 +99,4 @@ export const query = graphql`
   }
 `
 
-export default MeetupPage
+export default EventsPage

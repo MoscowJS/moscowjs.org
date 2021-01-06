@@ -4,8 +4,10 @@ import { rhythm } from "../../utils/typography"
 import "./layout.css"
 
 const Container = styled.div`
+  --container-width: ${rhythm(30)};
+
   margin: 0 auto;
-  max-width: ${rhythm(32)};
+  max-width: calc(var(--container-width) + ${rhythm(2)});
   padding: 0 ${rhythm(1)};
 `
 
