@@ -31,3 +31,4 @@ jobs:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
           AIRTABLE_META_BASE_ID: ${{ secrets.AIRTABLE_META_BASE_ID }}
+          PATH_PREFIX: ${{ secrets.PATH_PREFIX }}
