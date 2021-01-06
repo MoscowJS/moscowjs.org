@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    --text-color: rgba(255, 255, 255, 0.9);
+    --primary-color: #F7DF1F;
+
+    background: black;
+    color: var(--text-color);
+}
+
+a {
+    color: var(--primary-color)
+}
+
+ol, ul {
+    list-style-position: inside;
+}
