@@ -10,7 +10,7 @@ import {
   sizes,
 } from "./item.h"
 
-const getSize = (size?: keyof typeof sizes) => sizes[size || "tiny"]
+const getSize = (size: string = "tiny") => sizes[size] || size
 
 export const Item: FunctionComponent & {
   Image: typeof ItemImage

@@ -5,10 +5,10 @@ import styled from "styled-components"
 import { sizes } from "../../uikit/item/item.h"
 import { IconProps } from "react-feather"
 
-const getSize = (size?: keyof typeof sizes) => sizes[size || "tiny"]
+const getSize = (size: string = "tiny") => sizes[size] || size
 
 const Number = styled.span<{
-  size: keyof typeof sizes
+  size: string
   number: string
 }>`
   display: inline-block;
@@ -27,7 +27,7 @@ const Number = styled.span<{
 `
 
 const Background = styled.div<{
-  size: keyof typeof sizes
+  size: string
   number?: string
 }>`
   display: inline-block;
@@ -39,7 +39,7 @@ const Background = styled.div<{
 `
 
 export const EventLogo: FunctionComponent<{
-  size: keyof typeof sizes
+  size: string
   title: string
 }> = ({ size, title }) => {
   const number = title.match(/\d+/)?.[0]

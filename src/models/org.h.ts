@@ -1,10 +1,10 @@
-import { CompanyData } from "./company.h"
-import { SpeakerData } from "./speaker.h"
+import { AirtableImage } from "./airtable.h"
 
 export type OrgData = {
   Display_name: string
-  Speaker: { data: SpeakerData }
-  Company: Array<{ data: CompanyData }>
-  Telegram: string
-  Email: string
+  Photo?: AirtableImage[]
+  Company: string[]
+  Telegram: string[]
+  Email: string[]
+  About?: string[]
 }
