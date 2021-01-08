@@ -46,12 +46,12 @@ const ImageContainer = styled.div<ImageContainerProps>`
       ? `margin-left: ${rhythm(0.5)};`
       : `margin-right: ${rhythm(0.5)};`}
 
-  ${({ size }) => size === "tiny" || size === "micro" || !sizes[size!] ? `
+  ${({ size }) => size === "tiny" || size === "micro" ? `
     float: left;
   ` : ''}
   
   ${({ size }) => size === "small" ? `
-    @media screen and (min-width: 430px) {
+    @media screen and (min-width: 375px) {
       float: left;
     }
   ` : ''}
