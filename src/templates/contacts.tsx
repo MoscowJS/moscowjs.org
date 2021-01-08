@@ -1,3 +1,4 @@
+import Img from "gatsby-image"
 import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { Footer } from "../components/footer/footer"
@@ -7,7 +8,6 @@ import { Layout } from "../components/layout/layout"
 import { Markdown } from "../components/markdown/markdown"
 import { OrgData } from "../models/org.h"
 import { PagesData } from "../models/pages.h"
-import { SpeakerPhoto } from "../components/speakerPhoto/speakerPhoto"
 import { graphql, PageProps } from "gatsby"
 import { UserX } from "react-feather"
 
@@ -33,16 +33,14 @@ const Page: FunctionComponent<
           return (
             <Item key={data.Display_name}>
               <Item.ImageContainer size="small">
-                <SpeakerPhoto.Photo>
-                  {data.Photo ? (
-                    <img
-                      src={data.Photo[0].thumbnails.large.url}
+              {data.Photo ? (
+                    <Img
+                      fluid={data.Photo.localFiles[0].childImageSharp.fluid}
                       alt={data.Display_name}
                     />
                   ) : (
                     <UserX size="100%" />
                   )}
-                </SpeakerPhoto.Photo>
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
@@ -97,9 +95,18 @@ export const query = graphql`
           Telegram
           Company
           Photo {
-            thumbnails {
-              large {
-                url
+            localFiles {
+              childImageSharp {
+                fluid(
+                  cropFocus: CENTER
+                  quality: 80
+                  grayscale: true
+                  maxWidth: 300
+                  maxHeight: 300
+                  fit: COVER
+                ) {
+                  ...GatsbyImageSharpFluid
+                }
               }
             }
           }

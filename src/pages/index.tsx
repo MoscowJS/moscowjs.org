@@ -1,4 +1,3 @@
-import mainImage from "../images/main-hero.jpg"
 import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { Event } from "../components/event/event"
@@ -7,7 +6,9 @@ import { Feed } from "../components/feed/feed"
 import { Footer } from "../components/footer/footer"
 import { Header } from "../components/header/header"
 import { Hero } from "../components/hero/hero"
+import { ImageSharp } from "../models/gatsby.h"
 import { Layout } from "../components/layout/layout"
+import { FluidObject } from "gatsby-image"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
 
 const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
@@ -18,8 +19,21 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
         data: EventData
       }>
     }
+    hero: ImageSharp
   }>(graphql`
     {
+      hero: file(relativePath: { eq: "main-hero.jpg" }) {
+        childImageSharp {
+          fluid(grayscale: true, maxWidth: 2560, maxHeight: 800, fit: COVER) {
+            base64
+            tracedSVG
+            srcWebp
+            srcSetWebp
+            originalImg
+            originalName
+          }
+        }
+      }
       allAirtablemeetups(limit: 6, sort: { fields: data___Date, order: DESC }) {
         totalCount
         nodes {
@@ -34,35 +48,11 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
             Completed
             Date(locale: "ru", formatString: "LLL")
             Formatted_title
-            Long_Announcement
-            Publish
             Registration_link
             Short_Announcement
             Slug
             Stream_link
-            Talks {
-              data {
-                Title
-                Slides_URL
-                Theses
-                Record
-                Speakers {
-                  data {
-                    Name
-                    Company
-                    Photo {
-                      thumbnails {
-                        large {
-                          url
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
             Title
-            Type
             Video_link
             Venue {
               data {
@@ -76,8 +66,11 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
     }
   `)
 
+  console.log(result)
+
   const {
     allAirtablemeetups: { totalCount, nodes },
+    hero,
   } = result
 
   const [latestEvent, ...otherEvents] = nodes
@@ -85,7 +78,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   return (
     <Layout>
       <SEO title="Главная" />
-      <Hero image={mainImage} height="800px">
+      <Hero image={hero.childImageSharp.fluid} height="800px">
         <Header location={location} />
         <Hero.Container verticalAlign="center">
           <Event event={latestEvent.data} isIndexPage={true} short={true} />

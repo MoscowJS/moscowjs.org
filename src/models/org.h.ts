@@ -1,9 +1,13 @@
 import { AirtableImage } from "./airtable.h"
+import { ImageSharp } from "./gatsby.h"
 import { SpeakerData } from "./speaker.h"
 
 export type OrgData = {
   Display_name: string
-  Photo?: AirtableImage[]
+  Photo?: {
+    localFiles: ImageSharp[]
+    raw: AirtableImage[]
+  }
   Company: string[]
   Telegram: string[]
   Email: string[]

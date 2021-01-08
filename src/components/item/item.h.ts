@@ -5,8 +5,7 @@ export const sizes: { [K: string]: string } = {
   tiny: "3rem",
   small: "7rem",
   medium: "11rem",
-  large: "15rem",
-  huge: "19rem",
+  large: "15rem"
 }
 
 export enum flexAlign {

@@ -29,10 +29,12 @@ module.exports = {
         name: `MoscowJS Community Website`,
         short_name: `MoscowJS`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#000`,
+        theme_color: `#F7DF1F`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        lang: "ru",
+        cache_busting_mode: "none",
+        icon: `src/images/logo.png`, // This path is relative to the root of the site.
       },
     },
     {
@@ -84,6 +86,9 @@ module.exports = {
             tableName: `Speakers`,
             tableView: `moscowjs.org`,
             queryName: "speakers",
+            mapping: {
+              Photo: "fileNode",
+            },
             tableLinks: ["Talks"],
             separateNodeType: true,
           },
@@ -93,6 +98,9 @@ module.exports = {
             tableView: `moscowjs.org`,
             queryName: "orgs",
             tableLinks: ["Speaker"],
+            mapping: {
+              Photo: "fileNode",
+            },
             separateNodeType: true,
           },
           {
@@ -118,6 +126,11 @@ module.exports = {
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/cfp/`, `/contacts/`, `/coc/`, `/pc/`],
+      },
+    },
   ],
 }

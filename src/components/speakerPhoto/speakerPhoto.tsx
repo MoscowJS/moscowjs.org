@@ -1,53 +1,24 @@
+import Img from "gatsby-image"
 import React, { FunctionComponent } from "react"
-import styled from "styled-components"
 import { rhythm } from "../../utils/typography"
 import { SpeakerData } from "../../models/speaker.h"
 import { speakerPath } from "../../utils/paths"
 import { Link } from "gatsby"
 import { UserX } from "react-feather"
 
-const SquarePhoto = styled.div`
-  width: 100%;
-  padding-top: 100%;
-  height: 0;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: ${rhythm(0.5)};
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    vertical-align: top;
-    object-fit: cover;
-    filter: grayscale(1);
-  }
-
-  svg {
-    position: absolute;
-    width: 70%;
-    height: 70%;
-    top: 15%;
-    left: 15%;
-  }
-`
-
 export const SpeakerPhoto: FunctionComponent<{
   speaker: Pick<SpeakerData, "Name" | "Company" | "Photo">
-}> & {
-  Photo: typeof SquarePhoto
-} = ({ speaker }) => {
+}> = ({ speaker }) => {
   return (
     <div>
-      <SquarePhoto>
-        {speaker.Photo ? (
-          <img src={speaker.Photo[0].thumbnails.large.url} alt={speaker.Name} />
-        ) : (
-          <UserX size="100%" />
-        )}
-      </SquarePhoto>
+      {speaker.Photo ? (
+        <Img
+          fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
+          alt={speaker.Name}
+        />
+      ) : (
+        <div css={`line-height: 0;`}><UserX size="100%" /></div>
+      )}
       <p
         css={`
           text-align: center;
@@ -65,5 +36,3 @@ export const SpeakerPhoto: FunctionComponent<{
     </div>
   )
 }
-
-SpeakerPhoto.Photo = SquarePhoto

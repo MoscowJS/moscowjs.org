@@ -20,12 +20,22 @@ export const Item: FunctionComponent & {
   Meta: typeof ItemMeta
   ImageContainer: typeof ImageContainer
 } = styled.div`
-  display: flex;
   margin-bottom: ${rhythm(1)};
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  @media screen and (min-width: 600px) {
+    display: flex;
+  }
 ` as any
 
 const ImageContainer = styled.div<ImageContainerProps>`
   width: ${({ size }) => getSize(size)};
+  max-width: 100%;
   flex: 0 0 auto;
   order: ${({ position }) => (position === "right" ? 1 : 0)};
   line-height: 1;
@@ -33,12 +43,28 @@ const ImageContainer = styled.div<ImageContainerProps>`
 
   ${({ position }) =>
     position === "right"
-      ? `
-    margin-left: ${rhythm(0.5)};
-  `
-      : `
-    margin-right: ${rhythm(0.5)};
-  `}
+      ? `margin-left: ${rhythm(0.5)};`
+      : `margin-right: ${rhythm(0.5)};`}
+
+  ${({ size }) => size === "tiny" || size === "micro" || !sizes[size!] ? `
+    float: left;
+  ` : ''}
+  
+  ${({ size }) => size === "small" ? `
+    @media screen and (min-width: 430px) {
+      float: left;
+    }
+  ` : ''}
+
+  ${({ size }) => size === "medium" ? `
+    @media screen and (min-width: 530px) {
+      float: left;
+    }
+  ` : ''}
+  
+  @media screen and (min-width: 600px) {
+    float: none;
+  }
 `
 
 const ItemImage: FunctionComponent<ImageProps> = ({

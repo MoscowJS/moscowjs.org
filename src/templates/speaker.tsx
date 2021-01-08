@@ -1,3 +1,4 @@
+import Img from "gatsby-image"
 import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { EventLogo } from "../components/eventLogo/eventLogo"
@@ -66,8 +67,6 @@ const SpeakerPage: FunctionComponent<
   const speaker = data.airtablespeakers.data
   const contacts = transformContacts(speaker)
 
-  console.log(contacts)
-
   return (
     <Layout>
       <SEO title={speaker.Name} />
@@ -75,16 +74,14 @@ const SpeakerPage: FunctionComponent<
       <Layout.Container as="main">
         <Item>
           <Item.ImageContainer size="large">
-            <SpeakerPhoto.Photo>
-              {speaker.Photo ? (
-                <img
-                  src={speaker.Photo[0].thumbnails.large.url}
-                  alt={speaker.Name}
-                />
-              ) : (
-                <UserX size="100%" />
-              )}
-            </SpeakerPhoto.Photo>
+            {speaker.Photo ? (
+              <Img
+                fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
+                alt={speaker.Name}
+              />
+            ) : (
+              <UserX size="100%" />
+            )}
           </Item.ImageContainer>
           <Item.Content>
             <h1>{speaker.Name}</h1>
@@ -165,9 +162,18 @@ export const query = graphql`
           }
         }
         Photo {
-          thumbnails {
-            large {
-              url
+          localFiles {
+            childImageSharp {
+              fluid(
+                cropFocus: CENTER
+                quality: 80
+                grayscale: true
+                maxWidth: 300
+                maxHeight: 300
+                fit: COVER
+              ) {
+                ...GatsbyImageSharpFluid
+              }
             }
           }
         }

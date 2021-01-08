@@ -9,8 +9,6 @@ import { Facebook, Instagram, Twitter, Youtube } from "react-feather"
 import { graphql, Link, useStaticQuery } from "gatsby"
 
 const FooterContainer = styled(Layout.Container)`
-  margin-bottom: ${rhythm(1)};
-
   @media (min-width: 768px) {
     display: flex;
   }
@@ -18,6 +16,7 @@ const FooterContainer = styled(Layout.Container)`
 
 const Column = styled.div`
   flex: 1 1 auto;
+  margin-bottom: ${rhythm(1)};
 
   @media (min-width: 768px) {
     &:nth-child(2) {

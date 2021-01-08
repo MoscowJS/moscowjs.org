@@ -29,7 +29,6 @@ const TalkPage: FunctionComponent<
   const meetup = talk.Meetup[0].data
   const speakers = talk.Speakers
 
-  console.log(talk.Slides_URL)
   return (
     <Layout>
       <SEO title={talk.Title} />
@@ -99,9 +98,18 @@ export const query = graphql`
           data {
             Name
             Photo {
-              thumbnails {
-                large {
-                  url
+              localFiles {
+                childImageSharp {
+                  fluid(
+                    cropFocus: CENTER
+                    quality: 80
+                    grayscale: true
+                    maxWidth: 150
+                    maxHeight: 150
+                    fit: COVER
+                  ) {
+                    ...GatsbyImageSharpFluid
+                  }
                 }
               }
             }

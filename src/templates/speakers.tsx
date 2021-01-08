@@ -52,9 +52,18 @@ export const query = graphql`
           Name
           Company
           Photo {
-            thumbnails {
-              large {
-                url
+            localFiles {
+              childImageSharp {
+                fluid(
+                  cropFocus: CENTER
+                  quality: 80
+                  grayscale: true
+                  maxWidth: 150
+                  maxHeight: 150
+                  fit: COVER
+                ) {
+                  ...GatsbyImageSharpFluid
+                }
               }
             }
           }
