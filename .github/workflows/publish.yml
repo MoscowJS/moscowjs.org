@@ -24,6 +24,8 @@ jobs:
         with:
           access-token: ${{ secrets.ACCESS_TOKEN }}
           deploy-branch: gh-pages
+          gatsby-args: --prefix-paths
+
         env:
           NODE_ENV: production
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
