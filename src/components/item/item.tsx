@@ -25,20 +25,20 @@ export const Item: FunctionComponent & {
 ` as any
 
 const ImageContainer = styled.div<ImageContainerProps>`
-  margin-right: ${rhythm(0.5)};
   width: ${({ size }) => getSize(size)};
   flex: 0 0 auto;
+  order: ${({ position }) => (position === "right" ? 1 : 0)};
   line-height: 1;
-
   align-self: ${({ verticalAlign = "auto" }) => flexAlign[verticalAlign]};
 
-  img {
-    width: ${({ size }) => getSize(size)};
-    height: auto;
-    object-fit: cover;
-    margin: 0;
-    filter: grayscale(1);
-  }
+  ${({ position }) =>
+    position === "right"
+      ? `
+    margin-left: ${rhythm(0.5)};
+  `
+      : `
+    margin-right: ${rhythm(0.5)};
+  `}
 `
 
 const ItemImage: FunctionComponent<ImageProps> = ({
@@ -46,9 +46,14 @@ const ItemImage: FunctionComponent<ImageProps> = ({
   src,
   alt,
   verticalAlign,
+  position,
 }) => {
   return (
-    <ImageContainer size={size} verticalAlign={verticalAlign}>
+    <ImageContainer
+      position={position}
+      size={size}
+      verticalAlign={verticalAlign}
+    >
       <img src={src} alt={alt} />
     </ImageContainer>
   )
@@ -58,9 +63,14 @@ const ItemIcon: FunctionComponent<IconProps> = ({
   size,
   Icon,
   verticalAlign,
+  position,
 }) => {
   return (
-    <ImageContainer size={size} verticalAlign={verticalAlign}>
+    <ImageContainer
+      position={position}
+      size={size}
+      verticalAlign={verticalAlign}
+    >
       <Icon size={getSize(size)} />
     </ImageContainer>
   )

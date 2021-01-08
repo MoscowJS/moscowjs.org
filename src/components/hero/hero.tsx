@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { Layout } from "../"
+import { Layout } from "../layout/layout"
 import { rhythm } from "../../utils/typography"
 
 import {

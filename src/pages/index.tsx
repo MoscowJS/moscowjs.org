@@ -6,7 +6,8 @@ import { EventData } from "../models/event.h"
 import { Feed } from "../components/feed/feed"
 import { Footer } from "../components/footer/footer"
 import { Header } from "../components/header/header"
-import { Hero, Layout } from "../uikit"
+import { Hero } from "../components/hero/hero"
+import { Layout } from "../components/layout/layout"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
 
 const IndexPage: FunctionComponent<PageProps> = ({ location }) => {

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { Footer } from "../components/footer/footer"
 import { Header } from "../components/header/header"
-import { Layout } from "../uikit"
+import { Layout } from "../components/layout/layout"
 import { PageProps } from "gatsby"
 
 const NotFoundPage: FunctionComponent<PageProps> = ({ location }) => (

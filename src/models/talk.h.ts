@@ -5,9 +5,11 @@ import { SpeakerData } from "./speaker.h"
 export type TalkData = {
   Title: string
   Speakers: Array<{ data: SpeakerData }>
-  Theses: string
+  Theses?: string
   Company: string
-  Meetup: { data: EventData }
+  Meetup: Array<{ data: EventData }>
   Date: string
-  Announce: AirtableImage[]
+  Record?: string
+  Slides_URL?: string
+  Announce?: AirtableImage[]
 }

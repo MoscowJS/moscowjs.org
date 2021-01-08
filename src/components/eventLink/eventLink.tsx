@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
-import { Link } from "gatsby"
 import { EventData } from "../../models/event.h"
 import { eventPath } from "../../utils/paths"
+import { Link } from "gatsby"
 
 export const EventLink: FunctionComponent<{ event: EventData }> = ({
   event,

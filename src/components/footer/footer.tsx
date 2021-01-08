@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Layout } from "../../uikit"
+import { Layout } from "../layout/layout"
 import { NavigationData } from "../../models/navigation.h"
 import { pagePath } from "../../utils/paths"
 import { rhythm } from "../../utils/typography"

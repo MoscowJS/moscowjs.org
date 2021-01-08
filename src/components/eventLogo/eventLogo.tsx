@@ -2,8 +2,7 @@ import logo from "../../images/logo.png"
 import React, { FunctionComponent } from "react"
 import starry from "../../images/starry_background.png"
 import styled from "styled-components"
-import { sizes } from "../../uikit/item/item.h"
-import { IconProps } from "react-feather"
+import { sizes } from "../item/item.h"
 
 const getSize = (size: string = "tiny") => sizes[size] || size
 

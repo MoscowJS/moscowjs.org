@@ -4,10 +4,10 @@ import { EventProps } from "./event.h"
 import { TalkMultipleSpeaker } from "./multipleSpeakers"
 import { TalkSingleSpeaker } from "./singleSpeaker"
 import { EventLink } from "../eventLink/eventLink"
-import { Item } from "../../uikit"
+import { Item } from "../item/item"
 import { Markdown } from "../markdown/markdown"
 import { rhythm } from "../../utils/typography"
-import { Calendar, Icon, MapPin, PenTool, Youtube } from "react-feather"
+import { Calendar, Icon, MapPin, PenTool, Video } from "react-feather"
 
 const EventTitle = styled.h1`
   font-size: 2rem;
@@ -73,7 +73,7 @@ export const Event: FunctionComponent<EventProps> = ({
         </EventMeta>
       )}
 
-      <EventMeta Icon={Youtube} title={videoTitle}>
+      <EventMeta Icon={Video} title={videoTitle}>
         <p>
           {videoLink ? (
             <a href={videoLink}>{videoLink!.replace("https://", "")}</a>

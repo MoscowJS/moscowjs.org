@@ -92,6 +92,7 @@ module.exports = {
             tableName: `Orgs`,
             tableView: `moscowjs.org`,
             queryName: "orgs",
+            tableLinks: ["Speaker"],
             separateNodeType: true,
           },
           {

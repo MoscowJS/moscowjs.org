@@ -19,6 +19,7 @@ export enum flexAlign {
 export type ImageContainerProps = {
   size?: string
   verticalAlign?: keyof typeof flexAlign
+  position?: "left" | "right"
 }
 
 export type ImageProps = {
@@ -26,12 +27,14 @@ export type ImageProps = {
   verticalAlign?: keyof typeof flexAlign
   src: string
   alt: string
+  position?: "left" | "right"
 }
 
 export type IconProps = {
   size?: string
   verticalAlign?: keyof typeof flexAlign
   Icon: Icon
+  position?: "left" | "right"
 }
 
 export type ItemContentProps = {

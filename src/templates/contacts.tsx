@@ -2,12 +2,12 @@ import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { Footer } from "../components/footer/footer"
 import { Header } from "../components/header/header"
-import { Item, Layout } from "../uikit"
+import { Item } from "../components/item/item"
+import { Layout } from "../components/layout/layout"
 import { Markdown } from "../components/markdown/markdown"
 import { OrgData } from "../models/org.h"
 import { PagesData } from "../models/pages.h"
-import { rhythm } from "../utils/typography"
-import { SquarePhoto } from "../components/event/squarePhoto"
+import { SpeakerPhoto } from "../components/speakerPhoto/speakerPhoto"
 import { graphql, PageProps } from "gatsby"
 import { UserX } from "react-feather"
 
@@ -33,7 +33,7 @@ const Page: FunctionComponent<
           return (
             <Item key={data.Display_name}>
               <Item.ImageContainer size="small">
-                <SquarePhoto>
+                <SpeakerPhoto.Photo>
                   {data.Photo ? (
                     <img
                       src={data.Photo[0].thumbnails.large.url}
@@ -42,25 +42,32 @@ const Page: FunctionComponent<
                   ) : (
                     <UserX size="100%" />
                   )}
-                </SquarePhoto>
+                </SpeakerPhoto.Photo>
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
-                <div
+                <Markdown>{data.About?.[0]}</Markdown>
+                <ul
                   css={`
-                    margin-bottom: ${rhythm(0.5)};
+                    list-style-type: none;
+
+                    li {
+                      margin: 0;
+                    }
                   `}
                 >
-                  {data.About?.[0]}
-                </div>
-                <div>
-                  telegram:{" "}
-                  <a href={`https://t.me/${data.Telegram[0]}`}>
-                    t.me/{data.Telegram[0]}
-                  </a>
-                  <br />
-                  email: <a href={`mailto:${data.Email[0]}`}>{data.Email[0]}</a>
-                </div>
+                  <li>
+                    telegram:{" "}
+                    <a href={`https://t.me/${data.Telegram[0]}`}>
+                      t.me/{data.Telegram[0]}
+                    </a>
+                  </li>
+
+                  <li>
+                    email:{" "}
+                    <a href={`mailto:${data.Email[0]}`}>{data.Email[0]}</a>
+                  </li>
+                </ul>
               </Item.Content>
             </Item>
           )
@@ -85,10 +92,10 @@ export const query = graphql`
       nodes {
         data {
           Display_name
-          Email
-          Company
-          Telegram
           About
+          Email
+          Telegram
+          Company
           Photo {
             thumbnails {
               large {
