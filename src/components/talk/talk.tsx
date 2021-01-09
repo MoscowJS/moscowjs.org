@@ -34,9 +34,7 @@ const TalkDescription: FunctionComponent<{
       <Markdown>{talk.Theses}</Markdown>
       <p>
         {talk.Slides_URL && <Meta href={talk.Slides_URL}>Слайды</Meta>}
-        {(talk.Record || meetup.Video_link) && (
-            <Meta href={talk.Record || meetup.Video_link}>Запись</Meta>
-        )}
+        {talk.Record && <Meta href={talk.Record}>Запись</Meta>}
       </p>
     </>
   )
