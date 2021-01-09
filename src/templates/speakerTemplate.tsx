@@ -2,15 +2,14 @@ import Img from "gatsby-image"
 import React, { FunctionComponent } from "react"
 import SEO from "../utils/seo"
 import { EventLogo } from "../components/eventLogo/eventLogo"
-import { eventPath, talkPath } from "../utils/paths"
 import { Footer } from "../components/footer/footer"
 import { Header } from "../components/header/header"
 import { Item } from "../components/item/item"
 import { Layout } from "../components/layout/layout"
 import { Markdown } from "../components/markdown/markdown"
 import { SpeakerData } from "../models/speaker.h"
-import { SpeakerPhoto } from "../components/speakerPhoto/speakerPhoto"
-import { graphql, Link, PageProps } from "gatsby"
+import { Talk } from "../components/talk/talk"
+import { graphql, PageProps } from "gatsby"
 import { UserX } from "react-feather"
 
 const transformContacts = (speaker: SpeakerData) => {
@@ -111,16 +110,7 @@ const SpeakerPage: FunctionComponent<
                 <EventLogo size="tiny" title={meetup.Title} />
               </Item.ImageContainer>
               <Item.Content verticalAlign="center">
-                <Item.Meta>
-                  <Link to={eventPath(meetup.Slug)}>{meetup.Title}</Link>,{" "}
-                  <time dateTime={meetup.Date}>
-                    {new Date(data.Date).toLocaleDateString()}
-                  </time>
-                </Item.Meta>
-                <Item.Header>
-                  <Link to={talkPath(data.Title)}>{data.Title}</Link>
-                </Item.Header>
-                <Markdown>{data.Theses}</Markdown>
+                <Talk.Description talk={data} level={2} />
               </Item.Content>
             </Item>
           )

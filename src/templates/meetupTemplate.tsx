@@ -50,6 +50,15 @@ export const query = graphql`
             Slides_URL
             Theses
             Record
+            Date
+            Meetup {
+              data {
+                Date(locale: "ru", formatString: "LLL")
+                Video_link
+                Title
+                Slug
+              }
+            }
             Speakers {
               data {
                 Name

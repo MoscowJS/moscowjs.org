@@ -7,6 +7,7 @@ import { EventLink } from "../eventLink/eventLink"
 import { Item } from "../item/item"
 import { Markdown } from "../markdown/markdown"
 import { rhythm } from "../../utils/typography"
+import { Talk } from "../talk/talk"
 import { Calendar, Icon, MapPin, PenTool, Video } from "react-feather"
 
 const EventTitle = styled.h1`
@@ -104,11 +105,7 @@ export const Event: FunctionComponent<EventProps> = ({
               <h3>О чем будем говорить</h3>
 
               {event.Talks.map(({ data }) => {
-                if (data.Speakers.length > 1) {
-                  return <TalkMultipleSpeaker talk={data} />
-                }
-
-                return <TalkSingleSpeaker talk={data} />
+                return <Talk talk={data} level={2}/>
               })}
             </>
           )}

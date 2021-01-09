@@ -46,7 +46,7 @@ const MenuContainer = styled.nav<{
 }>`
   grid-area: navigation;
   color: ${({ $open }) => ($open ? "#000" : "var(--primary-text)")};
-  
+
   button {
     background: ${({ $open }) => ($open ? "var(--primary-color)" : "none")};
   }
@@ -69,7 +69,7 @@ const MenuContainer = styled.nav<{
       display: inline-block;
       position: initial;
       width: auto;
-    };
+    }
   }
 `
 

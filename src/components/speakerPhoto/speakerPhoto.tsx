@@ -17,7 +17,13 @@ export const SpeakerPhoto: FunctionComponent<{
           alt={speaker.Name}
         />
       ) : (
-        <div css={`line-height: 0;`}><UserX size="100%" /></div>
+        <div
+          css={`
+            line-height: 0;
+          `}
+        >
+          <UserX size="100%" />
+        </div>
       )}
       <p
         css={`

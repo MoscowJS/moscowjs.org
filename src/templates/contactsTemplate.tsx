@@ -33,14 +33,14 @@ const Page: FunctionComponent<
           return (
             <Item key={data.Display_name}>
               <Item.ImageContainer size="small">
-              {data.Photo ? (
-                    <Img
-                      fluid={data.Photo.localFiles[0].childImageSharp.fluid}
-                      alt={data.Display_name}
-                    />
-                  ) : (
-                    <UserX size="100%" />
-                  )}
+                {data.Photo ? (
+                  <Img
+                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
+                    alt={data.Display_name}
+                  />
+                ) : (
+                  <UserX size="100%" />
+                )}
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>

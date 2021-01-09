@@ -14,9 +14,6 @@ export const Feed: FunctionComponent<{
     <>
       {events.map(({ data }) => (
         <Item
-          css={`
-            margin-bottom: ${rhythm(2)};
-          `}
           key={data.Slug}
         >
           <Item.ImageContainer size="small">

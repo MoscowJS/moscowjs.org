@@ -23,7 +23,7 @@ export const Item: FunctionComponent & {
   margin-bottom: ${rhythm(1)};
 
   &::after {
-    content: '';
+    content: "";
     display: table;
     clear: both;
   }
@@ -46,21 +46,30 @@ const ImageContainer = styled.div<ImageContainerProps>`
       ? `margin-left: ${rhythm(0.5)};`
       : `margin-right: ${rhythm(0.5)};`}
 
-  ${({ size }) => size === "tiny" || size === "micro" ? `
+  ${({ size }) =>
+    size === "tiny" || size === "micro"
+      ? `
     float: left;
-  ` : ''}
+  `
+      : ""}
   
-  ${({ size }) => size === "small" ? `
+  ${({ size }) =>
+    size === "small"
+      ? `
     @media screen and (min-width: 375px) {
       float: left;
     }
-  ` : ''}
+  `
+      : ""}
 
-  ${({ size }) => size === "medium" ? `
+  ${({ size }) =>
+    size === "medium"
+      ? `
     @media screen and (min-width: 530px) {
       float: left;
     }
-  ` : ''}
+  `
+      : ""}
   
   @media screen and (min-width: 600px) {
     float: none;

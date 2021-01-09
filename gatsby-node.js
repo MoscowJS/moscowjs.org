@@ -53,7 +53,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allAirtablemeetups.nodes.forEach(({ data, id }) => {
     createPage({
       path: eventPath(data.Slug),
-      component: path.resolve(`./src/templates/meetup.tsx`),
+      component: path.resolve(`./src/templates/meetupTemplate.tsx`),
       context: { id },
     })
   })
@@ -61,7 +61,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allAirtablepages.nodes.forEach(({ data, id }) => {
     createPage({
       path: pagePath(data.customUrl || data.slug),
-      component: path.resolve(`./src/templates/${data.template}.tsx`),
+      component: path.resolve(`./src/templates/${data.template}Template.tsx`),
       context: { id },
     })
   })
@@ -69,7 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allAirtablespeakers.nodes.forEach(({ data, id }) => {
     createPage({
       path: speakerPath(data.Name),
-      component: path.resolve(`./src/templates/speaker.tsx`),
+      component: path.resolve(`./src/templates/speakerTemplate.tsx`),
       context: { id },
     })
   })
@@ -77,7 +77,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allAirtabletalks.nodes.forEach(({ data, id }) => {
     createPage({
       path: talkPath(data.Title),
-      component: path.resolve(`./src/templates/talk.tsx`),
+      component: path.resolve(`./src/templates/talkTemplate.tsx`),
       context: { id },
     })
   })
