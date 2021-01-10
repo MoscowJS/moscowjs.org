@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env.production`,
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.develop'
 })
 
 require("ts-node").register()

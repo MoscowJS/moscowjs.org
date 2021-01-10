@@ -21,9 +21,10 @@ npm install
 ## Data sources
 1. Pages — https://airtable.com/shrESYQUdFwE3B9Pw
 2. Navigation — https://airtable.com/shrVjBdqtUMxPXkI4
-3. Events — https://airtable.com/shrNV9SG6TXCnPqQN
-4. Talks — https://airtable.com/shrdardodHXu7nV0P
-5. Speakers — https://airtable.com/shrLKKIrdlnGfTiPx
+3. Events — https://airtable.com/shrriv6tz5JOHmO8g
+4. Talks — https://airtable.com/shrxodFEExyrch9A6
+5. Speakers — https://airtable.com/shrDgVtkzHCh8wKv1
+6. Companies — https://airtable.com/shrspKnmfnArZ3XQJ
 
 ## License
 MIT License
