@@ -105,7 +105,7 @@ export const Event: FunctionComponent<EventProps> = ({
               <h3>О чем будем говорить</h3>
 
               {event.Talks.map(({ data }) => {
-                return <Talk talk={data} level={2}/>
+                return <Talk talk={data} level={2} />
               })}
             </>
           )}

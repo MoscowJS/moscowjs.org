@@ -5,11 +5,12 @@ import { Layout } from "../layout/layout"
 import { NavigationData } from "../../models/navigation.h"
 import { pagePath } from "../../utils/paths"
 import { rhythm } from "../../utils/typography"
+import { ThemeToggle } from "../themeToggle/themeToggle"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
 import { Menu } from "react-feather"
 
 const HeaderContainer = styled.header`
-  border-bottom: 5px solid var(--primary-color);
+  border-bottom: 5px solid var(--color-primary);
   margin-bottom: ${rhythm(1)};
 `
 
@@ -23,7 +24,7 @@ const Grid = styled(Layout.Container)`
 `
 
 const HeaderLink = styled(Link)`
-  color: var(--text-color);
+  color: var(--color-text);
   text-decoration: none;
   grid-area: logo;
 `
@@ -32,7 +33,7 @@ const HeaderTitle = styled.div<{
   logo: string
 }>`
   line-height: ${rhythm(2)};
-  padding-left: ${rhythm(3)};
+  padding-left: ${rhythm(2.5)};
   background-image: url(${({ logo }) => logo});
   background-size: contain;
   background-position: 0 50%;
@@ -45,10 +46,10 @@ const MenuContainer = styled.nav<{
   $open: boolean
 }>`
   grid-area: navigation;
-  color: ${({ $open }) => ($open ? "#000" : "var(--primary-text)")};
+  color: ${({ $open }) => ($open ? "#000" : "var(--color-text)")};
 
   button {
-    background: ${({ $open }) => ($open ? "var(--primary-color)" : "none")};
+    background: ${({ $open }) => ($open ? "var(--color-primary)" : "none")};
   }
 
   ul {
@@ -60,8 +61,7 @@ const MenuContainer = styled.nav<{
     display: ${({ $open }) => ($open ? "block" : "none")};
     list-style-type: none;
     margin: 0;
-    background: var(--primary-color);
-    color: #000;
+    background: var(--color-primary);
 
     @media screen and (min-width: 991px) {
       background: none;
@@ -84,17 +84,21 @@ const MenuLink = styled.li<{
     padding: 0 ${rhythm(0.5)};
 
     background-color: ${({ $current }) =>
-      $current ? "var(--primary-color)" : "none"};
+      $current ? "var(--color-primary)" : "none"};
     text-transform: uppercase;
     text-decoration: none;
     font-size: 0.8rem;
     line-height: ${rhythm(2)};
     font-weight: 300;
-    color: ${({ $current }) => ($current ? "#000" : "var(--primary-text)")};
+    color: #000;
   }
 
   @media screen and (min-width: 991px) {
     display: inline-block;
+
+    a {
+      color: ${({ $current }) => ($current ? "#000" : "var(--color-text)")};
+    }
   }
 `
 
@@ -102,7 +106,6 @@ const MenuBurger = styled.button`
   cursor: pointer;
   display: inline-block;
   padding: 0 ${rhythm(0.5)};
-  font-size: 0.8rem;
   line-height: ${rhythm(2)};
   border: 0;
   color: inherit;
@@ -178,8 +181,9 @@ export const Header: FunctionComponent<{
           </HeaderTitle>
         </HeaderLink>
         <MenuContainer role="navigation" $open={menuOpened}>
+          <ThemeToggle />
           <MenuBurger onClick={handleClick}>
-            <Menu />
+            <Menu size={rhythm(1)} />
           </MenuBurger>
           <ul>
             {navigation.map(({ external, url, title, current }) => (

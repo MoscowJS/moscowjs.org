@@ -3,15 +3,29 @@
 }
 
 body {
-    --text-color: rgba(255, 255, 255, 0.9);
-    --primary-color: #F7DF1F;
+    --color-text-white: rgba(255, 255, 255, 0.9);
+    --color-text-black: rgba(0, 0, 0, 0.9);
+    --color-outline: #2196f3;
 
-    background: black;
-    color: var(--text-color);
+    /* Theme colors */
+    --color-text: var(--color-text-white);
+    --color-primary: #F7DF1F;
+    --color-background: black;
+    --color-links: var(--color-primary);
+
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+body.light {
+    --color-text: var(--color-text-black);
+    --color-primary-color: #F7DF1F;
+    --color-background: white;
+    --color-links: #605506;
 }
 
 a {
-    color: var(--primary-color)
+    color: var(--color-links)
 }
 
 ol, ul {

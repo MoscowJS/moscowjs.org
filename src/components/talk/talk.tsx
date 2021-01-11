@@ -44,8 +44,8 @@ export const Talk: FunctionComponent<{
   talk: TalkData
   level: 1 | 2 | 3
 }> & {
-    Description: typeof TalkDescription
-}= ({ talk, level }) => {
+  Description: typeof TalkDescription
+} = ({ talk, level }) => {
   const speakers = talk.Speakers
 
   return speakers.length > 1 ? (
@@ -64,6 +64,5 @@ export const Talk: FunctionComponent<{
     </Item>
   )
 }
-
 
 Talk.Description = TalkDescription

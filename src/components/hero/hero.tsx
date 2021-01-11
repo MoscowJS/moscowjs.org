@@ -15,6 +15,11 @@ const HeroBackground = styled.article<{
   min-height: ${({ height }) => height || defaultHeight};
   margin-bottom: ${rhythm(1)};
   position: relative;
+
+  /* Hero is always dark */
+  --color-text: var(--color-text-white);
+  --color-links: var(--color-primary);
+  color: var(--color-text);
 `
 
 const HeroImage = styled.div`

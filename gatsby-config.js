@@ -1,5 +1,6 @@
 require("dotenv").config({
-  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.develop'
+  path:
+    process.env.NODE_ENV === "production" ? ".env.production" : ".env.develop",
 })
 
 require("ts-node").register()
@@ -23,6 +24,7 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    "gatsby-plugin-dark-mode",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

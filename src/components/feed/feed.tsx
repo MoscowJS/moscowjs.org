@@ -13,9 +13,7 @@ export const Feed: FunctionComponent<{
   return (
     <>
       {events.map(({ data }) => (
-        <Item
-          key={data.Slug}
-        >
+        <Item key={data.Slug}>
           <Item.ImageContainer size="small">
             <EventLogo size="small" title={data.Title} />
           </Item.ImageContainer>

@@ -20,7 +20,7 @@ const typography = new Typography({
   bodyWeight: 300,
   boldWeight: 700,
   includeNormalize: true,
-  blockMarginBottom: 0.5
+  blockMarginBottom: 0.5,
 })
 
 // Export helper functions

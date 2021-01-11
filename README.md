@@ -1,7 +1,9 @@
 # MoscowJS — moscowjs.org
+
 Site of MoscowJS, JavaScript meetup group in Moscow.
 
 ## Contributing
+
 By contributing to moscowjs.org, you agree to abide by the [code of conduct](/code-of-conduct.md).
 
 1. Fork the repo
@@ -19,6 +21,7 @@ npm install
 6. Commit and finally send a GitHub Pull Request with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/)). Make sure all of your commits are atomic (one feature per commit) and have meaningful commit messages.
 
 ## Data sources
+
 1. Pages — https://airtable.com/shrESYQUdFwE3B9Pw
 2. Navigation — https://airtable.com/shrVjBdqtUMxPXkI4
 3. Events — https://airtable.com/shrriv6tz5JOHmO8g
@@ -27,6 +30,7 @@ npm install
 6. Companies — https://airtable.com/shrspKnmfnArZ3XQJ
 
 ## License
+
 MIT License
 
 Copyright (c) 2021 MoscowJS Team
