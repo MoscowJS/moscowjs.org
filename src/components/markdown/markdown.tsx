@@ -44,7 +44,11 @@ export const Markdown: FunctionComponent<{
   ]
 
   return (
-    <ReactMarkdown allowDangerousHtml={true} plugins={plugins} renderers={renderers}>
+    <ReactMarkdown
+      allowDangerousHtml={true}
+      plugins={plugins}
+      renderers={renderers}
+    >
       {children || markdown || ""}
     </ReactMarkdown>
   )
