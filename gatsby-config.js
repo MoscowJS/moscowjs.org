@@ -6,8 +6,9 @@ require("dotenv").config({
 require("ts-node").register()
 
 module.exports = {
-  pathPrefix: undefined,
+  pathPrefix: `/moscowjs/`,
   siteMetadata: {
+    siteUrl: "https://moscowjs.org/",
     title: `MoscowJS`,
     description: `Регулярные встречи JavaScript-разработчиков в Москве. Обсуждаем фреймворки, инструменты и процессы. Делимся знаниями и личным опытом в неформальной обстановке.`,
     author: `@moscowjs`,
@@ -25,6 +26,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     "gatsby-plugin-dark-mode",
+    "gatsby-plugin-cname",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
