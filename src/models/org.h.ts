@@ -10,7 +10,7 @@ export type OrgData = {
   }
   Company: string[]
   Telegram: string[]
-  Email: string[]
+  Email: string
   About?: string[]
   Speaker: Array<{
     data: SpeakerData

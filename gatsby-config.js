@@ -6,7 +6,7 @@ require("dotenv").config({
 require("ts-node").register()
 
 module.exports = {
-  pathPrefix: `/moscowjs/`,
+  pathPrefix: undefined,
   siteMetadata: {
     siteUrl: "https://moscowjs.org/",
     title: `MoscowJS`,

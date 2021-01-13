@@ -63,7 +63,7 @@ const Page: FunctionComponent<
 
                   <li>
                     email:{" "}
-                    <a href={`mailto:${data.Email[0]}`}>{data.Email[0]}</a>
+                    <a href={`mailto:${data.Email}`}>{data.Email}</a>
                   </li>
                 </ul>
               </Item.Content>
