@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
 import { EventProps } from "./event.h"
-import { TalkMultipleSpeaker } from "./multipleSpeakers"
-import { TalkSingleSpeaker } from "./singleSpeaker"
 import { EventLink } from "../eventLink/eventLink"
 import { Item } from "../item/item"
 import { Markdown } from "../markdown/markdown"
