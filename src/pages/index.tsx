@@ -66,8 +66,6 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
     }
   `)
 
-  console.log(result)
-
   const {
     allAirtablemeetups: { totalCount, nodes },
     hero,
