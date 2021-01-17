@@ -1,14 +1,9 @@
 import React, { FunctionComponent } from "react"
-import SEO from "../utils/seo"
-import { Event } from "../components/event/event"
-import { EventData } from "../models/event.h"
-import { Feed } from "../components/feed/feed"
-import { Footer } from "../components/footer/footer"
-import { Header } from "../components/header/header"
-import { Hero } from "../components/hero/hero"
-import { ImageSharp } from "../models/gatsby.h"
-import { Layout } from "../components/layout/layout"
-import { FluidObject } from "gatsby-image"
+import SEO from "utils/seo"
+import { Container, Footer, Header, Hero } from "components/layout"
+import { Event } from "features/events/event"
+import { EventData, ImageSharp } from "models"
+import { EventsFeed } from "features/events/eventsFeed"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
 
 const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
@@ -74,7 +69,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   const [latestEvent, ...otherEvents] = nodes
 
   return (
-    <Layout>
+    <>
       <SEO title="Главная" />
       <Hero image={hero.childImageSharp.fluid} height="800px">
         <Header location={location} />
@@ -83,7 +78,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
         </Hero.Container>
       </Hero>
 
-      <Layout.Container as="main">
+      <Container as="main">
         <h3>Для докладчиков</h3>
         <p>
           Мы всегда рады новым докладам. Чтобы стать докладчиком на нашем
@@ -94,14 +89,14 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
 
         <h3>Предыдущие мероприятия</h3>
 
-        <Feed events={otherEvents} />
+        <EventsFeed events={otherEvents} />
 
         <p>
           <Link to={"/events/"}>Все мероприятия ({totalCount})</Link>
         </p>
-      </Layout.Container>
+      </Container>
       <Footer />
-    </Layout>
+    </>
   )
 }
 

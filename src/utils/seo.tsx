@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
-import PropTypes from "prop-types"
+import { ConfigData } from "../models/config.h"
+import { graphql, useStaticQuery } from "gatsby"
 import { Helmet, HelmetProps } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
 
 const SEO: FunctionComponent<{
   description?: string
@@ -10,28 +10,21 @@ const SEO: FunctionComponent<{
   title?: string
 }> = ({ description = "", lang = "ru", meta = [], title }) => {
   const {
-    allAirtablemeta: { edges },
+    allAirtableconfig: { nodes },
   } = useStaticQuery<{
-    allAirtablemeta: {
-      edges: Array<{
-        node: {
-          data: {
-            name: string
-            value: string
-          }
-        }
+    allAirtableconfig: {
+      nodes: Array<{
+        data: ConfigData
       }>
     }
   }>(
     graphql`
       query {
-        allAirtablemeta {
-          edges {
-            node {
-              data {
-                name
-                value
-              }
+        allAirtableconfig(filter: { data: { type: { eq: "meta" } } }) {
+          nodes {
+            data {
+              name
+              value
             }
           }
         }
@@ -43,8 +36,8 @@ const SEO: FunctionComponent<{
     description?: string
     title?: string
     author?: string
-  } = edges.reduce((result, { node }) => {
-    result[node.data.name] = node.data.value
+  } = nodes.reduce((result, { data }) => {
+    result[data.name] = data.value
     return result
   }, {} as any)
 

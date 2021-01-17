@@ -1,6 +1,7 @@
+const path = require("path")
+
 require("dotenv").config({
-  path:
-    process.env.NODE_ENV === "production" ? ".env.production" : ".env.develop",
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 require("ts-node").register()
@@ -25,7 +26,7 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    "gatsby-plugin-dark-mode",
+    "gatsby-plugin-use-dark-mode",
     "gatsby-plugin-cname",
     {
       resolve: `gatsby-plugin-manifest`,
@@ -45,6 +46,17 @@ module.exports = {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-root-import",
+      options: {
+        src: path.join(__dirname, "src"),
+        components: path.join(__dirname, "src/components"),
+        models: path.join(__dirname, "src/models"),
+        images: path.join(__dirname, "src/images"),
+        features: path.join(__dirname, "src/features"),
+        utils: path.join(__dirname, "src/utils"),
       },
     },
     {
@@ -109,8 +121,8 @@ module.exports = {
           },
           {
             baseId: process.env.AIRTABLE_META_BASE_ID,
-            tableName: `meta`,
-            queryName: "meta",
+            tableName: `config`,
+            queryName: "config",
             separateNodeType: true,
           },
           {
