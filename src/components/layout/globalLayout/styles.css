@@ -31,7 +31,11 @@ body.light-mode {
 }
 
 a {
-    color: var(--color-links)
+    color: var(--color-links);
+}
+
+a:focus {
+    box-shadow: var(--color-outline);
 }
 
 ol, ul {

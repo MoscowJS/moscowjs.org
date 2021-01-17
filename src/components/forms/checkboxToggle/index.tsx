@@ -25,8 +25,8 @@ const CheckboxToggleContainer = styled.label<{
     height: ${rhythm(1)};
     transition: all 0.3s ease;
     border-radius: ${rhythm(0.5)};
-    border: ${rhythm(0.1)} solid rgba(120, 120, 120, 0.3);
-    background-color: rgba(120, 120, 120, 0.3);
+    border: ${rhythm(0.1)} solid rgba(120, 120, 120, 0.2);
+    background-color: rgba(120, 120, 120, 0.1);
     position: relative;
 
     &:after {
