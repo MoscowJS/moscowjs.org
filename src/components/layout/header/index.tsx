@@ -120,6 +120,10 @@ const MenuBurger = styled.button`
     vertical-align: middle;
   }
 
+  &:focus {
+    box-shadow: var(--color-outline);
+  }
+
   @media screen and (min-width: 45rem) {
     display: none;
   }

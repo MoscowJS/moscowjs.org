@@ -9,7 +9,7 @@ body {
     /* Theme colors */
     --color-text-white: rgba(255, 255, 255, 0.9);
     --color-text-black: rgba(0, 0, 0, 0.9);
-    --color-outline: rgb(1, 182, 245) 0px 0px 3px;
+    --color-outline: var(--color-primary) 0px 0px 4px 1px;
 
     /* Brand colors */
     --color-primary: #F7DF1F;
