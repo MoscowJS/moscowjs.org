@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import SEO from "utils/seo"
-import { Container, Footer, Header, Hero } from "components/layout"
+import { Container, Footer, Header, Hero, Panel } from "components/layout"
 import { Event } from "features/events/event"
 import { EventData, ImageSharp } from "models"
 import { EventsFeed } from "features/events/eventsFeed"
@@ -79,13 +79,15 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
       </Hero>
 
       <Container as="main">
-        <h3>Для докладчиков</h3>
-        <p>
-          Мы всегда рады новым докладам. Чтобы стать докладчиком на нашем
-          митапе, нужно заполнить специальную форму. Подать заявку и
-          ознакомиться с информацией для спикеров можно{" "}
-          <Link to="/cfp/">тут</Link>.
-        </p>
+        <Panel>
+          <h3>Для докладчиков</h3>
+          <p>
+            Мы всегда рады новым докладам. Чтобы стать докладчиком на нашем
+            митапе, нужно заполнить специальную форму. Подать заявку и
+            ознакомиться с информацией для спикеров можно{" "}
+            <Link to="/cfp/">тут</Link>.
+          </p>
+        </Panel>
 
         <h3>Предыдущие мероприятия</h3>
 
