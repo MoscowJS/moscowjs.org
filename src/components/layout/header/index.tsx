@@ -24,6 +24,8 @@ const Grid = styled(Container)`
   gap: 0px 0px;
   grid-template-areas: "logo navigation";
   position: relative;
+
+  margin-bottom: 0;
 `
 
 const HeaderLink = styled(Link)`

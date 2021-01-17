@@ -5,4 +5,10 @@ export const Container = styled.div`
   margin: 0 auto;
   max-width: calc(var(--container-width) + ${rhythm(1)});
   padding: 0 ${rhythm(0.5)};
+
+  margin-bottom: ${rhythm(1)};
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
 `
