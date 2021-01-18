@@ -23,7 +23,6 @@ export const useQnaList = (): [
   }
 ] => {
   const backendUrl = process.env.MJS_BACKEND_API_URL
-  const qnaSession = "mjso2"
   const userId = useUserId()
   const [list, saveList] = useState<QuestionData[]>([])
   const [initialLoading, setLoading] = useState(true)
@@ -35,7 +34,7 @@ export const useQnaList = (): [
 
     const controller = new AbortController()
 
-    fetch(`${backendUrl}/qna/${qnaSession}`, {
+    fetch(`${backendUrl}/qna/`, {
       signal: controller.signal,
       headers: {
         user_id: userId,
@@ -58,7 +57,7 @@ export const useQnaList = (): [
         return Promise.resolve()
       }
 
-      return fetch(`${backendUrl}/qna/vote/${qnaSession}`, {
+      return fetch(`${backendUrl}/qna/vote/${questionId}`, {
         method: "POST",
         headers: {
           user_id: userId,
