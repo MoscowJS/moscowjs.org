@@ -35,6 +35,7 @@ export const Textarea: FunctionComponent<{
   required?: boolean
   name?: string
   placeholder?: string
+  disabled?: boolean
 }> = props => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [rowHeight, setRowHeight] = useState<number | null>(null)

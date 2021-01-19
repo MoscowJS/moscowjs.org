@@ -2,12 +2,12 @@ import styled from "styled-components"
 import { Badge } from "components/elements/badge"
 import { rhythm } from "utils/typography"
 
-export const VoteButton = styled(Badge)<{ userHasVoted: boolean }>`
+export const VoteButton = styled(Badge)<{ userCanVote: boolean }>`
   float: right;
-  border-color: ${({ userHasVoted }) =>
-    userHasVoted ? `var(--color-primary)` : `var(--color-text)`};
-  color: ${({ userHasVoted }) =>
-    userHasVoted ? `var(--color-primary)` : `var(--color-text)`};
+  border-color: ${({ userCanVote }) =>
+    userCanVote ? `var(--color-text)` : `var(--color-primary)`};
+  color: ${({ userCanVote }) =>
+    userCanVote ? `var(--color-text)` : `var(--color-primary)`};
   cursor: pointer;
   margin: 0 0 ${rhythm(0.4)} ${rhythm(0.4)};
 

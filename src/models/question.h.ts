@@ -1,8 +1,10 @@
-export type QuestionData = {
-  id: string
+export type QuestionData = Partial<{
   question: string
-  created: string
-  author?: string
+  id: string
+  created: number
+  authorId: string
+  author: string
   votes: number
-  userHasVoted: boolean
-}
+  userCanVote: boolean
+  userCanEdit: boolean
+}>  
