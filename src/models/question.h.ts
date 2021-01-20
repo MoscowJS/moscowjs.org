@@ -7,4 +7,4 @@ export type QuestionData = Partial<{
   votes: number
   userCanVote: boolean
   userCanEdit: boolean
-}>  
+}>

@@ -1,6 +1,5 @@
 import styled from "styled-components"
-import { Button as ReakitButton } from "reakit/Button";
-
+import { Button as ReakitButton } from "reakit/Button"
 
 export const Button = styled(ReakitButton)`
   cursor: pointer;

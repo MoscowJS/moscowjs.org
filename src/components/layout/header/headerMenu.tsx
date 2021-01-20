@@ -14,7 +14,6 @@ const HeaderMenuContainer = styled.ul`
   }
 `
 
-
 const HeaderMenuLink = styled.li<{
   $current: boolean
 }>`
@@ -51,14 +50,9 @@ export const HeaderMenu: FunctionComponent<{
     <HeaderMenuContainer role="navigation">
       {navigation.map(({ external, url, title, current }) => (
         <HeaderMenuLink $current={current} key={url}>
-          {external ? (
-            <a href={url}>{title}</a>
-          ) : (
-            <Link to={url}>{title}</Link>
-          )}
+          {external ? <a href={url}>{title}</a> : <Link to={url}>{title}</Link>}
         </HeaderMenuLink>
       ))}
     </HeaderMenuContainer>
   )
-
 }

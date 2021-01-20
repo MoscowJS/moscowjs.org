@@ -5,15 +5,12 @@ import { Container, Footer, Header, Markdown } from "components/layout"
 import { PagesData, QuestionData } from "models"
 import { QuestionForm, QuestionsList, useQnaList } from "features/qna"
 
-
 const Page: FunctionComponent<
   PageProps<{
     airtablepages: { data: PagesData }
   }>
 > = ({ data, location }) => {
   const [list, loading, actions] = useQnaList()
-
-  console.log(list)
 
   return (
     <>
@@ -22,7 +19,11 @@ const Page: FunctionComponent<
       <Container as="main">
         <Markdown>{data.airtablepages.data.content}</Markdown>
         <QuestionForm onSubmit={actions.add} />
-        {loading ? <p>Загрузка...</p> : <QuestionsList upvote={actions.upvote} questions={list} />}
+        {loading ? (
+          <p>Загрузка...</p>
+        ) : (
+          <QuestionsList upvote={actions.upvote} questions={list} />
+        )}
       </Container>
       <Footer />
     </>

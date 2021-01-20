@@ -6,9 +6,8 @@ import { Panel } from "components/layout"
 import { QuestionData } from "models"
 import { rhythm } from "utils/typography"
 import { ThumbsUp } from "react-feather"
-import { format } from 'date-fns'
-import { ru } from 'date-fns/locale'
-
+import { format } from "date-fns"
+import { ru } from "date-fns/locale"
 
 const QuestionsListContainer = styled.ul`
   list-style: none;
@@ -64,7 +63,10 @@ export const QuestionsList: FunctionComponent<{
                         {votes} <ThumbsUp size={rhythm(0.6)} />
                       </VoteButton>
                       <p>
-                        {author || "Анонимно"}, {format(new Date(created || 0), 'd MMMM y, HH:mm', { locale: ru })}
+                        {author || "Анонимно"},{" "}
+                        {format(new Date(created || 0), "d MMMM y, HH:mm", {
+                          locale: ru,
+                        })}
                       </p>
                       <p className="question">{question}</p>
                     </Panel>

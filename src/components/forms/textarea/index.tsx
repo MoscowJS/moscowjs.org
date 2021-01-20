@@ -1,12 +1,13 @@
 import styled from "styled-components"
-import { FunctionComponent } from "react"
 import React, {
   SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
+  FunctionComponent,
 } from "react"
+import { Input } from "reakit/Input"
 
 const TextareaInner = styled.textarea`
   display: block;
@@ -36,7 +37,7 @@ export const Textarea: FunctionComponent<{
   placeholder?: string
   disabled?: boolean
   autosize?: boolean
-}> = ({ onChange, rows = 1, autosize, ...props}) => {
+}> = ({ onChange, rows = 1, autosize, ...props }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [rowHeight, setRowHeight] = useState<number | null>(null)
 
@@ -62,11 +63,10 @@ export const Textarea: FunctionComponent<{
   )
 
   return (
-    <TextareaInner
-      {...props}
-      ref={textareaRef}
-      onChange={handleChange}
-      rows={rows}
-    />
+    <Input {...(props as any)} onChange={handleChange}>
+      {inputProps => (
+        <TextareaInner {...inputProps} ref={textareaRef} rows={rows} />
+      )}
+    </Input>
   )
 }

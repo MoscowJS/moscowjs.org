@@ -1,12 +1,14 @@
-import React, { FormEventHandler, FunctionComponent, SyntheticEvent, useRef, useState } from 'react'
-import { Textarea, Input, Button } from "components/forms";
-import {
-  useDialogState,
-  DialogDisclosure,
-} from "reakit/Dialog";
-import { Modal } from 'components/layout'
-import styled from "styled-components";
-import { rhythm } from "utils/typography";
+import React, {
+  FormEventHandler,
+  FunctionComponent,
+  useRef,
+  useState,
+} from "react"
+import { Textarea, Input, Button } from "components/forms"
+import { Modal } from "components/layout"
+import styled from "styled-components"
+import { rhythm } from "utils/typography"
+import { useDialogState, DialogDisclosure } from "reakit/Dialog"
 
 const FakeTextarea = styled.button`
   cursor: text;
@@ -32,76 +34,86 @@ export const QuestionForm: FunctionComponent<{
   onSubmit: (data: QuestionFormData) => Promise<void>
 }> = ({ onSubmit }) => {
   const [disabled, setDisabled] = useState(false)
-  const dialog = useDialogState()
   const form = useRef(null)
+  const dialog = useDialogState({ animated: 250 })
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
+    event.preventDefault()
     setDisabled(true)
 
     const formData = new FormData(event.currentTarget)
     const result: any = {}
 
-    formData.forEach((value, name) => result[name] = value || '')
+    formData.forEach((value, name) => (result[name] = value || ""))
     event.currentTarget.reset()
 
-    onSubmit(result)
-      .then(() => {
-        if (form.current) {
-          setDisabled(false)
-        }
-      })
+    onSubmit(result).then(() => {
+      if (form.current) {
+        setDisabled(false)
+        dialog.hide()
+      }
+    })
   }
 
-  return <>
-  <Modal disclosure={<FakeTextarea>Добавь свой вопрос</FakeTextarea>}>
-    <form ref={form} action="/" onSubmit={handleSubmit}>
-      <p>
-        <Textarea
-          css={`
-            width: 100%;
-          `}
-          rows={3}
-          required={true}
-          placeholder="Твой вопрос"
-          name="question"
-          disabled={disabled}
-        />
-      </p>
+  return (
+    <>
+      <DialogDisclosure {...dialog}>
+        {disclosureProps => (
+          <FakeTextarea {...disclosureProps}> Добавь свой вопрос</FakeTextarea>
+        )}
+      </DialogDisclosure>
 
-      <p>
-        <Input
-          css={`
-            width: 100%;
-          `}
-          name="author"
-          placeholder="Имя (необязательно)"
-          disabled={disabled}
-        />
-      </p>
+      <Modal dialog={dialog}>
+        <form role="form" ref={form} action="/" onSubmit={handleSubmit}>
+          <p>
+            <Textarea
+              css={`
+                width: 100%;
+              `}
+              rows={3}
+              required={true}
+              placeholder="Твой вопрос"
+              name="question"
+              disabled={disabled}
+            />
+          </p>
 
-      <p>
-        <Input
-          css={`
-            width: 100%;
-          `}
-          name="contacts"
-          placeholder="Контакты (необязательно)"
-          disabled={disabled}
-        />
-      </p>
+          <p>
+            <Input
+              css={`
+                width: 100%;
+              `}
+              name="author"
+              placeholder="Имя (необязательно)"
+              disabled={disabled}
+            />
+          </p>
 
-      <p>
-        <small>
-          Контактные данные не публикуются и используются для связи с
-          авторами лучших вопросов
-        </small>
-      </p>
+          <p>
+            <Input
+              css={`
+                width: 100%;
+              `}
+              name="contacts"
+              placeholder="Контакты (необязательно)"
+              disabled={disabled}
+            />
+          </p>
 
-      <p>
-        <Button type="submit" disabled={disabled}>Отправить</Button>
-      </p>
-    </form>
-  </Modal>
-  </>
+          <p>
+            <small>
+              Контактные данные не публикуются и используются для связи с
+              авторами лучших вопросов
+            </small>
+          </p>
+
+          <p>
+            <Button type="submit" disabled={disabled}>
+              Отправить
+            </Button>
+          </p>
+        </form>
+      </Modal>
+    </>
+  )
 }

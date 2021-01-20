@@ -9,7 +9,7 @@ import { rhythm } from "utils/typography"
 import { CheckboxToggle } from "components/forms/checkboxToggle"
 import { Container } from "components/layout"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
-import { HeaderMenu } from './headerMenu'
+import { HeaderMenu } from "./headerMenu"
 import { HeaderMobileMenu } from "./headerMobileMenu"
 
 const HeaderContainer = styled.header`
@@ -58,14 +58,14 @@ const ThemeToggle = () => {
 
   return (
     <CheckboxToggle
-        css={`
-          margin-right: ${rhythm(0.5)};
-        `}
-        imageOn={moon}
-        imageOff={sun}
-        checked={darkMode.value}
-        onChange={darkMode.toggle}
-      />
+      css={`
+        margin-right: ${rhythm(0.5)};
+      `}
+      imageOn={moon}
+      imageOff={sun}
+      checked={darkMode.value}
+      onChange={darkMode.toggle}
+    />
   )
 }
 

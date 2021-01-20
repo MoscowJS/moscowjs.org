@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { rhythm } from "utils/typography"
+import { Input as ReakitInput } from "reakit/Input"
 
-export const Input = styled.input`
+export const Input = styled(ReakitInput)`
   border: none;
   transition: box-shadow 0.2s linear;
   background: transparent;

@@ -1,15 +1,10 @@
-import React, { FunctionComponent } from "react";
-import {
-  useMenuState,
-  Menu,
-  MenuItem,
-  MenuButton
-} from "reakit/Menu";
-import { Menu as MenuIcon } from 'react-feather'
-import styled from "styled-components";
-import { rhythm } from "utils/typography";
-import { NavigationItem } from "./index.h";
-import { Link } from "gatsby";
+import React, { FunctionComponent } from "react"
+import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu"
+import { Menu as MenuIcon } from "react-feather"
+import styled from "styled-components"
+import { rhythm } from "utils/typography"
+import { NavigationItem } from "./index.h"
+import { Link } from "gatsby"
 
 const HMMBurger = styled(MenuButton)`
   cursor: pointer;
@@ -20,10 +15,13 @@ const HMMBurger = styled(MenuButton)`
   color: inherit;
   background: none;
 
-  ${({ visible }) => visible  ? `
+  ${({ visible }) =>
+    visible
+      ? `
     background: var(--color-primary);
     color: var(--color-text-black);
-  ` : ''}
+  `
+      : ""}
 
   svg {
     vertical-align: middle;
@@ -65,7 +63,8 @@ const HMMContainer = styled.div`
     color: var(--color-text-black);
     text-decoration: none;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: var(--color-primary-darker);
     }
   }
@@ -84,7 +83,7 @@ export const HeaderMobileMenu: FunctionComponent<{
       <HMMTOuterContainer {...menu}>
         <HMMContainer>
           {navigation.map(({ external, url, title, current }) => (
-            <MenuItem key={url} as='div'>
+            <MenuItem key={url} as="div">
               {external ? (
                 <a href={url}>{title}</a>
               ) : (
