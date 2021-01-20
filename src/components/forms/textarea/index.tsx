@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import { FunctionComponent } from "react"
-import { rhythm } from "utils/typography"
 import React, {
   SyntheticEvent,
   useCallback,
