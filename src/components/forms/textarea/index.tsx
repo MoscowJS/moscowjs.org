@@ -36,10 +36,10 @@ export const Textarea: FunctionComponent<{
   name?: string
   placeholder?: string
   disabled?: boolean
-}> = props => {
+  autosize?: boolean
+}> = ({ onChange, rows = 1, autosize, ...props}) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [rowHeight, setRowHeight] = useState<number | null>(null)
-  const rows = props.rows || 1
 
   useEffect(() => {
     if (textareaRef?.current) {
@@ -49,13 +49,17 @@ export const Textarea: FunctionComponent<{
 
   const handleChange = useCallback(
     event => {
-      props.onChange && props.onChange(event)
+      onChange && onChange(event)
+
+      if (!autosize) {
+        return
+      }
 
       event.target.rows = rows
       const currentRows = ~~(event.target.scrollHeight / rowHeight!)
       event.target.rows = currentRows
     },
-    [props.onChange, rowHeight]
+    [onChange, rowHeight]
   )
 
   return (

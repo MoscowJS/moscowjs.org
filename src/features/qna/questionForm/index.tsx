@@ -1,9 +1,12 @@
 import React, { FormEventHandler, FunctionComponent, SyntheticEvent, useRef, useState } from 'react'
 import { Textarea, Input, Button } from "components/forms";
-import Modal from "react-responsive-modal";
-import styled, { css } from "styled-components";
+import {
+  useDialogState,
+  DialogDisclosure,
+} from "reakit/Dialog";
+import { Modal } from 'components/layout'
+import styled from "styled-components";
 import { rhythm } from "utils/typography";
-import { QuestionData } from 'models';
 
 const FakeTextarea = styled.button`
   cursor: text;
@@ -28,9 +31,8 @@ export type QuestionFormData = {
 export const QuestionForm: FunctionComponent<{
   onSubmit: (data: QuestionFormData) => Promise<void>
 }> = ({ onSubmit }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
-  const toggleModal = () => setIsOpen(!isOpen)
+  const dialog = useDialogState()
   const form = useRef(null)
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -46,23 +48,20 @@ export const QuestionForm: FunctionComponent<{
     onSubmit(result)
       .then(() => {
         if (form.current) {
-          setIsOpen(false)
           setDisabled(false)
         }
       })
   }
 
   return <>
-  <FakeTextarea onClick={toggleModal}>Добавь свой вопрос</FakeTextarea>
-
-  <Modal open={isOpen} onClose={toggleModal} center>
+  <Modal disclosure={<FakeTextarea>Добавь свой вопрос</FakeTextarea>}>
     <form ref={form} action="/" onSubmit={handleSubmit}>
       <p>
         <Textarea
           css={`
             width: 100%;
           `}
-          rows={1}
+          rows={3}
           required={true}
           placeholder="Твой вопрос"
           name="question"

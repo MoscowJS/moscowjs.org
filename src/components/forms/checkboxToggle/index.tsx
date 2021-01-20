@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { FunctionComponent } from "react"
 import { rhythm } from "utils/typography"
+import { Checkbox, CheckboxProps } from "reakit/Checkbox";
 
 const CheckboxToggleContainer = styled.label<{
   imageOn?: string
@@ -81,36 +82,20 @@ const CheckboxToggleContainer = styled.label<{
 `
 
 export const CheckboxToggle: FunctionComponent<{
-  disabled?: boolean
-  value?: boolean
-  name?: string
   imageOn?: string
   imageOff?: string
-  onBlur?: () => void
-  onFocus?: () => void
-  onChange: () => void
-}> = ({
-  disabled,
-  value,
-  name,
-  onBlur,
-  onFocus,
-  onChange,
+} & CheckboxProps> = ({
+  children,
   imageOn,
   imageOff,
-  children,
+  className,
+  ...props
 }) => {
   return (
-    <CheckboxToggleContainer imageOn={imageOn} imageOff={imageOff}>
-      <input
+    <CheckboxToggleContainer className={className} imageOn={imageOn} imageOff={imageOff}>
+      <Checkbox
         className="checkbox-toggle-input"
-        type="checkbox"
-        disabled={!!disabled}
-        checked={!!value}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onChange={onChange}
-        name={name}
+        { ...props }
       />
       <span className="checkbox-toggle-faux" />
       {children && <span className="checkbox-toggle-label">{children}</span>}

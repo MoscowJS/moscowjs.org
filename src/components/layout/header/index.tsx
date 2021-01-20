@@ -3,14 +3,14 @@ import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
 import sun from "./sun.svg"
 import useDarkMode from "use-dark-mode"
-import { ImageSharp } from "../../../models/gatsby.h"
-import { NavigationData } from "../../../models/navigation.h"
-import { pagePath } from "../../../utils/paths"
-import { rhythm } from "../../../utils/typography"
+import { ImageSharp, NavigationData } from "models"
+import { pagePath } from "utils/paths"
+import { rhythm } from "utils/typography"
 import { CheckboxToggle } from "components/forms/checkboxToggle"
 import { Container } from "components/layout"
 import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
-import { Menu } from "react-feather"
+import { HeaderMenu } from './headerMenu'
+import { HeaderMobileMenu } from "./headerMobileMenu"
 
 const HeaderContainer = styled.header`
   border-bottom: 5px solid var(--color-primary);
@@ -21,7 +21,7 @@ const Grid = styled(Container)`
   display: grid;
   grid-template-columns: auto max-content;
   grid-template-rows: auto;
-  gap: 0px 0px;
+  gap: 1rem;
   grid-template-areas: "logo navigation";
   position: relative;
 
@@ -51,100 +51,21 @@ const MenuContainer = styled.nav<{
   $open: boolean
 }>`
   grid-area: navigation;
-  color: ${({ $open }) => ($open ? "#000" : "var(--color-text)")};
-
-  button {
-    background: ${({ $open }) => ($open ? "var(--color-primary)" : "none")};
-  }
-
-  ul {
-    position: absolute;
-    z-index: 100;
-    width: 100vw;
-    left: 0;
-    top: calc(${rhythm(2)} + 5px);
-    display: ${({ $open }) => ($open ? "block" : "none")};
-    list-style-type: none;
-    margin: 0;
-    background: var(--color-primary);
-
-    @media screen and (min-width: 45rem) {
-      background: none;
-      color: inherit;
-      display: inline-block;
-      position: initial;
-      width: auto;
-    }
-  }
-`
-
-const MenuLink = styled.li<{
-  $current: boolean
-}>`
-  display: block;
-  margin: 0;
-
-  a {
-    display: inline-block;
-    padding: 0 ${rhythm(0.5)};
-
-    background-color: ${({ $current }) =>
-      $current ? "var(--color-primary)" : "none"};
-    text-transform: uppercase;
-    text-decoration: none;
-    font-size: 0.8rem;
-    line-height: ${rhythm(2)};
-    font-weight: 300;
-    color: #000;
-  }
-
-  @media screen and (min-width: 45rem) {
-    display: inline-block;
-
-    a {
-      color: ${({ $current }) => ($current ? "#000" : "var(--color-text)")};
-    }
-  }
-`
-
-const MenuBurger = styled.button`
-  cursor: pointer;
-  display: inline-block;
-  padding: 0 ${rhythm(0.5)};
-  line-height: ${rhythm(2)};
-  border: 0;
-  color: inherit;
-  background: none;
-
-  svg {
-    vertical-align: middle;
-  }
-
-  &:focus {
-    box-shadow: var(--color-outline);
-  }
-
-  @media screen and (min-width: 45rem) {
-    display: none;
-  }
 `
 
 const ThemeToggle = () => {
   const darkMode = useDarkMode()
 
   return (
-    <span
-      css={`
-        margin-right: ${rhythm(0.5)};
-      `}
-    >
-      <CheckboxToggle
+    <CheckboxToggle
+        css={`
+          margin-right: ${rhythm(0.5)};
+        `}
         imageOn={moon}
         imageOff={sun}
-        value={darkMode.value}
+        checked={darkMode.value}
         onChange={darkMode.toggle}
       />
-    </span>
   )
 }
 
@@ -194,9 +115,6 @@ export const Header: FunctionComponent<{
     current: pagePath(data.slug[0]) === location.pathname,
   }))
 
-  const [menuOpened, setMenuOpened] = useState(false)
-  const handleClick = () => setMenuOpened(!menuOpened)
-
   return (
     <HeaderContainer>
       <Grid>
@@ -208,22 +126,10 @@ export const Header: FunctionComponent<{
             MoscowJS
           </HeaderTitle>
         </HeaderLink>
-        <MenuContainer role="navigation" $open={menuOpened}>
+        <MenuContainer role="navigation" $open={false}>
           <ThemeToggle />
-          <MenuBurger onClick={handleClick}>
-            <Menu size={rhythm(1)} />
-          </MenuBurger>
-          <ul>
-            {navigation.map(({ external, url, title, current }) => (
-              <MenuLink $current={current} key={url}>
-                {external ? (
-                  <a href={url}>{title}</a>
-                ) : (
-                  <Link to={url}>{title}</Link>
-                )}
-              </MenuLink>
-            ))}
-          </ul>
+          <HeaderMenu navigation={navigation} />
+          <HeaderMobileMenu navigation={navigation} />
         </MenuContainer>
       </Grid>
     </HeaderContainer>
