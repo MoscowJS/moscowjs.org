@@ -35,7 +35,7 @@ export const SpeakerPhoto: FunctionComponent<{
         {speaker.Company && (
           <>
             {", "}
-            <em>{speaker.Company}</em>
+            <br/><em>{speaker.Company}</em>
           </>
         )}
       </p>
