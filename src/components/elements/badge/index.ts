@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { rhythm } from "utils/typography"
+import { getSize, rhythm } from "utils/typography"
 
-export const Badge = styled.span`
+export const Badge = styled.span<{ size: string }>`
   padding: 0 5px;
 
   border: 2px solid var(--color-text);
@@ -9,5 +9,5 @@ export const Badge = styled.span`
   background: none;
 
   font-size: ${rhythm(0.75)};
-  line-height: calc(${rhythm(1.2)} - 4px);
+  line-height: calc(${({ size }) => getSize(size)} - 4px);
 `

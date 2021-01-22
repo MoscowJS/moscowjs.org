@@ -48,6 +48,10 @@ export const Talk: FunctionComponent<{
 } = ({ talk, level }) => {
   const speakers = talk.Speakers
 
+  if (speakers.length === 0) {
+    return null
+  }
+
   return speakers.length > 1 ? (
     <>
       <TalkDescription talk={talk} level={level} />

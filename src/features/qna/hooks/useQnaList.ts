@@ -6,8 +6,6 @@ import { useEffect, useState } from "react"
 import { QuestionFormData } from "../questionForm"
 import firebase from "firebase"
 
-const ref = "questions/" + process.env.QNA_SESSION_ID
-const questions = database.ref(ref)
 const sorter = (questionA: QuestionData, questionB: QuestionData) => {
   const n = (questionB.votes || 0) - (questionA.votes || 0)
 
@@ -53,6 +51,13 @@ export const useQnaList = (): [
     upvote: (id: string) => Promise<any>
   }
 ] => {
+  if (typeof window === undefined) {
+    return [[], true, {} as any]
+  }
+
+  const ref = "questions/" + process.env.QNA_SESSION_ID
+  const questions = database().ref(ref)
+
   const [user, userLoading, userError] = useAuthState(auth)
   const [snapshots, snapshotsLoading, error] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
@@ -62,7 +67,7 @@ export const useQnaList = (): [
       return
     }
 
-    const votesRef = database.ref(`users/${user.uid}/votes`)
+    const votesRef = database().ref(`users/${user.uid}/votes`)
     const onUpdate = (result: any) => {
       setVotes(result.val() || {})
     }
@@ -85,7 +90,7 @@ export const useQnaList = (): [
 
     return Promise.all([
       questions.push().set(data),
-      database.ref(`users/${user.uid}`).update({
+      database().ref(`users/${user.uid}`).update({
         name: question.author,
         contacts: question.contacts,
       }),
@@ -97,13 +102,13 @@ export const useQnaList = (): [
       return
     }
 
-    const questionRef = database.ref(`${ref}/${id}`)
+    const questionRef = database().ref(`${ref}/${id}`)
 
     if (userVotes[id] === id) {
       return
     }
 
-    database.ref(`users/${user.uid}/votes`).update({ [id]: id })
+    database().ref(`users/${user.uid}/votes`).update({ [id]: id })
 
     return questionRef.transaction(question => {
       if (question) {

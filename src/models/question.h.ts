@@ -5,6 +5,8 @@ export type QuestionData = Partial<{
   authorId: string
   author: string
   votes: number
+  answered: boolean
   userCanVote: boolean
   userCanEdit: boolean
+  userCanDelete: boolean
 }>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent } from "react"
 import { graphql, PageProps } from "gatsby"
 import SEO from "utils/seo"
 import { Container, Footer, Header, Markdown } from "components/layout"

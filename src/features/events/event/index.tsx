@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from "react"
 import styled from "styled-components"
-import { Calendar, Icon, MapPin, PenTool, Video } from "react-feather"
+import { Calendar, MapPin, PenTool, Video } from "react-feather"
 import { EventData } from "models/event.h"
 import { EventLink } from "features/events/eventLink"
-import { Item, Markdown } from "components/layout"
-import { rhythm } from "utils/typography"
+import { Markdown, Meta } from "components/layout"
 import { Talk } from "features/talks/talk"
 
 type EventProps = {
@@ -16,29 +15,6 @@ type EventProps = {
 const EventTitle = styled.h1`
   font-size: 2rem;
 `
-
-const EventMeta: FunctionComponent<{
-  Icon: Icon
-  title: string
-}> = ({ Icon, title, children }) => {
-  return (
-    <Item>
-      <Item.Icon verticalAlign="center" size="xxs" Icon={Icon} />
-      <Item.Content verticalAlign="center">
-        <Item.Header
-          as="h5"
-          css={`
-            font-size: ${rhythm(0.75)};\
-            margin-bottom: 0;
-          `}
-        >
-          {title}
-        </Item.Header>
-        {children}
-      </Item.Content>
-    </Item>
-  )
-}
 
 export const Event: FunctionComponent<EventProps> = ({
   event,
@@ -57,14 +33,14 @@ export const Event: FunctionComponent<EventProps> = ({
 
       <Markdown>{event.Short_Announcement}</Markdown>
 
-      <EventMeta Icon={Calendar} title="Когда">
+      <Meta Icon={Calendar} title="Когда">
         <p>
           <time dateTime={`${event.Date} 19:00`}>{event.Date}</time>
         </p>
-      </EventMeta>
+      </Meta>
 
       {event.Address && (
-        <EventMeta Icon={MapPin} title="Где">
+        <Meta Icon={MapPin} title="Где">
           <p>
             {event.Address}
             {event.Company && (
@@ -74,10 +50,10 @@ export const Event: FunctionComponent<EventProps> = ({
               </>
             )}
           </p>
-        </EventMeta>
+        </Meta>
       )}
 
-      <EventMeta Icon={Video} title={videoTitle}>
+      <Meta Icon={Video} title={videoTitle}>
         <p>
           {videoLink ? (
             <a href={videoLink}>{videoLink!.replace("https://", "")}</a>
@@ -85,10 +61,10 @@ export const Event: FunctionComponent<EventProps> = ({
             "Скоро будет"
           )}
         </p>
-      </EventMeta>
+      </Meta>
 
       {!event.Completed && (
-        <EventMeta Icon={PenTool} title="Регистрация">
+        <Meta Icon={PenTool} title="Регистрация">
           <p>
             {event.Registration_link ? (
               <a href={event.Registration_link}></a>
@@ -96,7 +72,7 @@ export const Event: FunctionComponent<EventProps> = ({
               "Не требуется"
             )}
           </p>
-        </EventMeta>
+        </Meta>
       )}
 
       {!short && (

@@ -7,5 +7,5 @@ exports.wrapPageElement = ({ element, props }) => {
 }
 
 exports.onInitialClientRender = () => {
-  auth.signInAnonymously()
+  auth().signInAnonymously()
 }

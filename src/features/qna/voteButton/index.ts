@@ -3,7 +3,6 @@ import { Badge } from "components/elements/badge"
 import { rhythm } from "utils/typography"
 
 export const VoteButton = styled(Badge)<{ userCanVote: boolean }>`
-  float: right;
   border-color: ${({ userCanVote }) =>
     userCanVote ? `var(--color-text)` : `var(--color-primary)`};
   color: ${({ userCanVote }) =>

@@ -2,12 +2,13 @@ import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
 import { VoteButton } from "../voteButton"
 import { Flipped, Flipper } from "react-flip-toolkit"
-import { Panel } from "components/layout"
+import { Meta, Panel } from "components/layout"
 import { QuestionData } from "models"
-import { rhythm } from "utils/typography"
-import { ThumbsUp } from "react-feather"
+import { getSize, rhythm } from "utils/typography"
+import { MoreHorizontal, ThumbsUp } from "react-feather"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
+import { User } from "react-feather"
 
 const QuestionsListContainer = styled.ul`
   list-style: none;
@@ -28,11 +29,6 @@ const QuestionsListContainer = styled.ul`
       display: table;
       clear: both;
     }
-
-    p:first-of-type {
-      margin: 0;
-      font-size: ${rhythm(0.5)};
-    }
   }
 `
 
@@ -49,25 +45,39 @@ export const QuestionsList: FunctionComponent<{
       <QuestionsListContainer>
         <Flipper flipKey={questions.map(({ id }) => id).join(", ")}>
           {questions.map(
-            ({ id, userCanVote, votes = 0, question, created, author }) => {
+            ({ id, userCanVote, votes = 0, question, created, author, userCanEdit, userCanDelete }) => {
               return (
                 <Flipped key={id} flipId={id}>
                   <li>
                     <Panel>
-                      <VoteButton
-                        as="button"
-                        userCanVote={!!userCanVote}
-                        disabled={!userCanVote}
-                        onClick={() => upvote(id!)}
+                      <div
+                        css={`
+                          display: flex;
+                          justify-content: space-between;
+                          align-items: flex-start;
+                        `}
                       >
-                        {votes} <ThumbsUp size={rhythm(0.6)} />
-                      </VoteButton>
-                      <p>
-                        {author || "Анонимно"},{" "}
-                        {format(new Date(created || 0), "d MMMM y, HH:mm", {
-                          locale: ru,
-                        })}
-                      </p>
+                        <Meta title={author || "Анонимно"} Icon={User}>
+                          <p>
+                            {format(new Date(created || 0), "d MMMM y, HH:mm", {
+                              locale: ru,
+                            })}
+                          </p>
+                        </Meta>
+                        <div>
+                          <MoreHorizontal size={getSize('xxxs')}/>
+                          <VoteButton
+                            as="button"
+                            size="xxxs"
+                            userCanVote={!!userCanVote}
+                            disabled={!userCanVote}
+                            onClick={() => upvote(id!)}
+                          >
+                            {votes} <ThumbsUp size={rhythm(0.6)} />
+                          </VoteButton>
+                        </div>
+                      </div>
+                      
                       <p className="question">{question}</p>
                     </Panel>
                   </li>

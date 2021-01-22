@@ -26,6 +26,7 @@ const typography = new Typography({
 // Export helper functions
 export const { scale, rhythm, options } = typography
 export const sizes: { [K: string]: string } = {
+  xxxs: rhythm(1.2),
   xxs: rhythm(1.5),
   xs: rhythm(2),
   s: rhythm(4),
