@@ -1,29 +1,25 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, Suspense } from "react"
 import { graphql, PageProps } from "gatsby"
 import SEO from "utils/seo"
 import { Container, Footer, Header, Markdown } from "components/layout"
 import { PagesData } from "models"
-import { QuestionForm, QuestionsList, useQnaList } from "features/qna"
+
+const QnaPage = React.lazy(() => import('./qnaPage'))
 
 const Page: FunctionComponent<
   PageProps<{
     airtablepages: { data: PagesData }
   }>
 > = ({ data, location }) => {
-  const [list, loading, actions] = useQnaList()
-
   return (
     <>
       <SEO title={data.airtablepages.data.title} />
       <Header location={location} />
       <Container as="main">
         <Markdown>{data.airtablepages.data.content}</Markdown>
-        <QuestionForm onSubmit={actions.add} />
-        {loading ? (
-          <p>Загрузка...</p>
-        ) : (
-          <QuestionsList upvote={actions.upvote} questions={list} />
-        )}
+        {typeof window !== "undefined" && <Suspense fallback={<p>Загрузка...</p>}>
+          <QnaPage />
+        </Suspense>}
       </Container>
       <Footer />
     </>
