@@ -10,7 +10,7 @@ import styled from "styled-components"
 import { rhythm } from "utils/typography"
 import { useDialogState, DialogDisclosure } from "reakit/Dialog"
 
-const FakeTextarea = styled.button`
+const FakeTextarea = styled.div`
   cursor: text;
   background: none;
   border: none;

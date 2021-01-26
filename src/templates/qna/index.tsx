@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react"
 import { graphql, PageProps } from "gatsby"
 import SEO from "utils/seo"
 import { Container, Footer, Header, Markdown } from "components/layout"
-import { PagesData, QuestionData } from "models"
+import { PagesData } from "models"
 import { QuestionForm, QuestionsList, useQnaList } from "features/qna"
 
 const Page: FunctionComponent<

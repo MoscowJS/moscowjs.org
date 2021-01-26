@@ -5,6 +5,8 @@ import { EventData } from "models/event.h"
 import { EventLink } from "features/events/eventLink"
 import { Markdown, Meta } from "components/layout"
 import { Talk } from "features/talks/talk"
+import { Telegram } from "components/icons"
+import { PartnerLink } from "features/partners"
 
 type EventProps = {
   event: EventData
@@ -88,6 +90,15 @@ export const Event: FunctionComponent<EventProps> = ({
               })}
             </>
           )}
+        </>
+      )}
+
+      {!short && event.Partners && (
+        <>
+          <h3>Партнеры мероприятия</h3>
+          {
+            event.Partners.map(({ data }) => <PartnerLink partnerData={data}/>)
+          }
         </>
       )}
     </article>

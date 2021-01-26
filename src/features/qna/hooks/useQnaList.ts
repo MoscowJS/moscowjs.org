@@ -43,22 +43,31 @@ const transformList = (
     .sort(sorter)
 }
 
-export const useQnaList = (): [
+type QnaData = [
   list: QuestionData[],
   initialLoading: boolean,
   actions: {
     add: (question: QuestionFormData) => Promise<any>
     upvote: (id: string) => Promise<any>
   }
-] => {
+]
+
+const noop = () => Promise.resolve()
+
+const EMPTY_LIST: QnaData = [[], true, {
+  add: noop,
+  upvote: noop
+}]
+
+export const useQnaList = (): QnaData => {
   if (typeof window === undefined) {
-    return [[], true, {} as any]
+    return EMPTY_LIST
   }
 
   const ref = "questions/" + process.env.QNA_SESSION_ID
   const questions = database().ref(ref)
 
-  const [user, userLoading, userError] = useAuthState(auth)
+  const [user, userLoading, userError] = useAuthState(auth())
   const [snapshots, snapshotsLoading, error] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
 

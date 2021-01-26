@@ -1,5 +1,6 @@
 import { AirtableImage } from "./airtable.h"
 import { CompanyData } from "./company.h"
+import { PartnersData } from "./partners.h"
 import { TalkData } from "./talk.h"
 import { VenueData } from "./venue.h"
 
@@ -20,4 +21,5 @@ export type EventData = {
   Type: string
   Video_link?: string
   Venue?: { data: VenueData }
+  Partners: Array<{ data: PartnersData }>
 }

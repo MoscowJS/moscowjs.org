@@ -75,6 +75,11 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   result.data.allAirtabletalks.nodes.forEach(({ data, id }) => {
+    if (!data.Title) {
+      console.error(data)
+      process.exit(1)
+    }
+
     createPage({
       path: talkPath(data.Title),
       component: path.resolve(`./src/templates/talk/index.tsx`),

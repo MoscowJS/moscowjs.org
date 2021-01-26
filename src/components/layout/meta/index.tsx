@@ -1,25 +1,27 @@
 import React, { FunctionComponent } from "react"
 import { Icon } from "react-feather"
+import styled from "styled-components"
 import { rhythm } from "utils/typography"
 import { Item } from "../item"
 
+const SmallHeader = styled(Item.Header)`
+  font-size: ${rhythm(0.75)};
+  margin-bottom: 0;
+`
 export const Meta: FunctionComponent<{
-  Icon: Icon
+  Icon?: Icon
+  image?: string
   title: string
-}> = ({ Icon, title, children }) => {
+  titleLink?: string
+}> = ({ Icon, image, title, children }) => {
   return (
     <Item>
-      <Item.Icon verticalAlign="center" size="xxs" Icon={Icon} />
+      {Icon && <Item.Icon verticalAlign="center" size="xxs" Icon={Icon} />}
+      {image && <Item.Image src={image} alt='Логотип партнера'/>}
       <Item.Content verticalAlign="center">
-        <Item.Header
-          as="h5"
-          css={`
-            font-size: ${rhythm(0.75)};
-            margin-bottom: 0;
-          `}
-        >
+        <SmallHeader as="h5">
           {title}
-        </Item.Header>
+        </SmallHeader>
         {children}
       </Item.Content>
     </Item>

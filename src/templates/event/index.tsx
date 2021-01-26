@@ -42,6 +42,25 @@ export const query = graphql`
         Short_Announcement
         Slug
         Stream_link
+        Partners {
+          data {
+            Name
+            Link
+            Description
+            Logo {
+              localFiles {
+                childImageSharp {
+                  fixed(
+                    width: 60
+                    quality: 80
+                  ) {
+                    ...GatsbyImageSharpFixed
+                  }
+                }
+              }
+            }
+          }
+        }
         Talks {
           data {
             Title

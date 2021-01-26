@@ -70,7 +70,7 @@ module.exports = {
             tableName: `Meetups`,
             tableView: `moscowjs.org`,
             queryName: "meetups",
-            tableLinks: ["Talks", "Company", "Venue"],
+            tableLinks: ["Talks", "Company", "Venue", "Partners"],
             separateNodeType: true,
           },
           {
@@ -120,6 +120,15 @@ module.exports = {
             separateNodeType: true,
           },
           {
+            baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: `Partners`,
+            queryName: "partners",
+            mapping: {
+              Logo: "fileNode",
+            },
+            separateNodeType: true,
+          },
+          {
             baseId: process.env.AIRTABLE_META_BASE_ID,
             tableName: `config`,
             queryName: "config",
@@ -136,7 +145,7 @@ module.exports = {
             tableName: `pages`,
             queryName: "pages",
             separateNodeType: true,
-          },
+          }
         ],
       },
     },
