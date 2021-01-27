@@ -3,7 +3,6 @@ import { database, auth } from "features/firebase"
 import { useList } from "react-firebase-hooks/database"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useEffect, useState } from "react"
-import { QuestionFormData } from "../questionForm"
 import firebase from "firebase"
 
 const sorter = (questionA: QuestionData, questionB: QuestionData) => {
@@ -27,7 +26,7 @@ const transformList = (
 
   return snapshots
     .map(snapshot => {
-      const { created, question, author, authorId, votes } = snapshot.val()
+      const { created, question, author, authorId, votes, published, answered } = snapshot.val()
       const id = snapshot.key
 
       return {
@@ -36,8 +35,9 @@ const transformList = (
         question,
         author,
         votes,
-        userCanVote: userVotes[id] !== id && user.uid !== authorId,
-        userCanEdit: user.uid === authorId,
+        answered,
+        published,
+        userCanVote: userVotes[id] !== id && user.uid !== authorId
       }
     })
     .sort(sorter)
@@ -45,25 +45,10 @@ const transformList = (
 
 type QnaData = [
   list: QuestionData[],
-  initialLoading: boolean,
-  actions: {
-    add: (question: QuestionFormData) => Promise<any>
-    upvote: (id: string) => Promise<any>
-  }
+  initialLoading: boolean
 ]
 
-const noop = () => Promise.resolve()
-
-const EMPTY_LIST: QnaData = [[], true, {
-  add: noop,
-  upvote: noop
-}]
-
 export const useQnaList = (): QnaData => {
-  if (typeof window === undefined) {
-    return EMPTY_LIST
-  }
-
   const ref = "questions/" + process.env.QNA_SESSION_ID
   const questions = database().ref(ref)
 
@@ -85,57 +70,10 @@ export const useQnaList = (): QnaData => {
     return () => votesRef.off("value", onUpdate)
   }, [user])
 
-  const add = async (question: QuestionFormData) => {
-    if (!user) {
-      return
-    }
-
-    const data: QuestionData = {
-      question: question.question,
-      authorId: user.uid,
-      created: Date.now(),
-      votes: 0,
-    }
-
-    return Promise.all([
-      questions.push().set(data),
-      database().ref(`users/${user.uid}`).update({
-        name: question.author,
-        contacts: question.contacts,
-      }),
-    ])
-  }
-
-  const upvote = async (id: string) => {
-    if (!user || !userVotes) {
-      return
-    }
-
-    const questionRef = database().ref(`${ref}/${id}`)
-
-    if (userVotes[id] === id) {
-      return
-    }
-
-    database().ref(`users/${user.uid}/votes`).update({ [id]: id })
-
-    return questionRef.transaction(question => {
-      if (question) {
-        question.votes = (question.votes || 0) + 1
-      }
-
-      return question
-    })
-  }
-
-  const isLoading = snapshotsLoading || userLoading || !userVotes
+  const isLoading = snapshotsLoading || userLoading
 
   return [
     transformList(user, snapshots, userVotes),
-    isLoading,
-    {
-      add,
-      upvote,
-    },
+    isLoading
   ]
 }

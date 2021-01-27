@@ -1,20 +1,19 @@
 import React, { FunctionComponent } from "react"
 import { QuestionForm, QuestionsList, useQnaList } from "features/qna"
 
-const QnaPage: FunctionComponent = () => {
-  const [list, loading, actions] = useQnaList()
+const QnaAsyncContainer: FunctionComponent = () => {
+  const [list, loading] = useQnaList()
 
   return (
     <>
-      <QuestionForm onSubmit={actions.add} />
+      <QuestionForm />
       {loading ? (
         <p>Загрузка...</p>
       ) : (
-        <QuestionsList upvote={actions.upvote} questions={list} />
+        <QuestionsList questions={list} />
       )}
     </>
   )
 }
 
-
-export default QnaPage
+export default QnaAsyncContainer

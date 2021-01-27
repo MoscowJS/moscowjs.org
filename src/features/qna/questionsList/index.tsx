@@ -9,6 +9,7 @@ import { MoreHorizontal, ThumbsUp } from "react-feather"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
 import { User } from "react-feather"
+import { useUpvote } from "../hooks/useUpvote"
 
 const QuestionsListContainer = styled.ul`
   list-style: none;
@@ -34,18 +35,21 @@ const QuestionsListContainer = styled.ul`
 
 export const QuestionsList: FunctionComponent<{
   questions: QuestionData[]
-  upvote: (id: string) => Promise<any>
-}> = ({ questions, upvote }) => {
+}> = ({ questions }) => {
+  const upvote = useUpvote()
+
   if (!questions.length) {
     return <p>Вопросов пока нет. Добавь свой!</p>
   }
 
+  // TODO: выделить вопрос в отдельный компонент
+  // тогда можно будет убрать userCanVote, и всю логику с голосами вынести в хук useUpvote
   return (
     <>
       <QuestionsListContainer>
         <Flipper flipKey={questions.map(({ id }) => id).join(", ")}>
           {questions.map(
-            ({ id, userCanVote, votes = 0, question, created, author, userCanEdit, userCanDelete }) => {
+            ({ id, userCanVote, votes = 0, question, created, author }) => {
               return (
                 <Flipped key={id} flipId={id}>
                   <li>

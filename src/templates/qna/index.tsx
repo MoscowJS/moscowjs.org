@@ -4,7 +4,7 @@ import SEO from "utils/seo"
 import { Container, Footer, Header, Markdown } from "components/layout"
 import { PagesData } from "models"
 
-const QnaPage = React.lazy(() => import('./qnaPage'))
+const QnaAsyncContainer = React.lazy(() => import('../../features/qna/qnaAsyncContainer'))
 
 const Page: FunctionComponent<
   PageProps<{
@@ -18,7 +18,7 @@ const Page: FunctionComponent<
       <Container as="main">
         <Markdown>{data.airtablepages.data.content}</Markdown>
         {typeof window !== "undefined" && <Suspense fallback={<p>Загрузка...</p>}>
-          <QnaPage />
+          <QnaAsyncContainer />
         </Suspense>}
       </Container>
       <Footer />

@@ -9,6 +9,7 @@ import { Modal } from "components/layout"
 import styled from "styled-components"
 import { rhythm } from "utils/typography"
 import { useDialogState, DialogDisclosure } from "reakit/Dialog"
+import { useAdd } from "features/qna"
 
 const FakeTextarea = styled.div`
   cursor: text;
@@ -30,10 +31,9 @@ export type QuestionFormData = {
   author: string
   contacts: string
 }
-export const QuestionForm: FunctionComponent<{
-  onSubmit: (data: QuestionFormData) => Promise<void>
-}> = ({ onSubmit }) => {
+export const QuestionForm: FunctionComponent = () => {
   const [disabled, setDisabled] = useState(false)
+  const add = useAdd()
   const form = useRef(null)
   const dialog = useDialogState({ animated: 250 })
 
@@ -47,12 +47,16 @@ export const QuestionForm: FunctionComponent<{
     formData.forEach((value, name) => (result[name] = value || ""))
     event.currentTarget.reset()
 
-    onSubmit(result).then(() => {
+    add && add(result).then(() => {
       if (form.current) {
         setDisabled(false)
         dialog.hide()
       }
     })
+  }
+
+  if (!add) {
+    return null
   }
 
   return (

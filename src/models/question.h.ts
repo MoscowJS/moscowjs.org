@@ -1,12 +1,14 @@
 export type QuestionData = Partial<{
+  // from database
   question: string
-  id: string
+  votes: number
   created: number
   authorId: string
-  author: string
-  votes: number
+  id: string
   answered: boolean
+  published: boolean
+  author: string
+
+  // generated
   userCanVote: boolean
-  userCanEdit: boolean
-  userCanDelete: boolean
 }>

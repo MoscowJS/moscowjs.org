@@ -14,16 +14,35 @@ const firebaseConfig = {
   appId: "1:152903911908:web:60b0d402217339842d9ff1",
 }
 
-let app: firebase.app.App
+class FBApp {
+  private static instance: FBApp
+  public app: firebase.app.App
+  public auth: firebase.auth.Auth
+  public database: firebase.database.Database
+
+  private constructor() {
+    this.app = firebase.initializeApp(firebaseConfig)
+    this.auth = this.app.auth()
+    this.database = this.app.database()
+  }
+
+  public static getInstance(): FBApp {
+    if (!FBApp.instance) {
+      FBApp.instance = new FBApp()
+    }
+
+    return FBApp.instance    
+  }
+}
+
+export const getApp = () => {
+  return FBApp.getInstance()
+}
 
 export const auth = () => {
-  if (app) return app.auth()
-
-  return (app = firebase.initializeApp(firebaseConfig)).auth()
+  return FBApp.getInstance().auth
 }
 
 export const database = () => {
-  if (app) return app.database()
-
-  return (app = firebase.initializeApp(firebaseConfig)).database()
+  return FBApp.getInstance().database
 }
