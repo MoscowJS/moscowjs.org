@@ -12,4 +12,4 @@ export { QuestionData } from "./question.h"
 export { SpeakerData } from "./speaker.h"
 export { TalkData } from "./talk.h"
 export { VenueData } from "./venue.h"
-export { PartnersData } from './partners.h'
+export { PartnersData } from "./partners.h"

@@ -17,11 +17,9 @@ export const Meta: FunctionComponent<{
   return (
     <Item>
       {Icon && <Item.Icon verticalAlign="center" size="xxs" Icon={Icon} />}
-      {image && <Item.Image src={image} alt='Логотип партнера'/>}
+      {image && <Item.Image src={image} alt="Логотип партнера" />}
       <Item.Content verticalAlign="center">
-        <SmallHeader as="h5">
-          {title}
-        </SmallHeader>
+        <SmallHeader as="h5">{title}</SmallHeader>
         {children}
       </Item.Content>
     </Item>

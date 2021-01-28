@@ -3,7 +3,9 @@ import { PageProps } from "gatsby"
 import SEO from "utils/seo"
 import { Container, Footer, Header } from "components/layout"
 
-const LoginContainer = React.lazy(() => import('../features/login/loginContainer'))
+const LoginContainer = React.lazy(
+  () => import("../features/login/loginContainer")
+)
 
 const Page: FunctionComponent<PageProps> = ({ location }) => {
   return (
@@ -11,9 +13,11 @@ const Page: FunctionComponent<PageProps> = ({ location }) => {
       <SEO title="Авторизация" />
       <Header location={location} />
       <Container as="main">
-        {typeof window !== "undefined" && <Suspense fallback={<p>Загрузка...</p>}>
-          <LoginContainer />
-        </Suspense>}
+        {typeof window !== "undefined" && (
+          <Suspense fallback={<p>Загрузка...</p>}>
+            <LoginContainer />
+          </Suspense>
+        )}
       </Container>
       <Footer />
     </>

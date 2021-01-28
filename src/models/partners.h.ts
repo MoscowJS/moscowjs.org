@@ -1,4 +1,4 @@
-import { AirtableImage, EventData, ImageSharp } from "models";
+import { AirtableImage, EventData, ImageSharp } from "models"
 
 export type PartnersData = {
   Name: string

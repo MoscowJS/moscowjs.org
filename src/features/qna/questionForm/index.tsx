@@ -47,12 +47,13 @@ export const QuestionForm: FunctionComponent = () => {
     formData.forEach((value, name) => (result[name] = value || ""))
     event.currentTarget.reset()
 
-    add && add(result).then(() => {
-      if (form.current) {
-        setDisabled(false)
-        dialog.hide()
-      }
-    })
+    add &&
+      add(result).then(() => {
+        if (form.current) {
+          setDisabled(false)
+          dialog.hide()
+        }
+      })
   }
 
   if (!add) {

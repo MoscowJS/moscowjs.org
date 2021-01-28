@@ -145,7 +145,7 @@ module.exports = {
             tableName: `pages`,
             queryName: "pages",
             separateNodeType: true,
-          }
+          },
         ],
       },
     },

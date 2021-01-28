@@ -50,10 +50,7 @@ export const query = graphql`
             Logo {
               localFiles {
                 childImageSharp {
-                  fixed(
-                    width: 60
-                    quality: 80
-                  ) {
+                  fixed(width: 60, quality: 80) {
                     ...GatsbyImageSharpFixed
                   }
                 }

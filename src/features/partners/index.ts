@@ -1,1 +1,1 @@
-export { PartnerLink } from './partnerLink'
+export { PartnerLink } from "./partnerLink"

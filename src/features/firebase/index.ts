@@ -2,7 +2,6 @@ import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyAsVQ1nAZNCdXs_9CmpJgNZb6yscpZ4dIY",
   authDomain: "moscowjs-fad97.firebaseapp.com",
@@ -31,7 +30,7 @@ class FBApp {
       FBApp.instance = new FBApp()
     }
 
-    return FBApp.instance    
+    return FBApp.instance
   }
 }
 

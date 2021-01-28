@@ -34,7 +34,7 @@ a {
     color: var(--color-links);
 }
 
-a:focus, button:focus, input:focus, textarea:focus {
+*:focus {
     box-shadow: var(--color-outline);
     outline: none;
 }

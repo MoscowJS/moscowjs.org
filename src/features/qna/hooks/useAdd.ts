@@ -18,7 +18,8 @@ export const useAdd = () => {
       question: question.question,
       authorId: user.uid,
       created: Date.now(),
-      votes: 0,
+      published: false,
+      answered: false,
     }
 
     return Promise.all([

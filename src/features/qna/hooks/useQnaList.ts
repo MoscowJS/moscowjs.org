@@ -4,6 +4,7 @@ import { useList } from "react-firebase-hooks/database"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useEffect, useState } from "react"
 import firebase from "firebase"
+import { useIsAdmin } from "./useIsAdmin"
 
 const sorter = (questionA: QuestionData, questionB: QuestionData) => {
   const n = (questionB.votes || 0) - (questionA.votes || 0)
@@ -37,12 +38,13 @@ const splitter = (questions: QuestionData[]) => {
   return {
     unpublished,
     published,
-    answered
+    answered,
   }
 }
 
 // TODO: неплохо бы всё-таки заменить эту лапшу на рамду
 const transformList = (
+  isAdmin: boolean,
   user?: firebase.User,
   snapshots?: any[],
   userVotes?: Record<string, string>
@@ -51,29 +53,45 @@ const transformList = (
     return splitter([])
   }
 
-  return splitter(snapshots
-    .map(snapshot => {
-      const { created, question, author, authorId, votes, published, answered } = snapshot.val()
-      const id = snapshot.key
+  const result = splitter(
+    snapshots
+      .map(snapshot => {
+        const {
+          created,
+          question,
+          author,
+          authorId,
+          votes,
+          published,
+          answered,
+        } = snapshot.val()
+        const id = snapshot.key
 
-      return {
-        id,
-        created,
-        question,
-        author,
-        votes,
-        answered,
-        published,
-        userCanVote: userVotes[id] !== id && user.uid !== authorId
-      }
-    })
-    .sort(sorter))
+        return {
+          id,
+          created,
+          question,
+          author,
+          authorId,
+          votes,
+          answered,
+          published,
+          userCanVote: userVotes[id] !== id && user.uid !== authorId,
+        }
+      })
+      .sort(sorter)
+  )
+
+  if (!isAdmin) {
+    result.unpublished = result.unpublished.filter(
+      question => question.authorId === user.uid
+    )
+  }
+
+  return result
 }
 
-type QnaData = [
-  list: ReturnType<typeof splitter>,
-  initialLoading: boolean
-]
+type QnaData = [list: ReturnType<typeof splitter>, initialLoading: boolean]
 
 export const useQnaList = (): QnaData => {
   const ref = "questions/" + process.env.QNA_SESSION_ID
@@ -82,6 +100,7 @@ export const useQnaList = (): QnaData => {
   const [user, userLoading, userError] = useAuthState(auth())
   const [snapshots, snapshotsLoading, error] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
+  const isAdmin = useIsAdmin()
 
   useEffect(() => {
     if (!user) {
@@ -99,8 +118,5 @@ export const useQnaList = (): QnaData => {
 
   const isLoading = snapshotsLoading || userLoading
 
-  return [
-    transformList(user, snapshots, userVotes),
-    isLoading
-  ]
+  return [transformList(isAdmin, user, snapshots, userVotes), isLoading]
 }

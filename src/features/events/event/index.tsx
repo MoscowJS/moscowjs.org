@@ -96,9 +96,9 @@ export const Event: FunctionComponent<EventProps> = ({
       {!short && event.Partners && (
         <>
           <h3>Партнеры мероприятия</h3>
-          {
-            event.Partners.map(({ data }) => <PartnerLink partnerData={data}/>)
-          }
+          {event.Partners.map(({ data }) => (
+            <PartnerLink partnerData={data} />
+          ))}
         </>
       )}
     </article>
