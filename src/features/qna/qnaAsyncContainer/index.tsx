@@ -10,7 +10,7 @@ const QnaAsyncContainer: FunctionComponent = () => {
       {loading ? (
         <p>Загрузка...</p>
       ) : (
-        <QuestionsList questions={list} />
+        <QuestionsList questions={list.published} />
       )}
     </>
   )

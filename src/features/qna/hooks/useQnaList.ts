@@ -15,16 +15,43 @@ const sorter = (questionA: QuestionData, questionB: QuestionData) => {
   return (questionB.created || 0) - (questionA.created || 0)
 }
 
+const splitter = (questions: QuestionData[]) => {
+  const unpublished: QuestionData[] = []
+  const published: QuestionData[] = []
+  const answered: QuestionData[] = []
+
+  questions.forEach(question => {
+    if (!question.published) {
+      unpublished.push(question)
+      return
+    }
+
+    if (question.answered) {
+      answered.push(question)
+      return
+    }
+
+    published.push(question)
+  })
+
+  return {
+    unpublished,
+    published,
+    answered
+  }
+}
+
+// TODO: неплохо бы всё-таки заменить эту лапшу на рамду
 const transformList = (
   user?: firebase.User,
   snapshots?: any[],
   userVotes?: Record<string, string>
-): QuestionData[] => {
+): ReturnType<typeof splitter> => {
   if (!user || !snapshots || !userVotes) {
-    return []
+    return splitter([])
   }
 
-  return snapshots
+  return splitter(snapshots
     .map(snapshot => {
       const { created, question, author, authorId, votes, published, answered } = snapshot.val()
       const id = snapshot.key
@@ -40,11 +67,11 @@ const transformList = (
         userCanVote: userVotes[id] !== id && user.uid !== authorId
       }
     })
-    .sort(sorter)
+    .sort(sorter))
 }
 
 type QnaData = [
-  list: QuestionData[],
+  list: ReturnType<typeof splitter>,
   initialLoading: boolean
 ]
 
