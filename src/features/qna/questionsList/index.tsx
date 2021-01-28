@@ -40,13 +40,11 @@ export const QuestionsList: FunctionComponent<{
     <>
       <QuestionsListContainer>
         <Flipper flipKey={questions.map(({ id }) => id).join(", ")}>
-          {questions.map(question => {
-            return (
-              <Flipped key={question.id} flipId={question.id}>
-                <QuestionListItem {...question} />
-              </Flipped>
-            )
-          })}
+          {questions.map(question => (
+            <Flipped key={question.id} flipId={question.id}>
+              <QuestionListItem {...question} />
+            </Flipped>
+          ))}
         </Flipper>
       </QuestionsListContainer>
     </>

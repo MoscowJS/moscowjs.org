@@ -1,12 +1,14 @@
 import { Meta, Panel } from "components/layout"
 import React, { FunctionComponent } from "react"
-import { MoreHorizontal, User, ThumbsUp } from "react-feather"
-import { useIsAdmin, useUpvote, VoteButton } from "features/qna"
+import { User, ThumbsUp } from "react-feather"
+import { useIsAdmin, useUpvote } from "features/qna"
 import { QuestionData } from "models"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
-import { getSize, rhythm } from "utils/typography"
+import { rhythm } from "utils/typography"
 import styled from "styled-components"
+import { QuestionAdmin } from "../questionAdmin"
+import { BadgeButton } from "components/elements/badgeButton"
 
 const QuestionContainer = styled.li`
   ${Panel} {
@@ -42,6 +44,7 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
     question,
     created,
     author,
+    answered,
     published,
   } = props
   const upvote = useUpvote()
@@ -50,14 +53,18 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
   return (
     <QuestionContainer>
       <Panel>
-        <QuestionHeader>
-          {!published && !isAdmin && (
-            <UnpublishedNotice>
-              <div>Твой вопрос на модерации</div>
-            </UnpublishedNotice>
-          )}
+        {!published && !isAdmin && (
+          <UnpublishedNotice>
+            <div>Твой вопрос на модерации</div>
+          </UnpublishedNotice>
+        )}
 
-          {!published && isAdmin && <p><string>Не опубликовано!</string></p>}
+        {!published && isAdmin && (
+          <p>
+            <strong>Не опубликовано!</strong>
+          </p>
+        )}
+        <QuestionHeader>
           <Meta title={author || "Анонимно"} Icon={User}>
             <p>
               {format(new Date(created || 0), "d MMMM y, HH:mm", {
@@ -66,16 +73,15 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
             </p>
           </Meta>
           <div>
-            <MoreHorizontal size={getSize("xxxs")} />
-            <VoteButton
-              as="button"
+            <QuestionAdmin id={id} published={published} answered={answered} />
+            <BadgeButton
               size="xxxs"
-              userCanVote={!!userCanVote}
+              active={!userCanVote}
               disabled={!userCanVote}
               onClick={() => upvote(id!)}
             >
               {votes} <ThumbsUp size={rhythm(0.6)} />
-            </VoteButton>
+            </BadgeButton>
           </div>
         </QuestionHeader>
 

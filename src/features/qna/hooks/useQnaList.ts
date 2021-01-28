@@ -76,7 +76,11 @@ const transformList = (
           votes,
           answered,
           published,
-          userCanVote: userVotes[id] !== id && user.uid !== authorId,
+          userCanVote:
+            published &&
+            !answered &&
+            userVotes[id] !== id &&
+            user.uid !== authorId,
         }
       })
       .sort(sorter)
