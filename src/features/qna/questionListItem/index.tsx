@@ -57,6 +57,7 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
             </UnpublishedNotice>
           )}
 
+          {!published && isAdmin && <p><string>Не опубликовано!</string></p>}
           <Meta title={author || "Анонимно"} Icon={User}>
             <p>
               {format(new Date(created || 0), "d MMMM y, HH:mm", {
