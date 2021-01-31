@@ -2,9 +2,10 @@ import { QuestionData } from "models/question.h"
 import { database, auth } from "features/firebase"
 import { useList } from "react-firebase-hooks/database"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import firebase from "firebase"
 import { useIsAdmin } from "./useIsAdmin"
+import { SessionContext } from ".."
 
 const sorter = (questionA: QuestionData, questionB: QuestionData) => {
   const n = (questionB.votes || 0) - (questionA.votes || 0)
@@ -98,8 +99,9 @@ const transformList = (
 type QnaData = [list: ReturnType<typeof splitter>, initialLoading: boolean]
 
 export const useQnaList = (): QnaData => {
-  const ref = "questions/" + process.env.QNA_SESSION_ID
-  const questions = database().ref(ref)
+  const sessionId = useContext(SessionContext)
+  const sessionRef = "questions/" + sessionId
+  const questions = database().ref(sessionRef)
 
   const [user, userLoading, userError] = useAuthState(auth())
   const [snapshots, snapshotsLoading, error] = useList(questions)

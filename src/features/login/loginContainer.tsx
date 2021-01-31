@@ -76,8 +76,6 @@ const LoginContainer = () => {
     }
   }, [authRef.current, user])
 
-  console.log(user)
-
   if (userLoading) {
     return <p>Загрузка...</p>
   }

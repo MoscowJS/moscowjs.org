@@ -2,9 +2,12 @@ import { QuestionData } from "models/question.h"
 import { database, auth } from "features/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { QuestionFormData } from "../questionForm"
+import { useContext } from "react"
+import { SessionContext } from "../sessionContext"
 
 export const useAdd = () => {
-  const ref = "questions/" + process.env.QNA_SESSION_ID
+  const sessionId = useContext(SessionContext)
+  const ref = "questions/" + sessionId
   const questions = database().ref(ref)
 
   const [user] = useAuthState(auth())
@@ -16,6 +19,7 @@ export const useAdd = () => {
 
     const data: QuestionData = {
       question: question.question,
+      author: question.author,
       authorId: user.uid,
       created: Date.now(),
       published: false,

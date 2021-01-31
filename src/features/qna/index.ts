@@ -5,3 +5,4 @@ export { useAdd } from "./hooks/useAdd"
 export { useUpvote } from "./hooks/useUpvote"
 export { useIsAdmin } from "./hooks/useIsAdmin"
 export { useAdminActions } from "./hooks/useAdminActions"
+export { SessionContext } from './sessionContext'

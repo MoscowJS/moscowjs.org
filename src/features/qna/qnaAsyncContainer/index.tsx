@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useContext } from "react"
 import {
   QuestionForm,
   QuestionsList,
@@ -8,6 +8,7 @@ import {
 import { useTabState, Tab, TabList, TabPanel } from "reakit/Tab"
 import styled from "styled-components"
 import { rhythm } from "utils/typography"
+import { SessionContext } from "../sessionContext"
 
 const QnaTabList = styled(TabList)`
   border-bottom: 5px solid var(--color-primary);
@@ -31,6 +32,11 @@ const QnaAsyncContainer: FunctionComponent = () => {
   const [list, loading] = useQnaList()
   const tab = useTabState()
   const isAdmin = useIsAdmin()
+  const sessionId = useContext(SessionContext)
+
+  if (!sessionId) {
+    return <p>В настоящий момент вопросы не принимаются.</p>
+  }
 
   return (
     <>
@@ -39,18 +45,18 @@ const QnaAsyncContainer: FunctionComponent = () => {
         <p>Загрузка...</p>
       ) : (
         <>
-          <QnaTabList {...tab} aria-label="My tabs">
+          <QnaTabList {...tab} aria-label="Вкладки с вопросами">
             <QnaTab {...tab}>Вопросы</QnaTab>
-            <QnaTab {...tab}>Отвеченные</QnaTab>
+            {list.answered.length ? <QnaTab {...tab}>Отвеченные</QnaTab> : null}
           </QnaTabList>
           <TabPanel {...tab}>
             <QuestionsList
               questions={list.unpublished.concat(list.published)}
             />
           </TabPanel>
-          <TabPanel {...tab}>
+          {list.answered.length ? <TabPanel {...tab}>
             <QuestionsList questions={list.answered} />
-          </TabPanel>
+          </TabPanel> : null}
         </>
       )}
       {isAdmin && (

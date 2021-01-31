@@ -1,9 +1,11 @@
 import { database, auth } from "features/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { SessionContext } from ".."
 
 export const useUpvote = () => {
-  const sessionRef = "questions/" + process.env.QNA_SESSION_ID
+  const sessionId = useContext(SessionContext)
+  const sessionRef = "questions/" + sessionId
 
   const [user] = useAuthState(auth())
   const [userVotes, setVotes] = useState<Record<string, string>>()
@@ -29,7 +31,7 @@ export const useUpvote = () => {
 
     // TODO: добавить проверку, что автор вопроса не голосует сам за себя
     // (на беке чекается, и кнопка не должна быть доступна, но всё же)
-    const questionRef = database()
+    database()
       .ref(`users/${user.uid}/votes`)
       .update({ [questionId]: questionId })
 

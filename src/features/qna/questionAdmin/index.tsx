@@ -26,7 +26,7 @@ export const QuestionAdmin: FunctionComponent<QuestionData> = ({
           <CheckCircle size={rhythm(0.6)} />
         </BadgeButton>
       )}
-      {!answered && (
+      {published && !answered && (
         <BadgeButton
           size="xxxs"
           title="Пометить как отвеченное"

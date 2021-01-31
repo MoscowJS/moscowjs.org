@@ -1,10 +1,12 @@
-import { QuestionData } from "models/question.h"
 import { database, auth } from "features/firebase"
+import { useContext } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { SessionContext } from ".."
 import { useIsAdmin } from "./useIsAdmin"
 
 export const useAdminActions = (questionId: string) => {
-  const sessionRef = "questions/" + process.env.QNA_SESSION_ID
+  const sessionId = useContext(SessionContext)
+  const sessionRef = "questions/" + sessionId
 
   const [user] = useAuthState(auth())
   const isAdmin = useIsAdmin()
