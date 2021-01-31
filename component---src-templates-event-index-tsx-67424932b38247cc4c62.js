@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{NGx7:function(e,a,t){"use strict";t.r(a);var n=t("q1tI"),r=t.n(n),l=t("Yi6t"),c=t("Ac47"),i=t("2aZx");a.default=function(e){var a=e.data,t=e.location;return r.a.createElement(r.a.Fragment,null,r.a.createElement(l.a,{title:a.airtablemeetups.data.Title}),r.a.createElement(c.Header,{location:t}),r.a.createElement(c.Container,{as:"main"},r.a.createElement(i.a,{event:a.airtablemeetups.data})),r.a.createElement(c.Footer,null))}}}]);
+//# sourceMappingURL=component---src-templates-event-index-tsx-67424932b38247cc4c62.js.map
