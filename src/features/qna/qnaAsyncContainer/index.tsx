@@ -50,8 +50,17 @@ const QnaAsyncContainer: FunctionComponent = () => {
             {list.answered.length ? <QnaTab {...tab}>Отвеченные</QnaTab> : null}
           </QnaTabList>
           <TabPanel {...tab}>
+            {
+              list.unpublished.length ? <>
+                <h4>На модерации</h4>
+                <QuestionsList
+                  questions={list.unpublished}
+                />
+                <hr/>
+              </> : null
+            }
             <QuestionsList
-              questions={list.unpublished.concat(list.published)}
+              questions={list.published}
             />
           </TabPanel>
           {list.answered.length ? <TabPanel {...tab}>

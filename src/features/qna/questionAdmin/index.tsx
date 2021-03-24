@@ -1,9 +1,16 @@
 import { BadgeButton } from "components/elements"
-import React, { FunctionComponent } from "react"
-import { CheckCircle, Trash2, Check } from "react-feather"
-import { rhythm } from "utils/typography"
+import React, { FunctionComponent, useCallback } from "react"
 import { useIsAdmin, useAdminActions } from "features/qna"
 import { QuestionData } from "models"
+
+const useConfirm = (fn: Function, message: string) => {
+  return useCallback(() => {
+    const result = confirm(message)
+    if (result) {
+      fn()
+    }
+  }, [fn, message])
+}
 
 export const QuestionAdmin: FunctionComponent<QuestionData> = ({
   id,
@@ -13,26 +20,30 @@ export const QuestionAdmin: FunctionComponent<QuestionData> = ({
   const isAdmin = useIsAdmin()
   const { remove, publish, setAnswered } = useAdminActions(id!)
 
+  const removeConfirm = useConfirm(remove, 'Точно удалить?')
+  const publishConfirm = useConfirm(publish, 'Точно опубликовать?')
+  const answeredConfirm = useConfirm(setAnswered, 'Точно пометить, как отвеченный?')
+
   if (!isAdmin) {
     return null
   }
   return (
     <>
-      <BadgeButton size="xxxs" title="Удалить" onClick={remove}>
-        <Trash2 size={rhythm(0.6)} />
+      <BadgeButton size="xxxs" title="Удалить" onClick={removeConfirm}>
+        Удалить
       </BadgeButton>
       {!published && (
-        <BadgeButton size="xxxs" title="Опубликовать" onClick={publish}>
-          <CheckCircle size={rhythm(0.6)} />
+        <BadgeButton size="xxxs" title="Опубликовать" onClick={publishConfirm}>
+          Опубликовать
         </BadgeButton>
       )}
       {published && !answered && (
         <BadgeButton
           size="xxxs"
           title="Пометить как отвеченное"
-          onClick={setAnswered}
+          onClick={answeredConfirm}
         >
-          <Check size={rhythm(0.6)} />
+          Отвечено
         </BadgeButton>
       )}
     </>
