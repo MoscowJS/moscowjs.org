@@ -7,6 +7,9 @@ require("dotenv").config({
 require("ts-node").register()
 
 module.exports = {
+  flags: {
+    DEV_SSR: false
+  },
   pathPrefix: undefined,
   siteMetadata: {
     siteUrl: "https://moscowjs.org/",
@@ -19,14 +22,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: `static`,
+        path: `${__dirname}/src/static`,
       },
     },
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    "gatsby-plugin-use-dark-mode",
     "gatsby-plugin-cname",
     {
       resolve: `gatsby-plugin-manifest`,
@@ -39,7 +41,7 @@ module.exports = {
         display: `minimal-ui`,
         lang: "ru",
         cache_busting_mode: "none",
-        icon: `src/images/logo.png`, // This path is relative to the root of the site.
+        icon: `src/static/logo.png`, // This path is relative to the root of the site.
       },
     },
     {
@@ -54,7 +56,7 @@ module.exports = {
         src: path.join(__dirname, "src"),
         components: path.join(__dirname, "src/components"),
         models: path.join(__dirname, "src/models"),
-        images: path.join(__dirname, "src/images"),
+        static: path.join(__dirname, "src/static"),
         features: path.join(__dirname, "src/features"),
         utils: path.join(__dirname, "src/utils"),
       },

@@ -46,7 +46,7 @@
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "components/*": ["src/components/*"],
-      "images/*": ["src/images/*"],
+      "static/*": ["src/static/*"],
       "models": ["src/models"],
       "models/*": ["src/models/*"],
       "features/*": ["src/features/*"],

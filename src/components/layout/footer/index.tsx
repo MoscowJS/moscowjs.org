@@ -34,6 +34,10 @@ const IconLink = styled.a`
   }
 `
 
+const Navigation = styled.nav`
+  font-size: small;
+`
+
 export const Footer = () => {
   const {
     allAirtablenavigation: { nodes },
@@ -72,7 +76,7 @@ export const Footer = () => {
     <FooterContainer as="footer">
       <Column>
         <div>© 2011 — {new Date().getFullYear()}, MoscowJS Team</div>
-        <nav>
+        <Navigation>
           {navigation.map(({ external, url, title }) => {
             return (
               <div key={url}>
@@ -84,7 +88,7 @@ export const Footer = () => {
               </div>
             )
           })}
-        </nav>
+        </Navigation>
       </Column>
 
       <Column>

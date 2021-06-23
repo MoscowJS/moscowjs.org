@@ -2,7 +2,6 @@ import moon from "./moon.svg"
 import React, { FunctionComponent, useState } from "react"
 import styled from "styled-components"
 import sun from "./sun.svg"
-import useDarkMode from "use-dark-mode"
 import { ImageSharp, NavigationData } from "models"
 import { pagePath } from "utils/paths"
 import { rhythm } from "utils/typography"
@@ -54,19 +53,21 @@ const MenuContainer = styled.nav<{
 `
 
 const ThemeToggle = () => {
-  const darkMode = useDarkMode()
+  return null
 
-  return (
-    <CheckboxToggle
-      css={`
-        margin-right: ${rhythm(0.5)};
-      `}
-      imageOn={moon}
-      imageOff={sun}
-      checked={darkMode.value}
-      onChange={darkMode.toggle}
-    />
-  )
+  // const darkMode = useDarkMode()
+
+  // return (
+  //   <CheckboxToggle
+  //     css={`
+  //       margin-right: ${rhythm(0.5)};
+  //     `}
+  //     imageOn={moon}
+  //     imageOff={sun}
+  //     checked={darkMode.value}
+  //     onChange={darkMode.toggle}
+  //   />
+  // )
 }
 
 export const Header: FunctionComponent<{

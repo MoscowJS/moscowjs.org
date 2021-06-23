@@ -1,6 +1,6 @@
-import logo from "images/logo.png"
+import logo from "static/logo.png"
 import React, { FunctionComponent } from "react"
-import starry from "images/starry_background.png"
+import starry from "static/starry_background.png"
 import styled from "styled-components"
 import { getSize } from "utils/typography"
 
