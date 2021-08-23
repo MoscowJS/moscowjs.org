@@ -9,7 +9,6 @@ export type EventData = {
   Company?: Array<{ data: CompanyData }>
   Completed: boolean
   Date: string
-  Duration: number
   Formatted_title?: string
   Logo?: AirtableImage[]
   Long_Announcement: string
