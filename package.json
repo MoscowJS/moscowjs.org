@@ -23,7 +23,7 @@
     "gatsby-plugin-sharp": "^3.8.0",
     "gatsby-plugin-styled-components": "^4.8.0",
     "gatsby-plugin-typography": "^3.8.0",
-    "gatsby-source-airtable": "^2.2.0",
+    "gatsby-source-airtable": "^2.2.1",
     "gatsby-source-filesystem": "^3.8.0",
     "gatsby-transformer-sharp": "^3.8.0",
     "process": "^0.11.10",
