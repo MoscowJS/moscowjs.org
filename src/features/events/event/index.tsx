@@ -64,7 +64,6 @@ export const Event: FunctionComponent<EventProps> = ({
           )}
         </p>
       </Meta>
-      
 
       {!event.Completed && (
         <Meta Icon={PenTool} title="Регистрация">
@@ -72,7 +71,7 @@ export const Event: FunctionComponent<EventProps> = ({
             {event.Registration_link ? (
               <a href={event.Registration_link}></a>
             ) : (
-              "Скоро будет"
+              "Не требуется"
             )}
           </p>
         </Meta>
