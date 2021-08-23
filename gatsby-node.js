@@ -1,4 +1,5 @@
 const path = require(`path`)
+// const fs = require('fs/promises')
 const {
   eventPath,
   pagePath,
@@ -15,6 +16,12 @@ exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
     })
   }
 }
+
+// const publicPath = `./public`
+// const outputPath = path.join(publicPath, '/test/a.json')
+// const json = JSON.stringify({ a: 1, b: 2 }, null, 2)
+// await fs.mkdir(path.dirname(outputPath))
+// await fs.writeFile(outputPath, json)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
