@@ -25,7 +25,7 @@ const TalkPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     airtabletalks(id: { eq: $id }) {
       data {
         Date
@@ -57,7 +57,7 @@ export const query = graphql`
         }
         Meetup {
           data {
-            Date(locale: "ru", formatString: "LLL")
+            Date
             Video_link
             Title
             Slug

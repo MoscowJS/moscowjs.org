@@ -118,7 +118,7 @@ const SpeakerPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     airtablespeakers(id: { eq: $id }) {
       data {
         Name
@@ -138,7 +138,7 @@ export const query = graphql`
             Publish
             Meetup {
               data {
-                Date(locale: "ru", formatString: "LLL")
+                Date
                 Video_link
                 Title
                 Slug

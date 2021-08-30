@@ -9,6 +9,7 @@
     "@types/remarkable": "^2.0.2",
     "@types/styled-components": "^5.1.10",
     "@types/typography": "^0.16.3",
+    "@types/uuid": "^8.3.0",
     "babel-plugin-styled-components": "^1.12.0",
     "date-fns": "^2.22.1",
     "firebase": "^8.6.8",
@@ -42,10 +43,9 @@
     "remark-toc": "^7.2.0",
     "slugify": "^1.5.3",
     "styled-components": "^5.3.0",
-    "typescript": "^4.3.4",
-    "typography": "^0.16.21",
     "ts-node": "^10.0.0",
-    "@types/uuid": "^8.3.0"
+    "typescript": "^4.3.4",
+    "typography": "^0.16.21"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3",

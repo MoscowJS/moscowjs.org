@@ -41,7 +41,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
               }
             }
             Completed
-            Date(locale: "ru", formatString: "LLL")
+            Date
             Formatted_title
             Registration_link
             Short_Announcement

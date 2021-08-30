@@ -8,7 +8,7 @@ require("ts-node").register()
 
 module.exports = {
   flags: {
-    DEV_SSR: false
+    DEV_SSR: false,
   },
   pathPrefix: undefined,
   siteMetadata: {
@@ -150,7 +150,7 @@ module.exports = {
           },
         ],
       },
-    }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // {

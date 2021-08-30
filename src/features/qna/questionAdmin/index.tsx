@@ -20,9 +20,12 @@ export const QuestionAdmin: FunctionComponent<QuestionData> = ({
   const isAdmin = useIsAdmin()
   const { remove, publish, setAnswered } = useAdminActions(id!)
 
-  const removeConfirm = useConfirm(remove, 'Точно удалить?')
-  const publishConfirm = useConfirm(publish, 'Точно опубликовать?')
-  const answeredConfirm = useConfirm(setAnswered, 'Точно пометить, как отвеченный?')
+  const removeConfirm = useConfirm(remove, "Точно удалить?")
+  const publishConfirm = useConfirm(publish, "Точно опубликовать?")
+  const answeredConfirm = useConfirm(
+    setAnswered,
+    "Точно пометить, как отвеченный?"
+  )
 
   if (!isAdmin) {
     return null

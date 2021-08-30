@@ -12,4 +12,7 @@ export type TalkData = {
   Record?: string
   Slides_URL?: string
   Announce?: AirtableImage[]
+  Scene?: string
+  Start?: string
+  Duration?: string
 }

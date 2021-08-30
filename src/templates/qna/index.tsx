@@ -22,7 +22,6 @@ const Page: FunctionComponent<
 > = ({ data, location }) => {
   const config = transformConfig(data.allAirtableconfig.nodes)
 
-
   return (
     <>
       <SEO title={data.airtablepages.data.title} />
@@ -43,7 +42,7 @@ const Page: FunctionComponent<
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     airtablepages(id: { eq: $id }) {
       data {
         title

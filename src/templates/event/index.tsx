@@ -23,7 +23,7 @@ const MeetupPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     airtablemeetups(id: { eq: $id }) {
       data {
         Address
@@ -34,11 +34,13 @@ export const query = graphql`
           }
         }
         Completed
-        Date(locale: "ru", formatString: "LLL")
+        Date
+        DateEnd
         Formatted_title
         Long_Announcement
         Publish
         Registration_link
+        Timetable
         Short_Announcement
         Slug
         Stream_link
@@ -65,9 +67,12 @@ export const query = graphql`
             Theses
             Record
             Date
+            Duration
+            Start
+            Scene
             Meetup {
               data {
-                Date(locale: "ru", formatString: "LLL")
+                Date
                 Video_link
                 Title
                 Slug

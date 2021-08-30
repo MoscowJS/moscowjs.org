@@ -9,6 +9,7 @@ export type EventData = {
   Company?: Array<{ data: CompanyData }>
   Completed: boolean
   Date: string
+  DateEnd: string
   Formatted_title?: string
   Logo?: AirtableImage[]
   Long_Announcement: string
@@ -17,6 +18,7 @@ export type EventData = {
   Slug: string
   Stream_link?: string
   Talks?: Array<{ data: TalkData }>
+  Timetable?: boolean
   Title: string
   Type: string
   Video_link?: string

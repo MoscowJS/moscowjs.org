@@ -4,6 +4,14 @@ import { EventData } from "models/event.h"
 import { EventLink } from "features/events/eventLink"
 import { FunctionComponent } from "react"
 import { Item, Markdown } from "components/layout"
+import { format } from "date-fns"
+import { ru } from "date-fns/locale"
+import { airtableDateFix } from "utils/airtableDateFix"
+
+const formatDate = (date: string) =>
+  format(airtableDateFix(new Date(date)), "d MMMM y, HH:mm", {
+    locale: ru,
+  })
 
 export const EventsFeed: FunctionComponent<{
   events: Array<{ data: EventData }>
@@ -17,7 +25,9 @@ export const EventsFeed: FunctionComponent<{
           </Item.ImageContainer>
           <Item.Content>
             <Item.Meta>
-              <time dateTime={data.Date}>{data.Date}</time>
+              <time dateTime={formatDate(data.Date)}>
+                {formatDate(data.Date)}
+              </time>
               {data.Company && (
                 <>
                   {" "}

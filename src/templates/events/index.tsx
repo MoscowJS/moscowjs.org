@@ -30,7 +30,7 @@ const EventsPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     airtablepages(id: { eq: $id }) {
       data {
         title
@@ -51,7 +51,8 @@ export const query = graphql`
             }
           }
           Completed
-          Date(locale: "ru", formatString: "LLL")
+          Date
+          DateEnd
           Formatted_title
           Long_Announcement
           Publish
