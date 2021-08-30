@@ -112,7 +112,7 @@ export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
     const [ah, am] = a!.split(":").map(x => +x)
     const [bh, bm] = b!.split(":").map(x => +x)
 
-    return am - bm || ah - bh
+    return ah - bh || am - bm
   })
 
   const tableRows: TableRows = talks.reduce((result, talk) => {
