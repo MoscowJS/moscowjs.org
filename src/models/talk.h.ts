@@ -14,5 +14,4 @@ export type TalkData = {
   Announce?: AirtableImage[]
   Scene?: string
   Start?: string
-  Duration?: string
 }

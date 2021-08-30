@@ -67,7 +67,6 @@ export const query = graphql`
             Theses
             Record
             Date
-            Duration
             Start
             Scene
             Meetup {
