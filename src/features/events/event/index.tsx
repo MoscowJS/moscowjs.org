@@ -10,6 +10,7 @@ import { PartnerLink } from "features/partners"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
 import { airtableDateFix } from "utils/airtableDateFix"
+import { rhythm } from "utils/typography"
 
 type EventProps = {
   event: EventData
@@ -19,6 +20,10 @@ type EventProps = {
 
 const EventTitle = styled.h1`
   font-size: 2rem;
+`
+
+const Section = styled.section`
+  margin-bottom: ${rhythm(1)};
 `
 
 const MetaDate = ({ event }: EventProps) => {
@@ -125,28 +130,32 @@ export const Event: FunctionComponent<EventProps> = ({
         <EventLink event={event} />
       </EventTitle>
 
-      <Markdown>{event.Short_Announcement}</Markdown>
+      <Section>
+        <Markdown>{event.Short_Announcement}</Markdown>
+      </Section>
 
-      <MetaDate event={event} />
-      <MetaAddress event={event} />
-      <MetaVideo event={event} />
-      <MetaRegistration event={event} />
+      <Section>
+        <MetaDate event={event} />
+        <MetaAddress event={event} />
+        <MetaVideo event={event} />
+        <MetaRegistration event={event} />
+      </Section>
 
       {!short && (
         <>
-          <Markdown>{event.Long_Announcement}</Markdown>
-          <EventTimeTable event={event} />
-          <TalksList event={event} />
+          {event.Long_Announcement && <Section><Markdown>{event.Long_Announcement}</Markdown></Section>}
+          {event.Timetable && <Section><EventTimeTable event={event} /></Section>}
+          {event.Talks && <Section><TalksList event={event} /></Section>}
         </>
       )}
 
       {!short && event.Partners && (
-        <>
+        <Section>
           <h3>Партнеры мероприятия</h3>
           {event.Partners.map(({ data }) => (
             <PartnerLink partnerData={data} />
           ))}
-        </>
+        </Section>
       )}
     </article>
   )
