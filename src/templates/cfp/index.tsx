@@ -4,7 +4,7 @@ import { Container, Footer, Header, Markdown } from "components/layout"
 import { graphql, PageProps } from "gatsby"
 import { PagesData } from "models"
 
-const Page: FunctionComponent<
+const CFP: FunctionComponent<
   PageProps<{
     airtablepages: { data: PagesData }
   }>
@@ -14,6 +14,12 @@ const Page: FunctionComponent<
       <SEO title={data.airtablepages.data.title} />
       <Header location={location} />
       <Container as="main">
+        <iframe src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet" style={{
+          width: "100%",
+          height: "500px",
+          border: "none"
+        }} />
+
         <Markdown>{data.airtablepages.data.content}</Markdown>
       </Container>
       <Footer />
@@ -25,7 +31,7 @@ export const query = graphql`
   query ($id: String!) {
     airtablepages(id: { eq: $id }) {
       data {
-        title
+        titles̄
         slug
         content
         description
@@ -34,4 +40,4 @@ export const query = graphql`
   }
 `
 
-export default Page
+export default CFP
