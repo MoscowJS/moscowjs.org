@@ -31,7 +31,7 @@ export const query = graphql`
   query ($id: String!) {
     airtablepages(id: { eq: $id }) {
       data {
-        titles̄
+        title
         slug
         content
         description
