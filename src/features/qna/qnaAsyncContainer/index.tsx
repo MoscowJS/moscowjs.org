@@ -9,6 +9,8 @@ import { useTabState, Tab, TabList, TabPanel } from "reakit/Tab"
 import styled from "styled-components"
 import { rhythm } from "utils/typography"
 import { SessionContext } from "../sessionContext"
+import { useState } from "react"
+import { Select } from "components/forms"
 
 const QnaTabList = styled(TabList)`
   border-bottom: 5px solid var(--color-primary);
@@ -29,13 +31,22 @@ const QnaTab = styled(Tab)`
 `
 
 const QnaAsyncContainer: FunctionComponent = () => {
-  const [list, loading] = useQnaList()
+  const [list, allTalks, loading] = useQnaList()
   const tab = useTabState()
   const isAdmin = useIsAdmin()
   const sessionId = useContext(SessionContext)
+  const [selectedTalk, selectTalk] = useState('Все вопросы')
+  const handleTalkChange = (event: any) => {
+    selectTalk(event.target.value)
+  }
 
   if (!sessionId) {
     return <p>В настоящий момент вопросы не принимаются.</p>
+  }
+
+  if (selectedTalk !== 'Все вопросы') {
+    list.answered = list.answered.filter(question => question.talk === selectedTalk)
+    list.published = list.published.filter(question => question.talk === selectedTalk)
   }
 
   return (
@@ -45,6 +56,14 @@ const QnaAsyncContainer: FunctionComponent = () => {
         <p>Загрузка...</p>
       ) : (
         <>
+          <p>
+          <Select placeholder={'Фильтр вопросов'}
+            onChange={handleTalkChange}
+          >
+            <option>Все вопросы</option>
+            {allTalks.map(talk => <option key={talk.title} id={talk.title}>{talk.title}, {talk.speaker}</option>)}
+          </Select>
+          </p>
           <QnaTabList {...tab} aria-label="Вкладки с вопросами">
             <QnaTab {...tab}>Вопросы</QnaTab>
             {list.answered.length ? <QnaTab {...tab}>Отвеченные</QnaTab> : null}

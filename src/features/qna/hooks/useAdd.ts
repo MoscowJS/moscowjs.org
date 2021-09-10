@@ -24,6 +24,7 @@ export const useAdd = () => {
       created: Date.now(),
       published: false,
       answered: false,
+      talk: question.talk
     }
 
     return Promise.all([

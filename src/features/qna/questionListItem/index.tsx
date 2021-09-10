@@ -46,6 +46,7 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
     author,
     answered,
     published,
+    talk
   } = props
   const upvote = useUpvote()
   const isAdmin = useIsAdmin()
@@ -70,7 +71,10 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
               {format(new Date(created || 0), "d MMMM y, HH:mm", {
                 locale: ru,
               })}
+              <br />
+              <small><em>Доклад: {talk}</em></small>
             </p>
+            
           </Meta>
           <div>
             <QuestionAdmin id={id} published={published} answered={answered} />
