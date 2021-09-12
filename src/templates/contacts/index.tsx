@@ -86,7 +86,7 @@ const Page: FunctionComponent<
           )
         })}
 
-        <h3>Бывшие организаторы (спасибо!)</h3>
+        <h3>Бывшие организаторы</h3>
         <Grid>
           {orgs.former.map(data => (
             <GridItem key={data.Display_name}>
