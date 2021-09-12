@@ -73,7 +73,7 @@ const Page: FunctionComponent<
                 <Item.Header>{data.Display_name}</Item.Header>
                 <div>
                   telegram:{" "}
-                  <a href={`https://t.me/${data.Telegram[0]}`}>
+                  <a href={`https://t.me/${data.Telegram}`}>
                     t.me/{data.Telegram[0]}
                   </a>
                 </div>
