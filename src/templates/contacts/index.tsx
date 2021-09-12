@@ -74,8 +74,8 @@ const Page: FunctionComponent<
                 <Markdown>{data.About?.[0]}</Markdown>
                 <div>
                   telegram:{" "}
-                  <a href={`https://t.me/${data.Telegram[0]}`}>
-                    t.me/{data.Telegram[0]}
+                  <a href={`https://t.me/${data.Telegram}`}>
+                    t.me/{data.Telegram}
                   </a>
                 </div>
                 <div>
