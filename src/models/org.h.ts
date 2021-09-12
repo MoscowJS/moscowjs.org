@@ -9,10 +9,10 @@ export type OrgData = {
     localFiles: ImageSharp[]
     raw: AirtableImage[]
   }
-  Company: string[]
-  Telegram: string[]
+  Company: string
+  Telegram: string
   Email: string
-  About?: string[]
+  About?: string
   Speaker: Array<{
     data: SpeakerData
   }>

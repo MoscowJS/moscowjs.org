@@ -71,7 +71,7 @@ const Page: FunctionComponent<
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
-                <Markdown>{data.About?.[0]}</Markdown>
+                {data.About && <Markdown>{data.About}</Markdown>}
                 <div>
                   telegram:{" "}
                   <a href={`https://t.me/${data.Telegram}`}>
