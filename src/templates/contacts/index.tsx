@@ -83,36 +83,25 @@ const Page: FunctionComponent<
         })}
 
         <h3>Бывшие организаторы (спасибо!)</h3>
-        <Grid>
-          {orgs.former.map(data => (
-            <GridItem key={data.Display_name}>
-              <div>
+        {orgs.former.map(data => {
+          return (
+            <Item key={data.Display_name}>
+              <Item.ImageContainer size="xs">
                 {data.Photo ? (
                   <Img
                     fluid={data.Photo.localFiles[0].childImageSharp.fluid}
                     alt={data.Display_name}
                   />
                 ) : (
-                  <div
-                    css={`
-                      line-height: 0;
-                    `}
-                  >
-                    <UserX size="100%" />
-                  </div>
+                  <UserX size="100%" />
                 )}
-                <p
-                  css={`
-                    text-align: center;
-                    font-size: ${rhythm(0.5)};
-                  `}
-                >
-                  {data.Display_name}
-                </p>
-              </div>
-            </GridItem>
-          ))}
-        </Grid>
+              </Item.ImageContainer>
+              <Item.Content>
+                <Item.Header>{data.Display_name}</Item.Header>
+              </Item.Content>
+            </Item>
+          )
+        })}
 
         <h3>Волонтеры</h3>
         <ul>
