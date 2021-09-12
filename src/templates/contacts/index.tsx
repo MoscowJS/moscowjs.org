@@ -9,12 +9,12 @@ import styled from "styled-components"
 import { rhythm } from "utils/typography"
 
 const Grid = styled.ul`
-  --item-width: ${rhythm(5)};
+  --item-width: ${rhythm(4)};
 
   margin: 0 0 ${rhythm(2)};
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--item-width));
-  grid-gap: ${rhythm(1)};
+  grid-gap: ${rhythm(0.5)};
   justify-content: space-between;
 `
 
@@ -59,33 +59,6 @@ const Page: FunctionComponent<
         {orgs.current.map(data => {
           return (
             <Item key={data.Display_name}>
-              <Item.ImageContainer size="s">
-                {data.Photo ? (
-                  <Img
-                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
-                    alt={data.Display_name}
-                  />
-                ) : (
-                  <UserX size="100%" />
-                )}
-              </Item.ImageContainer>
-              <Item.Content>
-                <Item.Header>{data.Display_name}</Item.Header>
-                <div>
-                  telegram:{" "}
-                  <a href={`https://t.me/${data.Telegram}`}>
-                    t.me/{data.Telegram[0]}
-                  </a>
-                </div>
-              </Item.Content>
-            </Item>
-          )
-        })}
-
-        <h3>Бывшие организаторы (спасибо!)</h3>
-        {orgs.former.map(data => {
-          return (
-            <Item key={data.Display_name}>
               <Item.ImageContainer size="xs">
                 {data.Photo ? (
                   <Img
@@ -98,10 +71,52 @@ const Page: FunctionComponent<
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
+                <Markdown>{data.About?.[0]}</Markdown>
+                <div>
+                  telegram:{" "}
+                  <a href={`https://t.me/${data.Telegram[0]}`}>
+                    t.me/{data.Telegram[0]}
+                  </a>
+                </div>
+                <div>
+                  email: <a href={`mailto:${data.Email}`}>{data.Email}</a>
+                </div>
               </Item.Content>
             </Item>
           )
         })}
+
+        <h3>Бывшие организаторы (спасибо!)</h3>
+        <Grid>
+          {orgs.former.map(data => (
+            <GridItem key={data.Display_name}>
+              <div>
+                {data.Photo ? (
+                  <Img
+                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
+                    alt={data.Display_name}
+                  />
+                ) : (
+                  <div
+                    css={`
+                      line-height: 0;
+                    `}
+                  >
+                    <UserX size="100%" />
+                  </div>
+                )}
+                <p
+                  css={`
+                    text-align: center;
+                    font-size: ${rhythm(0.4)};
+                  `}
+                >
+                  {data.Display_name}
+                </p>
+              </div>
+            </GridItem>
+          ))}
+        </Grid>
 
         <h3>Волонтеры</h3>
         <ul>
