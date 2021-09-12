@@ -59,7 +59,7 @@ const Page: FunctionComponent<
         {orgs.current.map(data => {
           return (
             <Item key={data.Display_name}>
-              <Item.ImageContainer size="xs">
+              <Item.ImageContainer size="s">
                 {data.Photo ? (
                   <Img
                     fluid={data.Photo.localFiles[0].childImageSharp.fluid}
