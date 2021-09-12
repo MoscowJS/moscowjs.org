@@ -108,7 +108,7 @@ const TalksList = ({ event }: EventProps) => {
   if (event.Talks) {
     return (
       <>
-        <h3>О чем будем говорить</h3>
+        <h3>{event.Completed ? 'О чём говорили' : 'О чём будем говорить'}</h3>
         {event.Talks.map(({ data }) => {
           return <Talk talk={data} level={2} key={data.Title} />
         })}
