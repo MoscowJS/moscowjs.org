@@ -5,6 +5,26 @@ import { Container, Footer, Header, Item, Markdown } from "components/layout"
 import { graphql, PageProps } from "gatsby"
 import { OrgData, PagesData } from "models"
 import { UserX } from "react-feather"
+import styled from "styled-components"
+import { rhythm } from "utils/typography"
+
+const Grid = styled.ul`
+  --item-width: ${rhythm(5)};
+
+  margin: 0 0 ${rhythm(2)};
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--item-width));
+  grid-gap: ${rhythm(1)};
+  justify-content: space-between;
+`
+
+const GridItem = styled.li`
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  font-size: ${rhythm(0.5)};
+  margin: 0;
+`
 
 const Page: FunctionComponent<
   PageProps<{
@@ -16,6 +36,18 @@ const Page: FunctionComponent<
     }
   }>
 > = ({ data, location }) => {
+  const orgs = data.allAirtableorgs.nodes.reduce(
+    (result, { data }) => {
+      result[data.Status].push(data)
+      return result
+    },
+    {
+      current: [] as OrgData[],
+      former: [] as OrgData[],
+      volunteer: [] as OrgData[],
+    }
+  )
+
   return (
     <>
       <SEO title={data.airtablepages.data.title} />
@@ -24,7 +56,7 @@ const Page: FunctionComponent<
         <Markdown>{data.airtablepages.data.content}</Markdown>
 
         <h3>Организаторы</h3>
-        {data.allAirtableorgs.nodes.map(({ data }) => {
+        {orgs.current.map(data => {
           return (
             <Item key={data.Display_name}>
               <Item.ImageContainer size="s">
@@ -40,30 +72,58 @@ const Page: FunctionComponent<
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
                 <Markdown>{data.About?.[0]}</Markdown>
-                <ul
-                  css={`
-                    list-style-type: none;
-
-                    li {
-                      margin: 0;
-                    }
-                  `}
-                >
-                  <li>
-                    telegram:{" "}
-                    <a href={`https://t.me/${data.Telegram[0]}`}>
-                      t.me/{data.Telegram[0]}
-                    </a>
-                  </li>
-
-                  <li>
-                    email: <a href={`mailto:${data.Email}`}>{data.Email}</a>
-                  </li>
-                </ul>
+                <div>
+                  telegram:{" "}
+                  <a href={`https://t.me/${data.Telegram[0]}`}>
+                    t.me/{data.Telegram[0]}
+                  </a>
+                </div>
+                <div>
+                  email: <a href={`mailto:${data.Email}`}>{data.Email}</a>
+                </div>
               </Item.Content>
             </Item>
           )
         })}
+
+        <h3>Бывшие организаторы (спасибо!)</h3>
+        <Grid>
+          {orgs.former.map(data => (
+            <GridItem key={data.Display_name}>
+              <div>
+                {data.Photo ? (
+                  <Img
+                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
+                    alt={data.Display_name}
+                  />
+                ) : (
+                  <div
+                    css={`
+                      line-height: 0;
+                    `}
+                  >
+                    <UserX size="100%" />
+                  </div>
+                )}
+                <p
+                  css={`
+                    text-align: center;
+                    font-size: ${rhythm(0.5)};
+                  `}
+                >
+                  {data.Display_name}
+                </p>
+              </div>
+            </GridItem>
+          ))}
+        </Grid>
+
+        <h3>Волонтеры</h3>
+        <ul>
+          {orgs.volunteer.map(data => (
+            <li>{data.Display_name}</li>
+          ))}
+        </ul>
       </Container>
       <Footer />
     </>
@@ -87,6 +147,7 @@ export const query = graphql`
           About
           Email
           Telegram
+          Status
           Company
           Photo {
             localFiles {

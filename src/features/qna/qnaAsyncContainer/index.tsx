@@ -35,7 +35,7 @@ const QnaAsyncContainer: FunctionComponent = () => {
   const tab = useTabState()
   const isAdmin = useIsAdmin()
   const sessionId = useContext(SessionContext)
-  const [selectedTalk, selectTalk] = useState('Все вопросы')
+  const [selectedTalk, selectTalk] = useState("Все вопросы")
   const handleTalkChange = (event: any) => {
     selectTalk(event.target.value)
   }
@@ -44,9 +44,13 @@ const QnaAsyncContainer: FunctionComponent = () => {
     return <p>В настоящий момент вопросы не принимаются.</p>
   }
 
-  if (selectedTalk !== 'Все вопросы') {
-    list.answered = list.answered.filter(question => question.talk === selectedTalk)
-    list.published = list.published.filter(question => question.talk === selectedTalk)
+  if (selectedTalk !== "Все вопросы") {
+    list.answered = list.answered.filter(
+      question => question.talk === selectedTalk
+    )
+    list.published = list.published.filter(
+      question => question.talk === selectedTalk
+    )
   }
 
   return (
@@ -57,12 +61,14 @@ const QnaAsyncContainer: FunctionComponent = () => {
       ) : (
         <>
           <p>
-          <Select placeholder={'Фильтр вопросов'}
-            onChange={handleTalkChange}
-          >
-            <option>Все вопросы</option>
-            {allTalks.map(talk => <option key={talk.title} id={talk.title}>{talk.title}, {talk.speaker}</option>)}
-          </Select>
+            <Select placeholder={"Фильтр вопросов"} onChange={handleTalkChange}>
+              <option>Все вопросы</option>
+              {allTalks.map(talk => (
+                <option key={talk.title} id={talk.title}>
+                  {talk.title}, {talk.speaker}
+                </option>
+              ))}
+            </Select>
           </p>
           <QnaTabList {...tab} aria-label="Вкладки с вопросами">
             <QnaTab {...tab}>Вопросы</QnaTab>

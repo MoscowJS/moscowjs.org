@@ -4,6 +4,7 @@ import { SpeakerData } from "./speaker.h"
 
 export type OrgData = {
   Display_name: string
+  Status: "current" | "former" | "volunteer"
   Photo?: {
     localFiles: ImageSharp[]
     raw: AirtableImage[]

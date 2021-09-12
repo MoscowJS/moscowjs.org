@@ -14,11 +14,14 @@ const CFP: FunctionComponent<
       <SEO title={data.airtablepages.data.title} />
       <Header location={location} />
       <Container as="main">
-        <iframe src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet" style={{
-          width: "100%",
-          height: "500px",
-          border: "none"
-        }} />
+        <iframe
+          src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet"
+          style={{
+            width: "100%",
+            height: "500px",
+            border: "none",
+          }}
+        />
 
         <Markdown>{data.airtablepages.data.content}</Markdown>
       </Container>

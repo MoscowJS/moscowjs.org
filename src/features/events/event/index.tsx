@@ -108,7 +108,7 @@ const TalksList = ({ event }: EventProps) => {
   if (event.Talks) {
     return (
       <>
-        <h3>{event.Completed ? 'О чём говорили' : 'О чём будем говорить'}</h3>
+        <h3>{event.Completed ? "О чём говорили" : "О чём будем говорить"}</h3>
         {event.Talks.map(({ data }) => {
           return <Talk talk={data} level={2} key={data.Title} />
         })}
@@ -143,9 +143,21 @@ export const Event: FunctionComponent<EventProps> = ({
 
       {!short && (
         <>
-          {event.Long_Announcement && <Section><Markdown>{event.Long_Announcement}</Markdown></Section>}
-          {event.Timetable && <Section><EventTimeTable event={event} /></Section>}
-          {event.Talks && <Section><TalksList event={event} /></Section>}
+          {event.Long_Announcement && (
+            <Section>
+              <Markdown>{event.Long_Announcement}</Markdown>
+            </Section>
+          )}
+          {event.Timetable && (
+            <Section>
+              <EventTimeTable event={event} />
+            </Section>
+          )}
+          {event.Talks && (
+            <Section>
+              <TalksList event={event} />
+            </Section>
+          )}
         </>
       )}
 

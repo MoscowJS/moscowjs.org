@@ -46,7 +46,7 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
     author,
     answered,
     published,
-    talk
+    talk,
   } = props
   const upvote = useUpvote()
   const isAdmin = useIsAdmin()
@@ -72,9 +72,10 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
                 locale: ru,
               })}
               <br />
-              <small><em>Доклад: {talk}</em></small>
+              <small>
+                <em>Доклад: {talk}</em>
+              </small>
             </p>
-            
           </Meta>
           <div>
             <QuestionAdmin id={id} published={published} answered={answered} />
