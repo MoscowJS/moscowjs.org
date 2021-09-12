@@ -59,7 +59,7 @@ const Page: FunctionComponent<
         {orgs.current.map(data => {
           return (
             <Item key={data.Display_name}>
-              <Item.ImageContainer size="s">
+              <Item.ImageContainer size="xs">
                 {data.Photo ? (
                   <Img
                     fluid={data.Photo.localFiles[0].childImageSharp.fluid}
@@ -71,15 +71,11 @@ const Page: FunctionComponent<
               </Item.ImageContainer>
               <Item.Content>
                 <Item.Header>{data.Display_name}</Item.Header>
-                <Markdown>{data.About?.[0]}</Markdown>
                 <div>
                   telegram:{" "}
                   <a href={`https://t.me/${data.Telegram[0]}`}>
                     t.me/{data.Telegram[0]}
                   </a>
-                </div>
-                <div>
-                  email: <a href={`mailto:${data.Email}`}>{data.Email}</a>
                 </div>
               </Item.Content>
             </Item>
