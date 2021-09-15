@@ -17,7 +17,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
     hero: ImageSharp
   }>(graphql`
     {
-      hero: file(relativePath: { eq: "main-hero.jpg" }) {
+      hero: file(relativePath: { eq: "main-hero-2.jpg" }) {
         childImageSharp {
           fluid(grayscale: true, maxWidth: 2560, maxHeight: 800, fit: COVER) {
             base64
