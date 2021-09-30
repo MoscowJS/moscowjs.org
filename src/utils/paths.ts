@@ -7,7 +7,7 @@ const slugify = (path: string) => path
   .split('')
   .map(char => (charMap[char] || char))
   .join('')
-  .replace(/[^A-Za-z\s\-]/g, '')
+  .replace(/[^A-Za-z0-9\s\-]/g, '')
   .replace(/\s+/g, '-')
 
 export const eventPath = (slug: string) =>
