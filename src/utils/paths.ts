@@ -1,7 +1,7 @@
 import slugify from "slugify"
 
 const strictSlugify = (path: string) => slugify(path, {
-  remove: /[*+~.()'"!:@]/g
+  remove: /[*+~.()'"!:@ьъ]/g
 })
 
 export const eventPath = (slug: string) =>
