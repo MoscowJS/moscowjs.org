@@ -1,4 +1,4 @@
-import { charMap } from './charMap.js'
+import { charMap } from './charMap'
 
 const slugify = (path: string) => path
   .normalize()
