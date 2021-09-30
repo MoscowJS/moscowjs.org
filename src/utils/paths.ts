@@ -6,7 +6,7 @@ const slugify = (path: string) => path
   .toLowerCase()
   .split('')
   .map(char => (charMap[char] || char))
-  .join()
+  .join('')
   .replace(/[^A-Za-z\s\-]/g, '')
   .replace(/\s+/g, '-')
 
