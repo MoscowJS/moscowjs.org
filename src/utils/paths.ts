@@ -1,21 +1,27 @@
-import slugify from "slugify"
+import { charMap } from './charMap.js'
 
-const strictSlugify = (path: string) => slugify(path, {
-  remove: /[?*+~.()'"!:@ьъ\/]/g
-})
+const slugify = (path: string) => path
+  .normalize()
+  .trim()
+  .toLowerCase()
+  .split('')
+  .map(char => (charMap[char] || char))
+  .join()
+  .replace(/[^A-Za-z\s\-]/g, '')
+  .replace(/\s+/g, '-')
 
 export const eventPath = (slug: string) =>
-  `/events/${strictSlugify(slug)}/`.toLowerCase()
+  `/events/${slugify(slug)}/`.toLowerCase()
 
 export const pagePath = (slug: string) =>
   `/${slug
     .split("/")
     .filter(p => p)
-    .map(p => strictSlugify(p))
+    .map(p => slugify(p))
     .join("/")}/`.toLowerCase()
 
 export const speakerPath = (name: string) =>
-  `/speakers/${strictSlugify(name)}/`.toLowerCase()
+  `/speakers/${slugify(name)}/`.toLowerCase()
 
 export const talkPath = (title: string) =>
-  `/talks/${strictSlugify(title)}/`.toLowerCase()
+  `/talks/${slugify(title)}/`.toLowerCase()
