@@ -113,7 +113,7 @@ export const Header: FunctionComponent<{
     external: !!data.customUrl,
     url: data.customUrl || pagePath(data.slug[0]),
     title: data.title,
-    current: pagePath(data.slug[0]) === location.pathname,
+    current: data.customUrl ? false : pagePath(data.slug[0]) === location.pathname,
   }))
 
   return (
