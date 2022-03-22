@@ -5,7 +5,7 @@ import { pagePath } from "../../../utils/paths"
 import { rhythm } from "../../../utils/typography"
 import { Telegram } from "../../icons/telegram"
 import { Container } from "components/layout"
-import { Facebook, Instagram, Twitter, Youtube } from "react-feather"
+import { Twitter, Youtube } from "react-feather"
 import { graphql, Link, useStaticQuery } from "gatsby"
 
 const FooterContainer = styled(Container)`
@@ -97,22 +97,10 @@ export const Footer = () => {
             <Telegram size={rhythm(1)} />
           </IconLink>
           <IconLink
-            href="https://www.instagram.com/moscowjsmeetup/"
-            title="Instagram MoscowJS"
-          >
-            <Instagram size={rhythm(1)} />
-          </IconLink>
-          <IconLink
             href="https://www.youtube.com/c/moscowjs"
             title="YouTube MoscowJS"
           >
             <Youtube size={rhythm(1)} />
-          </IconLink>
-          <IconLink
-            href="https://www.facebook.com/groups/moscowjs/"
-            title="Facebook MoscowJS"
-          >
-            <Facebook size={rhythm(1)} />
           </IconLink>
           <IconLink
             href="https://twitter.com/moscowjs"
