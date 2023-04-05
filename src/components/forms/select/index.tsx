@@ -7,6 +7,7 @@ export const Select = styled.select`
   box-shadow: var(--color-primary) 0px 1px;
   color: var(--color-text);
   max-width: 100%;
+  width: 100%;
 
   &:focus {
     box-shadow: var(--color-primary) 0px 3px;
