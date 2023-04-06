@@ -38,6 +38,7 @@ const DialogContainer = styled.div`
 `
 
 const DialogStyled = styled(Dialog)`
+  width: calc(100vw - 2.4rem);
   max-width: 20rem;
   display: inline-block;
   text-align: left;
