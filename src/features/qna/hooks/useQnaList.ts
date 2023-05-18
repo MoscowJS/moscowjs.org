@@ -14,24 +14,24 @@ type Talk = {
 }
 const allTalks: Talk[] = [
   {
-    title: "Единый стиль кода: как и зачем",
-    speaker: "Софья Гусева",
-    timeEnd: 1680798600000,
+    title: "Доступность для всех",
+    speaker: "Артём Чугаинов, Татьяна Чуйкова",
+    timeEnd: 1684427700000,
   },
   {
-    title: "Зачем и когда стоит использовать Deno",
-    speaker: "Данильян Ахмедьзянов",
-    timeEnd: 1680800100000,
+    title: "Профилирование фронтенда в проде",
+    speaker: "Илья Алонов",
+    timeEnd: 1684429500000,
   },
   {
-    title: "Сравнение подходов разработки: implementation-first vs contract-first",
-    speaker: "Паша Коршиков",
-    timeEnd: 1680803100000,
+    title: "Pet-project — песочница для разработчика",
+    speaker: "Паша Кондаков",
+    timeEnd: 1684432200000,
   },
   {
-    title: "TypeScript: тип never и исчерпывающая проверка типа",
-    speaker: "Денис Чиж",
-    timeEnd: 1680805800000,
+    title: "It is fine или как эффективно выгореть",
+    speaker: "Ольга Кобец",
+    timeEnd: 1684434000000,
   },
 ]
 
