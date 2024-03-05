@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '15'
       - name: Gatsby Publish
-        uses: enriikke/gatsby-gh-pages-action@v2.1.1
+        uses: enriikke/gatsby-gh-pages-action@v2
         with:
           access-token: x-access-token:${{ secrets.ACCESS_TOKEN }}
           deploy-branch: gh-pages
