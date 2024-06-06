@@ -25,7 +25,7 @@ const allTalks: Talk[] = [
   },
   {
     title: "effector - проектирование бизнес-логики",
-    speaker: "Андрей Поповскийв",
+    speaker: "Андрей Поповский",
     timeEnd: 1717696800000,
   },
   {
