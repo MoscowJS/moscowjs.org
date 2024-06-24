@@ -2,26 +2,42 @@ import React, { FunctionComponent } from "react"
 import SEO from "utils/seo"
 import { Container, Footer, Header, Markdown } from "components/layout"
 import { graphql, PageProps } from "gatsby"
-import { PagesData } from "models"
+import { transformConfig } from "utils/transformConfig"
+import { ConfigData, PagesData } from "models"
 
 const CFP: FunctionComponent<
   PageProps<{
     airtablepages: { data: PagesData }
+    allAirtableconfig: {
+      nodes: Array<{
+        data: ConfigData
+      }>
+    }
   }>
 > = ({ data, location }) => {
+  const config = transformConfig(data.allAirtableconfig.nodes)
+
   return (
     <>
       <SEO title={data.airtablepages.data.title} />
       <Header location={location} />
       <Container as="main">
-        <iframe
+        {config.cfpform.value === "airtable" && <iframe
+          src="https://airtable.com/embed/appV8iIxl39lc20bh/pag57KTKlKuiOgmvH/form"
+          style={{
+            width: "100%",
+            height: "533px",
+            border: "none",
+          }}
+        />}
+        {config.cfpform.value === "typeform" && <iframe
           src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet"
           style={{
             width: "100%",
             height: "500px",
             border: "none",
           }}
-        />
+        />}
 
         <Markdown>{data.airtablepages.data.content}</Markdown>
       </Container>
@@ -38,6 +54,14 @@ export const query = graphql`
         slug
         content
         description
+      }
+    }
+    allAirtableconfig(filter: { data: { type: { eq: "qna" } } }) {
+      nodes {
+        data {
+          name
+          value
+        }
       }
     }
   }
