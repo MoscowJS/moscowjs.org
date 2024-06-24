@@ -16,13 +16,14 @@ const CFP: FunctionComponent<
   }>
 > = ({ data, location }) => {
   const config = transformConfig(data.allAirtableconfig.nodes)
+  const formType = config?.cfpform?.value || "airtable"
 
   return (
     <>
       <SEO title={data.airtablepages.data.title} />
       <Header location={location} />
       <Container as="main">
-        {config.cfpform.value === "airtable" && <iframe
+        {formType === "airtable" && <iframe
           src="https://airtable.com/embed/appV8iIxl39lc20bh/pag57KTKlKuiOgmvH/form"
           style={{
             width: "100%",
@@ -30,7 +31,7 @@ const CFP: FunctionComponent<
             border: "none",
           }}
         />}
-        {config.cfpform.value === "typeform" && <iframe
+        {formType === "typeform" && <iframe
           src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet"
           style={{
             width: "100%",
