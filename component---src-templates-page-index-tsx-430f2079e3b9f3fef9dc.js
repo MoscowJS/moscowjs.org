@@ -1,0 +1,2 @@
+(self.webpackChunkmoscowjs_org=self.webpackChunkmoscowjs_org||[]).push([[787],{9091:function(e,t,a){"use strict";a.r(t);var n=a(67294),l=a(64938),r=a(39667);t.default=function(e){var t=e.data,a=e.location;return n.createElement(n.Fragment,null,n.createElement(l.Z,{title:t.airtablepages.data.title}),n.createElement(r.Header,{location:a}),n.createElement(r.Container,{as:"main"},n.createElement(r.Markdown,null,t.airtablepages.data.content)),n.createElement(r.Footer,null))}}}]);
+//# sourceMappingURL=component---src-templates-page-index-tsx-430f2079e3b9f3fef9dc.js.map

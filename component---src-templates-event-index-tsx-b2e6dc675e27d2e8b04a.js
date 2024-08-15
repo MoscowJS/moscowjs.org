@@ -1,0 +1,2 @@
+(self.webpackChunkmoscowjs_org=self.webpackChunkmoscowjs_org||[]).push([[495],{60137:function(e,t,a){"use strict";a.r(t);var n=a(67294),r=a(64938),l=a(39667),c=a(96415);t.default=function(e){var t=e.data,a=e.location;return n.createElement(n.Fragment,null,n.createElement(r.Z,{title:t.airtablemeetups.data.Title}),n.createElement(l.Header,{location:a}),n.createElement(l.Container,{as:"main"},n.createElement(c.j,{event:t.airtablemeetups.data})),n.createElement(l.Footer,null))}}}]);
+//# sourceMappingURL=component---src-templates-event-index-tsx-b2e6dc675e27d2e8b04a.js.map
