@@ -1,7 +1,12 @@
 const path = require("path")
-
-require("dotenv").config({
+const dotenv = require("dotenv")
+ 
+dotenv.config({
   path: `.env.${process.env.NODE_ENV}`,
+})
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}.local`,
+  override: true,
 })
 
 require("ts-node").register()

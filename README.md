@@ -20,6 +20,13 @@ npm install
 5. Make your changes. Make sure the command `npm run build` is passing.
 6. Commit and finally send a GitHub Pull Request with a clear list of what you've done (read more [about pull requests](https://help.github.com/articles/about-pull-requests/)). Make sure all of your commits are atomic (one feature per commit) and have meaningful commit messages.
 
+## Development
+
+To start local development, you need a personal access token for Airtable. Create the one on https://airtable.com/create/tokens (you need read access 
+for Meetups and MoscowJS.org bases).
+
+Add created token to the file `.env.development.local`
+
 ## Data sources
 
 1. Pages — https://airtable.com/shrESYQUdFwE3B9Pw
