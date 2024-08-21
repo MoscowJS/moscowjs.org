@@ -1,13 +1,16 @@
 const path = require("path")
 const dotenv = require("dotenv")
- 
+
 dotenv.config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `.env`,
 })
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV}.local`,
-  override: true,
-})
+// dotenv.config({
+//   path: `.env.${process.env.NODE_ENV}.local`,
+//   override: true,
+// })
+
+console.log('-key', process.env.AIRTABLE_API_KEY)
+console.log('-NODE_ENV', process.env.NODE_ENV)
 
 require("ts-node").register()
 
