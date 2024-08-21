@@ -5,6 +5,7 @@
   "version": "2.0.0",
   "author": "MoscowJS Team <team@moscowjs.org>",
   "dependencies": {
+    "@directus/gatsby-source-directus": "^9.16.2",
     "@types/react-helmet": "^6.1.1",
     "@types/remarkable": "^2.0.2",
     "@types/styled-components": "^5.1.10",
@@ -26,6 +27,7 @@
     "gatsby-plugin-typography": "^4.25.0",
     "gatsby-source-airtable": "^2.2.1",
     "gatsby-source-filesystem": "^4.25.0",
+    "gatsby-source-graphql": "^4.25.0",
     "gatsby-transformer-sharp": "^4.25.0",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
