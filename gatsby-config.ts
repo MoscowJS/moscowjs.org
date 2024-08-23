@@ -1,10 +1,11 @@
 import path from 'node:path'
-
 import type { GatsbyConfig } from 'gatsby'
 
-const GATSBY_SRC_ROOT = 'src'
+import { config } from './config'
 
-const config: GatsbyConfig = {
+const GATSBY_SRC_ROOT = config.gatsby.src ?? 'src'
+
+const gatsbyConfig: GatsbyConfig = {
   flags: {
     DEV_SSR: false,
   },
@@ -63,11 +64,11 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-airtable',
       options: {
-        apiKey: process.env.AIRTABLE_API_KEY,
+        apiKey: config.airtable.apiKey,
         concurrency: 5,
         tables: [
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Meetups',
             tableView: 'moscowjs.org',
             queryName: 'meetups',
@@ -75,7 +76,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Companies',
             tableView: 'moscowjs.org',
             queryName: 'companies',
@@ -83,7 +84,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Talks',
             tableView: 'moscowjs.org',
             queryName: 'talks',
@@ -91,7 +92,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Venues',
             tableView: 'moscowjs.org',
             queryName: 'venues',
@@ -99,7 +100,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Speakers',
             tableView: 'moscowjs.org',
             queryName: 'speakers',
@@ -110,7 +111,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Orgs',
             tableView: 'moscowjs.org',
             queryName: 'orgs',
@@ -121,7 +122,7 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_BASE_ID,
+            baseId: config.airtable.baseId,
             tableName: 'Partners',
             queryName: 'partners',
             mapping: {
@@ -130,19 +131,19 @@ const config: GatsbyConfig = {
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_META_BASE_ID,
+            baseId: config.airtable.metaBaseId,
             tableName: 'config',
             queryName: 'config',
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_META_BASE_ID,
+            baseId: config.airtable.metaBaseId,
             tableName: 'navigation',
             queryName: 'navigation',
             separateNodeType: true,
           },
           {
-            baseId: process.env.AIRTABLE_META_BASE_ID,
+            baseId: config.airtable.metaBaseId,
             tableName: 'pages',
             queryName: 'pages',
             separateNodeType: true,
@@ -150,7 +151,19 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    // {
+    //   resolve: '@directus/gatsby-source-directus',
+    //   options: {
+    //     url: 'http://localhost:8055', // Fill with your Directus instance address
+    //     auth: {
+    //       // token: 'my_secret_token', // You can use a static token from an user
 
+    //       // Or you can use the credentials of an user
+    //       email: 'team@moscowjs.org',
+    //       password: 'fAbRinFgt7_P',
+    //     },
+    //   },
+    // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // {
@@ -162,4 +175,4 @@ const config: GatsbyConfig = {
   ],
 }
 
-export default config
+export default gatsbyConfig
