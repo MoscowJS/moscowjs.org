@@ -1,8 +1,15 @@
-const React = require("react")
-const { GlobalLayout } = require("components/layout")
+import React from 'react'
+import { GlobalLayout } from 'components/layout'
+
 // const { auth } = require("features/firebase")
 
-exports.wrapPageElement = ({ element, props }) => {
+import type { GatsbyBrowser } from 'gatsby'
+
+export const wrapPageElement: GatsbyBrowser['wrapPageElement'] = ({
+  element,
+  props,
+}) => {
+  // @ts-ignore
   return <GlobalLayout {...props}>{element}</GlobalLayout>
 }
 
