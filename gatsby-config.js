@@ -1,18 +1,8 @@
-const path = require("path")
-const dotenv = require("dotenv")
-
-dotenv.config({
-  path: `.env`,
-})
-// dotenv.config({
-//   path: `.env.${process.env.NODE_ENV}.local`,
-//   override: true,
-// })
-
-console.log('-key', process.env.AIRTABLE_API_KEY)
-console.log('-NODE_ENV', process.env.NODE_ENV)
-
 require("ts-node").register()
+
+const path = require("path")
+
+const BASE_SRC_ROOT = 'src'
 
 module.exports = {
   flags: {
@@ -31,7 +21,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `static`,
-        path: `${__dirname}/src/static`,
+        path: `${__dirname}/${BASE_SRC_ROOT}/static`,
       },
     },
     `gatsby-plugin-styled-components`,
@@ -49,24 +39,24 @@ module.exports = {
         display: `minimal-ui`,
         lang: "ru",
         cache_busting_mode: "none",
-        icon: `src/static/logo.png`, // This path is relative to the root of the site.
+        icon: `${BASE_SRC_ROOT}/static/logo.png`, // This path is relative to the root of the site.
       },
     },
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        pathToConfigModule: `${BASE_SRC_ROOT}/utils/typography`,
       },
     },
     {
       resolve: "gatsby-plugin-root-import",
       options: {
-        src: path.join(__dirname, "src"),
-        components: path.join(__dirname, "src/components"),
-        models: path.join(__dirname, "src/models"),
-        static: path.join(__dirname, "src/static"),
-        features: path.join(__dirname, "src/features"),
-        utils: path.join(__dirname, "src/utils"),
+        src: path.join(__dirname, `${BASE_SRC_ROOT}`),
+        components: path.join(__dirname, `${BASE_SRC_ROOT}/components`),
+        models: path.join(__dirname, `${BASE_SRC_ROOT}/models`),
+        static: path.join(__dirname, `${BASE_SRC_ROOT}/static`),
+        features: path.join(__dirname, `${BASE_SRC_ROOT}/features`),
+        utils: path.join(__dirname, `${BASE_SRC_ROOT}/utils`),
       },
     },
     {
