@@ -1,18 +1,18 @@
-import React, { FunctionComponent } from "react"
-import ReactMarkdown from "react-markdown"
-import slug from "remark-slug"
-import toc from "remark-toc"
-import { Link } from "gatsby"
+import React, { FunctionComponent } from 'react'
+import ReactMarkdown from 'react-markdown'
+import slug from 'remark-slug'
+import toc from 'remark-toc'
+import { Link } from 'gatsby'
 
 const renderers: any = {
   link: (link: { href: string; children: any }) => {
-    if (link.href.startsWith("/")) {
+    if (link.href.startsWith('/')) {
       return <Link to={link.href}>{link.children}</Link>
     }
 
     // dirtiest hack evar
-    if (link.href.includes("moscowjs.org")) {
-      const [, path] = link.href.split("moscowjs.org")
+    if (link.href.includes('moscowjs.org')) {
+      const [, path] = link.href.split('moscowjs.org')
 
       return <Link to={path}>{link.children}</Link>
     }
@@ -37,7 +37,7 @@ export const Markdown: FunctionComponent<{
     [
       toc,
       {
-        heading: "Содержание",
+        heading: 'Содержание',
         tight: true,
       },
     ],
@@ -49,7 +49,7 @@ export const Markdown: FunctionComponent<{
       plugins={plugins}
       renderers={renderers}
     >
-      {children || markdown || ""}
+      {children || markdown || ''}
     </ReactMarkdown>
   )
 }
