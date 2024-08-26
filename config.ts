@@ -15,7 +15,7 @@ if (typeof process.env['SITE_URL'] !== 'string') {
 }
 if (
   typeof process.env['GATSBY_DATASOURCE'] !== 'string' ||
-  ['airtable', 'directus'].includes(process.env['GATSBY_DATASOURCE'])
+  !['airtable', 'directus'].includes(process.env['GATSBY_DATASOURCE'])
 ) {
   throw new Error('ENV GATSBY_DATASOURCE invalid')
 }

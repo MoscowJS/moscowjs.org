@@ -147,7 +147,7 @@ const gatsbyConfig: GatsbyConfig = {
         display: 'minimal-ui',
         lang: 'ru',
         cache_busting_mode: 'none',
-        icon: '${GATSBY_SRC_ROOT}/static/logo.png',
+        icon: `${GATSBY_SRC_ROOT}/static/logo.png`,
       },
     },
     {
