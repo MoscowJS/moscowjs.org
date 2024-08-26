@@ -1,4 +1,4 @@
-import React, { FunctionComponent, StatelessComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import {
   flexAlign,
@@ -49,7 +49,7 @@ const ImageContainer = styled.div<ImageContainerProps>`
     float: left;
   `
       : ''}
-  
+
   ${({ size }) =>
     size === 's'
       ? `
@@ -67,7 +67,7 @@ const ImageContainer = styled.div<ImageContainerProps>`
     }
   `
       : ''}
-  
+
   @media screen and (min-width: 600px) {
     float: none;
   }

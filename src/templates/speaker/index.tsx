@@ -1,5 +1,9 @@
-import Img from 'gatsby-image'
 import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+import Img from 'gatsby-image'
+import { UserX } from 'react-feather'
+
+import type { WrappedWithDirectus, Speaker } from 'models'
 // import SEO from "utils/seo"
 import {
   Container,
@@ -8,86 +12,73 @@ import {
   Item,
   Markdown,
 } from 'components/layout'
-// import { EventLogo } from 'features/events/eventLogo'
-import { graphql, PageProps } from 'gatsby'
-// import { SpeakerData } from 'models'
-// import { Talk } from 'features/talks/talk'
-import { UserX } from 'react-feather'
+import { EventLogo } from 'features/events/eventLogo'
+import { Talk } from 'features/talks/talk'
 
-// const transformContacts = (speaker: SpeakerData) => {
-//   const result = []
+const transformContacts = (speaker: Speaker) => {
+  const result = []
 
-//   if (speaker.Telegram) {
-//     result.push({
-//       title: 'telegram',
-//       href: `https://t.me/${speaker.Telegram}`,
-//       text: `t.me/${speaker.Telegram}`,
-//     })
-//   }
+  if (speaker.telegram) {
+    result.push({
+      title: 'telegram',
+      href: `https://t.me/${speaker.telegram}`,
+      text: `t.me/${speaker.telegram}`,
+    })
+  }
 
-//   if (speaker.Email) {
-//     result.push({
-//       title: 'email',
-//       href: `mailto:${speaker.Email}`,
-//       text: speaker.Email,
-//     })
-//   }
+  if (speaker.email) {
+    result.push({
+      title: 'email',
+      href: `mailto:${speaker.email}`,
+      text: speaker.email,
+    })
+  }
 
-//   if (speaker.Twitter) {
-//     result.push({
-//       title: 'twitter',
-//       href: `https://twitter.com/${speaker.Twitter}`,
-//       text: `@${speaker.Twitter}`,
-//     })
-//   }
+  if (speaker.github) {
+    result.push({
+      title: 'github',
+      href: `https://github.com/${speaker.github}`,
+      text: `@${speaker.github}`,
+    })
+  }
 
-//   if (speaker.Github___Bitbucket) {
-//     result.push({
-//       title: 'github',
-//       href: `https://github.com/${speaker.Github___Bitbucket}`,
-//       text: `@${speaker.Github___Bitbucket}`,
-//     })
-//   }
+  if (speaker.link) {
+    result.push({
+      title: 'personal',
+      href: speaker.link,
+      text: speaker.link,
+    })
+  }
 
-//   if (speaker.Personal_link) {
-//     result.push({
-//       title: 'personal',
-//       href: speaker.Personal_link,
-//       text: speaker.Personal_link,
-//     })
-//   }
-
-//   return result
-// }
+  return result
+}
 
 const SpeakerPage: FunctionComponent<
-  PageProps<{
-    airtablespeakers: { data: unknown }
-  }>
+  PageProps<WrappedWithDirectus<'persons_by_id', Speaker>>
 > = ({ data, location }) => {
-  // const speaker = data.airtablespeakers.data
-  // const contacts = transformContacts(speaker)
+  const speaker = data.directus.persons_by_id
+  const contacts = transformContacts(speaker)
 
   return (
     <>
       {/* <SEO title={speaker.Name} /> */}
       {/* <Header location={location} /> */}
       <Container as="main">
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-        {/* <Item>
+        <pre>{JSON.stringify(data.directus.persons_by_id, null, 2)}</pre>
+        <Item>
           <Item.ImageContainer size="xl">
-            {speaker.Photo ? (
+            {speaker.photo ? (
               <Img
-                fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
-                alt={speaker.Name}
+                // fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
+                alt={speaker.name}
               />
             ) : (
               <UserX size="100%" />
             )}
           </Item.ImageContainer>
           <Item.Content>
-            <h1>{speaker.Name}</h1>
-            <Markdown>{speaker.About}</Markdown>
+            <h1>{speaker.name}</h1>
+            <Markdown>{speaker.about}</Markdown>
             {contacts.length > 0 && (
               <>
                 {contacts.map(({ title, href, text }) => {
@@ -102,22 +93,24 @@ const SpeakerPage: FunctionComponent<
           </Item.Content>
         </Item>
         <h2>Доклады</h2>
-        {speaker.Talks?.sort((a, b) => {
-          return +new Date(b.data.Date) - +new Date(a.data.Date)
-        }).map(({ data }) => {
-          const meetup = data.Meetup[0].data
+        {speaker.talks
+          // ?.sort((a, b) => {
+          //   return +new Date(b.data.Date) - +new Date(a.data.Date)
+          // })
+          ?.map(meetupData => {
+            const talk = meetupData['talks_id']
 
-          return (
-            <Item>
-              <Item.ImageContainer size="xs">
-                <EventLogo size="xs" title={meetup.Title} />
-              </Item.ImageContainer>
-              <Item.Content verticalAlign="center">
-                <Talk.Description talk={data} level={2} />
-              </Item.Content>
-            </Item>
-          ) */}
-        {/* })} */}
+            return (
+              <Item>
+                <Item.ImageContainer size="xs">
+                  <EventLogo size="xs" title={talk.title} />
+                </Item.ImageContainer>
+                <Item.Content verticalAlign="center">
+                  <Talk.Description talk={talk} level={2} />
+                </Item.Content>
+              </Item>
+            )
+          })}
       </Container>
       {/* <Footer /> */}
     </>
@@ -125,16 +118,33 @@ const SpeakerPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query OtherPlaylistInfoQuery {
+  query ($id: ID!) {
     directus {
-      persons(limit: 3) {
+      persons_by_id(id: $id) {
         id
-        name
-        email
+        status
         telegram
+        name
+        role
+        phone
+        email
+        about
+        github
+        link
+        photo {
+          id
+        }
+        talks {
+          talks_id {
+            id
+            title
+          }
+        }
       }
     }
   }
 `
+
+console.log('++SpeakerPage:', query)
 
 export default SpeakerPage

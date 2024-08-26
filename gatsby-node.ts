@@ -3,6 +3,7 @@ import type { GatsbyNode } from 'gatsby'
 
 import { config } from './config'
 import { speakerPath } from './src/utils/paths'
+import type { Speaker, WrappedWithDirectus } from './src/models'
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   actions,
@@ -22,14 +23,14 @@ export const createPages: GatsbyNode['createPages'] = async ({
 }) => {
   const { createPage } = actions
 
-  const result = await graphql(`
-    query OtherPlaylistInfoQuery {
+  const result = await graphql<
+    WrappedWithDirectus<'persons', Array<Pick<Speaker, 'id' | 'name'>>>
+  >(`
+    query {
       directus {
         persons(limit: 3) {
           id
           name
-          email
-          telegram
         }
       }
     }
@@ -37,7 +38,8 @@ export const createPages: GatsbyNode['createPages'] = async ({
 
   console.log('----result', JSON.stringify(result, null, 2))
 
-  result.data.directus.persons.forEach(person => {
+  result.data?.directus.persons.forEach(person => {
+    console.log('----id', person.id)
     createPage({
       path: speakerPath(person.name),
       component: path.resolve(config.gatsby.src, 'templates/speaker/index.tsx'),
