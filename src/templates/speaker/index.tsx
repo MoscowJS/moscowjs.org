@@ -59,12 +59,21 @@ const SpeakerPage: FunctionComponent<
   const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)
 
+  const talks = (speaker.talks ?? [])
+    .filter(talk => Boolean(talk.talks_id.meetup_id))
+    .sort((talkA, talkB) => {
+      return (
+        new Date(talkB.talks_id.meetup_id.date_start).valueOf() -
+        new Date(talkB.talks_id.meetup_id.date_start).valueOf()
+      )
+    })
+
   return (
     <>
       {/* <SEO title={speaker.Name} /> */}
       {/* <Header location={location} /> */}
       <Container as="main">
-        <pre>{JSON.stringify(data.directus.persons_by_id, null, 2)}</pre>
+        <pre>{JSON.stringify(speaker, null, 2)}</pre>
         <Item>
           <Item.ImageContainer size="xl">
             {speaker.photo ? (
@@ -93,24 +102,20 @@ const SpeakerPage: FunctionComponent<
           </Item.Content>
         </Item>
         <h2>Доклады</h2>
-        {speaker.talks
-          // ?.sort((a, b) => {
-          //   return +new Date(b.data.Date) - +new Date(a.data.Date)
-          // })
-          ?.map(meetupData => {
-            const talk = meetupData['talks_id']
+        {talks.map(meetupData => {
+          const talk = meetupData['talks_id']
 
-            return (
-              <Item>
-                <Item.ImageContainer size="xs">
-                  <EventLogo size="xs" title={talk.title} />
-                </Item.ImageContainer>
-                <Item.Content verticalAlign="center">
-                  <Talk.Description talk={talk} level={2} />
-                </Item.Content>
-              </Item>
-            )
-          })}
+          return (
+            <Item>
+              <Item.ImageContainer size="xs">
+                <EventLogo size="xs" title={talk.title} />
+              </Item.ImageContainer>
+              <Item.Content verticalAlign="center">
+                <Talk.Description talk={talk} level={2} />
+              </Item.Content>
+            </Item>
+          )
+        })}
       </Container>
       {/* <Footer /> */}
     </>
@@ -138,13 +143,16 @@ export const query = graphql`
           talks_id {
             id
             title
+            theses
+            meetup_id {
+              id
+              date_start
+            }
           }
         }
       }
     }
   }
 `
-
-console.log('++SpeakerPage:', query)
 
 export default SpeakerPage
