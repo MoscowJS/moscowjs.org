@@ -25,16 +25,14 @@ const Speaker = styled.li`
 `
 
 export const SpeakersGrid: FunctionComponent<{
-  speakers: Array<{
-    data: Speaker
-  }>
+  speakers: Array<Speaker>
 }> = ({ speakers }) => {
   return (
     <SpeakersContainer>
-      {speakers.map(({ data }) => {
+      {speakers.map(speaker => {
         return (
-          <Speaker key={data.name}>
-            <SpeakerPhoto speaker={data} />
+          <Speaker key={speaker.name}>
+            <SpeakerPhoto speaker={speaker} />
           </Speaker>
         )
       })}

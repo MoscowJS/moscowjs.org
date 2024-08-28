@@ -1,9 +1,10 @@
 import path from 'node:path'
+import assert from 'node:assert/strict'
 import type { GatsbyNode } from 'gatsby'
 
 import { config } from './config'
-import { speakerPath } from './src/utils/paths'
-import type { Speaker, WrappedWithDirectus } from './src/models'
+import { speakerPath, talkPath } from './src/utils/paths'
+import type { Speaker, Talk, WrappedWithDirectus } from './src/models'
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   actions,
@@ -17,6 +18,11 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   }
 }
 
+type GraphqlDirectusPersonsTalks = {
+  persons: Array<Pick<Speaker, 'id' | 'name'>>
+  talks: Array<Pick<Talk, 'id' | 'title'>>
+}
+
 export const createPages: GatsbyNode['createPages'] = async ({
   graphql,
   actions,
@@ -24,13 +30,17 @@ export const createPages: GatsbyNode['createPages'] = async ({
   const { createPage } = actions
 
   const result = await graphql<
-    WrappedWithDirectus<'persons', Array<Pick<Speaker, 'id' | 'name'>>>
+    WrappedWithDirectus<GraphqlDirectusPersonsTalks>
   >(`
     query {
       directus {
-        persons(limit: 3) {
+        persons(limit: 5) {
           id
           name
+        }
+        talks(limit: 5) {
+          id
+          title
         }
       }
     }
@@ -38,12 +48,26 @@ export const createPages: GatsbyNode['createPages'] = async ({
 
   console.log('----result', JSON.stringify(result, null, 2))
 
-  result.data?.directus.persons.forEach(person => {
-    console.log('----id', person.id)
+  assert(result.data, 'GraphqlDataError')
+
+  result.data.directus.persons.forEach(person => {
     createPage({
       path: speakerPath(person.name),
       component: path.resolve(config.gatsby.src, 'templates/speaker/index.tsx'),
       context: { id: person.id },
+    })
+  })
+
+  result.data.directus.talks.forEach(talk => {
+    if (!talk.title) {
+      console.error('Talk wrong format', talk.id)
+      return
+    }
+
+    createPage({
+      path: talkPath(talk.title),
+      component: path.resolve(config.gatsby.src, 'templates/talk/index.tsx'),
+      context: { id: talk.id },
     })
   })
 }

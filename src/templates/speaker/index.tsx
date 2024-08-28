@@ -53,8 +53,12 @@ const transformContacts = (speaker: Speaker) => {
   return result
 }
 
+type GraphqlDirectusTalks = {
+  persons_by_id: Speaker
+}
+
 const SpeakerPage: FunctionComponent<
-  PageProps<WrappedWithDirectus<'persons_by_id', Speaker>>
+  PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
 > = ({ data, location }) => {
   const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)

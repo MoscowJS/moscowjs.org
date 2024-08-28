@@ -45,14 +45,14 @@ const TalkDescription: FunctionComponent<{
 }
 
 export const Talk: FunctionComponent<{
-  talk: TalkData
+  talk: TalkType
   level: 1 | 2 | 3
 }> & {
   Description: typeof TalkDescription
 } = ({ talk, level }) => {
-  const speakers = talk.Speakers
+  const { speakers } = talk
 
-  if (speakers.length === 0) {
+  if (speakers?.length === 0) {
     return null
   }
 
@@ -62,9 +62,9 @@ export const Talk: FunctionComponent<{
       <SpeakersGrid speakers={speakers} />
     </>
   ) : (
-    <Item key={talk.Title}>
+    <Item key={talk.title}>
       <Item.ImageContainer size="s">
-        <SpeakerPhoto speaker={talk.Speakers[0].data} />
+        <SpeakerPhoto speaker={talk.speakers[0]} />
       </Item.ImageContainer>
       <Item.Content>
         <TalkDescription talk={talk} level={level} />
