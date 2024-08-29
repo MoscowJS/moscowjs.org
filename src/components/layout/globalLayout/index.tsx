@@ -1,6 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import React, { type ReactNode, type FunctionComponent } from 'react'
 import './styles.css'
 
-export const GlobalLayout: FunctionComponent = ({ children }) => {
+export const GlobalLayout: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <>{children}</>
 }

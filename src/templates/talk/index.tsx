@@ -12,7 +12,7 @@ type GraphqlDirectusTalks = {
 
 const TalkPage: FunctionComponent<
   PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
-> = ({ data, location }) => {
+> = ({ data }) => {
   const talk = data.directus.talks_by_id
 
   return (

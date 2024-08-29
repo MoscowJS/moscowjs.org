@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
-import { eventPath, talkPath } from 'utils/paths'
-import { rhythm } from 'utils/typography'
+import { talkPath } from 'utils/paths'
+// import { rhythm } from 'utils/typography'
 
 import { SpeakerPhoto } from '../../speakers/speakerPhoto'
 import { SpeakersGrid } from '../../speakers/speakersGrid'
@@ -12,10 +12,10 @@ import { Talk as TalkType } from 'models'
 import { Item, Markdown } from 'components/layout'
 import { Link } from 'gatsby'
 
-const Meta = styled.a`
-  display: inline-block;
-  margin-right: ${rhythm(0.5)};
-`
+// const Meta = styled.a`
+//   display: inline-block;
+//   margin-right: ${rhythm(0.5)};
+// `
 
 const TalkDescription: FunctionComponent<{
   talk: TalkType

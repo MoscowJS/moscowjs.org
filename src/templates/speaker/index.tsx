@@ -59,7 +59,7 @@ type GraphqlDirectusTalks = {
 
 const SpeakerPage: FunctionComponent<
   PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
-> = ({ data, location }) => {
+> = ({ data }) => {
   const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)
 
@@ -68,7 +68,7 @@ const SpeakerPage: FunctionComponent<
     .sort((talkA, talkB) => {
       return (
         new Date(talkB.talks_id.meetup_id!.date_start).valueOf() -
-        new Date(talkB.talks_id.meetup_id!.date_start).valueOf()
+        new Date(talkA.talks_id.meetup_id!.date_start).valueOf()
       )
     })
 

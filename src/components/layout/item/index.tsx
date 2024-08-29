@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, ReactNode } from 'react'
 import styled from 'styled-components'
 import {
   flexAlign,
@@ -9,7 +9,7 @@ import {
 } from './item.h'
 import { getSize, rhythm } from '../../../utils/typography'
 
-export const Item: FunctionComponent & {
+export const Item: FunctionComponent<{ children: ReactNode }> & {
   Image: typeof ItemImage
   Content: typeof ItemContent
   Header: typeof ItemHeader
