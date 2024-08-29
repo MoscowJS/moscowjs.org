@@ -1,6 +1,6 @@
 import path from 'node:path'
 import assert from 'node:assert/strict'
-import type { GatsbyNode } from 'gatsby'
+import type { CreatePagesArgs, GatsbyNode } from 'gatsby'
 
 import { config } from './config'
 import { speakerPath, talkPath } from './src/utils/paths'
@@ -18,9 +18,45 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   }
 }
 
-type GraphqlDirectusPersonsTalks = {
+type GraphqlDirectusPersons = {
   persons: Array<Pick<Speaker, 'id' | 'name'>>
+}
+type GraphqlDirectusTalks = {
   talks: Array<Pick<Talk, 'id' | 'title'>>
+}
+
+type GraphqlDirectusData = {
+  [key: string]: Array<unknown>
+}
+
+async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
+  graphql: CreatePagesArgs['graphql'],
+  buildQueryFunction: Function,
+  arrayField: keyof TQueryResult
+): AsyncGenerator<TQueryResult[keyof TQueryResult]> {
+  const limit = 100
+  let hasNextPage = true
+  let currentPage = 0
+
+  while (hasNextPage) {
+    const query = buildQueryFunction(limit, currentPage)
+    const result = await graphql<WrappedWithDirectus<TQueryResult>>(query)
+
+    assert(result.data, 'GraphqlDataError')
+    const arrayFieldData = result.data.directus[arrayField]
+    assert(Array.isArray(arrayFieldData), 'GraphqlDataArrayFieldError')
+
+    yield arrayFieldData
+
+    console.log(`fetched ${arrayFieldData.length} ${String(arrayField)}`)
+
+    if (arrayFieldData.length < limit) {
+      hasNextPage = false
+      continue
+    } else {
+      currentPage += arrayFieldData.length
+    }
+  }
 }
 
 export const createPages: GatsbyNode['createPages'] = async ({
@@ -29,45 +65,67 @@ export const createPages: GatsbyNode['createPages'] = async ({
 }) => {
   const { createPage } = actions
 
-  const result = await graphql<
-    WrappedWithDirectus<GraphqlDirectusPersonsTalks>
-  >(`
-    query {
-      directus {
-        persons(limit: 5) {
-          id
-          name
-        }
-        talks(limit: 5) {
-          id
-          title
+  function personsQuery(limit: number, offset: number): string {
+    const query = `
+      query {
+        directus {
+          persons(limit: ${limit}, offset: ${offset}) {
+            id
+            name
+          }
         }
       }
-    }
-  `)
+    `
+    return query
+  }
 
-  console.log('----result', JSON.stringify(result, null, 2))
+  function talksQuery(limit: number, offset: number): string {
+    const query = `
+      query {
+        directus {
+          talks(limit: ${limit}, offset: ${offset}) {
+            id
+            title
+          }
+        }
+      }
+    `
+    return query
+  }
 
-  assert(result.data, 'GraphqlDataError')
-
-  result.data.directus.persons.forEach(person => {
-    createPage({
-      path: speakerPath(person.name),
-      component: path.resolve(config.gatsby.src, 'templates/speaker/index.tsx'),
-      context: { id: person.id },
+  for await (const persons of fetchGraphqlQuery<GraphqlDirectusPersons>(
+    graphql,
+    personsQuery,
+    'persons'
+  )) {
+    persons.forEach(person => {
+      createPage({
+        path: speakerPath(person.name),
+        component: path.resolve(
+          config.gatsby.src,
+          'templates/speaker/index.tsx'
+        ),
+        context: { id: person.id },
+      })
     })
-  })
+  }
 
-  result.data.directus.talks.forEach(talk => {
-    if (!talk.title) {
-      console.error('Talk wrong format', talk.id)
-      return
-    }
+  for await (const talks of fetchGraphqlQuery<GraphqlDirectusTalks>(
+    graphql,
+    talksQuery,
+    'talks'
+  )) {
+    talks.forEach(talk => {
+      if (!talk.title) {
+        console.error('Talk wrong format', talk.id)
+        return
+      }
 
-    createPage({
-      path: talkPath(talk.title),
-      component: path.resolve(config.gatsby.src, 'templates/talk/index.tsx'),
-      context: { id: talk.id },
+      createPage({
+        path: talkPath(talk.title),
+        component: path.resolve(config.gatsby.src, 'templates/talk/index.tsx'),
+        context: { id: talk.id },
+      })
     })
-  })
+  }
 }
