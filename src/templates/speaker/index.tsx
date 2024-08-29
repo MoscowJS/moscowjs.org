@@ -67,8 +67,8 @@ const SpeakerPage: FunctionComponent<
     .filter(talk => Boolean(talk.talks_id.meetup_id))
     .sort((talkA, talkB) => {
       return (
-        new Date(talkB.talks_id.meetup_id.date_start).valueOf() -
-        new Date(talkB.talks_id.meetup_id.date_start).valueOf()
+        new Date(talkB.talks_id.meetup_id!.date_start).valueOf() -
+        new Date(talkB.talks_id.meetup_id!.date_start).valueOf()
       )
     })
 
@@ -82,7 +82,7 @@ const SpeakerPage: FunctionComponent<
           <Item.ImageContainer size="xl">
             {speaker.photo ? (
               <Img
-                // fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
+                fluid={speaker.photo.imageFile.childImageSharp.fluid}
                 alt={speaker.name}
               />
             ) : (
@@ -142,6 +142,20 @@ export const query = graphql`
         link
         photo {
           id
+          imageFile {
+            childImageSharp {
+              fluid(
+                cropFocus: CENTER
+                quality: 80
+                grayscale: true
+                maxWidth: 150
+                maxHeight: 150
+                fit: COVER
+              ) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
         talks {
           talks_id {

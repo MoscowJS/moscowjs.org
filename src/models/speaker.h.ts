@@ -11,7 +11,20 @@ export type Speaker = {
   about?: string
   github?: string
   link?: string
-  photo?: Record<string, unknown>
+  photo?: {
+    id: string
+    imageFile: {
+      childImageSharp: {
+        fluid: {
+          base64: string
+          aspectRatio: number
+          src: string
+          srcSet: string
+          sizes: string
+        }
+      }
+    }
+  }
   talks?: Array<{
     talks_id: Talk
   }>
