@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import { Link } from 'gatsby'
-// import Img from 'gatsby-image'
+import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
 import type { Speaker } from 'models'
@@ -13,13 +13,12 @@ export const SpeakerPhoto: FunctionComponent<{
 }> = ({ speaker }) => {
   return (
     <div>
-      {speaker.photo && (
-        // (
-        //   <Img
-        //     fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
-        //     alt={speaker.Name}
-        //   />
-        // ) :
+      {speaker.photo ? (
+        <Img
+          fluid={speaker.photo.imageFile.childImageSharp.fluid}
+          alt={speaker.name}
+        />
+      ) : (
         <div
           css={`
             line-height: 0;

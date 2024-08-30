@@ -64,7 +64,7 @@ export const Talk: FunctionComponent<{
   ) : (
     <Item key={talk.title}>
       <Item.ImageContainer size="s">
-        <SpeakerPhoto speaker={talk.speakers[0]} />
+        <SpeakerPhoto speaker={talk.speakers[0]?.persons_id} />
       </Item.ImageContainer>
       <Item.Content>
         <TalkDescription talk={talk} level={level} />

@@ -44,10 +44,31 @@ export const query = graphql`
         company
         scene
         speakers {
-          id
+          persons_id {
+            id
+            name
+            photo {
+              id
+              imageFile {
+                childImageSharp {
+                  fluid(
+                    cropFocus: CENTER
+                    quality: 80
+                    grayscale: true
+                    maxWidth: 150
+                    maxHeight: 150
+                    fit: COVER
+                  ) {
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
         }
         meetup_id {
           id
+          title
         }
       }
     }

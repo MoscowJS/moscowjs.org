@@ -112,7 +112,7 @@ const SpeakerPage: FunctionComponent<
           return (
             <Item>
               <Item.ImageContainer size="xs">
-                <EventLogo size="xs" title={talk.title} />
+                <EventLogo size="xs" title={talk.meetup_id?.title ?? ''} />
               </Item.ImageContainer>
               <Item.Content verticalAlign="center">
                 <Talk.Description talk={talk} level={2} />
@@ -165,6 +165,7 @@ export const query = graphql`
             meetup_id {
               id
               date_start
+              title
             }
           }
         }

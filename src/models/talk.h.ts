@@ -13,5 +13,5 @@ export type Talk = {
   company: string
   scene: string
   meetup_id?: Meetup
-  speakers: Array<Speaker>
+  speakers: Array<{ persons_id: Speaker }>
 }
