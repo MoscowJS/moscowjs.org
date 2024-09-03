@@ -98,10 +98,21 @@ export const createPages: GatsbyNode['createPages'] = async ({
   }
 
   function pagesQuery(limit: number, offset: number): string {
+    // const query = `
+    //   query {
+    //     directus {
+    //       pages(filter: { status: { _eq: "published" } }, limit: ${limit}, offset: ${offset}) {
+    //         id
+    //         slug
+    //         template
+    //       }
+    //     }
+    //   }
+    // `
     const query = `
       query {
         directus {
-          pages(filter: { status: { _eq: "published" } }, limit: ${limit}, offset: ${offset}) {
+          pages(filter: { template: { _eq: "page" } }, limit: ${limit}, offset: ${offset}) {
             id
             slug
             template
@@ -148,20 +159,20 @@ export const createPages: GatsbyNode['createPages'] = async ({
     })
   }
 
-  // for await (const pages of fetchGraphqlQuery<GraphqlDirectusPages>(
-  //   graphql,
-  //   pagesQuery,
-  //   'pages'
-  // )) {
-  //   pages.forEach(page => {
-  //     createPage({
-  //       path: pagePath(page.slug),
-  //       component: path.resolve(
-  //         config.gatsby.src,
-  //         `templates/${page.template}/index.tsx`
-  //       ),
-  //       context: { id: page.id },
-  //     })
-  //   })
-  // }
+  for await (const pages of fetchGraphqlQuery<GraphqlDirectusPages>(
+    graphql,
+    pagesQuery,
+    'pages'
+  )) {
+    pages.forEach(page => {
+      createPage({
+        path: pagePath(page.slug),
+        component: path.resolve(
+          config.gatsby.src,
+          `templates/${page.template}/index.tsx`
+        ),
+        context: { id: page.id },
+      })
+    })
+  }
 }
