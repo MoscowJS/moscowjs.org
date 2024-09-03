@@ -5,13 +5,7 @@ import { UserX } from 'react-feather'
 
 import type { WrappedWithDirectus, Speaker } from 'models'
 // import SEO from "utils/seo"
-import {
-  Container,
-  // Footer,
-  Header,
-  Item,
-  Markdown,
-} from 'components/layout'
+import { Container, Footer, Header, Item, Markdown } from 'components/layout'
 import { EventLogo } from 'features/events/eventLogo'
 import { Talk } from 'features/talks/talk'
 
@@ -77,7 +71,6 @@ const SpeakerPage: FunctionComponent<
       {/* <SEO title={speaker.Name} /> */}
       <Header location={location} />
       <Container as="main">
-        <pre>{JSON.stringify(speaker, null, 2)}</pre>
         <Item>
           <Item.ImageContainer size="xl">
             {speaker.photo ? (
@@ -121,7 +114,7 @@ const SpeakerPage: FunctionComponent<
           )
         })}
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

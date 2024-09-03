@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
 
 // import SEO from 'utils/seo'
-import { Container, Hero, Panel, Header } from 'components/layout'
+import { Container, Hero, Panel, Header, Footer } from 'components/layout'
 import { Event } from 'features/events/event'
 import { Meetup, WrappedWithDirectus } from 'models'
 import { EventsFeed } from 'features/events/eventsFeed'
@@ -107,7 +107,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
           <Link to={'/events/'}>Все мероприятия ({totalCount})</Link>
         </p>
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
