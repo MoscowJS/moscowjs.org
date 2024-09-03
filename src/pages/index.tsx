@@ -7,12 +7,26 @@ import { Event } from 'features/events/event'
 import { Meetup, WrappedWithDirectus } from 'models'
 import { EventsFeed } from 'features/events/eventsFeed'
 
+type GraphqlDirectusMeetupsCount = {
+  count: {
+    id: number
+  }
+}
+
 const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   const result = useStaticQuery<
-    WrappedWithDirectus<{ meetups: Array<Meetup> }>
+    WrappedWithDirectus<{
+      meetups: Array<Meetup>
+      meetups_aggregated: Array<GraphqlDirectusMeetupsCount>
+    }>
   >(graphql`
     query {
       directus {
+        meetups_aggregated(filter: { publish: { _eq: true } }) {
+          count {
+            id
+          }
+        }
         meetups(
           filter: { publish: { _eq: true } }
           sort: ["-date_start"]
@@ -61,11 +75,8 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
     }
   `)
 
-  // const {
-  //   allAirtablemeetups: { totalCount, nodes },
-  // } = result
-
   const [latestEvent, ...otherEvents] = result.directus.meetups
+  const totalCount = result.directus.meetups_aggregated.at(0)?.count.id ?? 0
 
   return (
     <>
@@ -92,9 +103,9 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
 
         <EventsFeed events={otherEvents} />
 
-        {/* <p>
+        <p>
           <Link to={'/events/'}>Все мероприятия ({totalCount})</Link>
-        </p> */}
+        </p>
       </Container>
       {/* <Footer /> */}
     </>
