@@ -2,17 +2,17 @@ import React, { FunctionComponent, Suspense } from 'react'
 import type { PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import { Container } from 'components/layout'
+import { Container, Header } from 'components/layout'
 
 // const LoginContainer = React.lazy(
 //   () => import("../features/login/loginContainer")
 // )
 
-const Page: FunctionComponent<PageProps> = () => {
+const Page: FunctionComponent<PageProps> = ({ location }) => {
   return (
     <>
       {/* <SEO title="Авторизация" /> */}
-      {/* <Header location={location} /> */}
+      <Header location={location} />
       <Container as="main">
         {typeof window !== 'undefined' && (
           <Suspense fallback={<p>Загрузка...</p>}>

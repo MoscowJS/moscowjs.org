@@ -3,8 +3,8 @@ import assert from 'node:assert/strict'
 import type { CreatePagesArgs, GatsbyNode } from 'gatsby'
 
 import { config } from './config'
-import { speakerPath, talkPath } from './src/utils/paths'
-import type { Speaker, Talk, WrappedWithDirectus } from './src/models'
+import { speakerPath, talkPath, pagePath } from './src/utils/paths'
+import type { Page, Speaker, Talk, WrappedWithDirectus } from './src/models'
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   actions,
@@ -23,6 +23,9 @@ type GraphqlDirectusPersons = {
 }
 type GraphqlDirectusTalks = {
   talks: Array<Pick<Talk, 'id' | 'title'>>
+}
+type GraphqlDirectusPages = {
+  pages: Array<Pick<Page, 'id' | 'slug' | 'template'>>
 }
 
 type GraphqlDirectusData = {
@@ -55,6 +58,7 @@ async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
       continue
     } else {
       currentPage += arrayFieldData.length
+      // hasNextPage = currentPage > 20
     }
   }
 }
@@ -86,6 +90,21 @@ export const createPages: GatsbyNode['createPages'] = async ({
           talks(limit: ${limit}, offset: ${offset}) {
             id
             title
+          }
+        }
+      }
+    `
+    return query
+  }
+
+  function pagesQuery(limit: number, offset: number): string {
+    const query = `
+      query {
+        directus {
+          pages(filter: { status: { _eq: "published" } }, limit: ${limit}, offset: ${offset}) {
+            id
+            slug
+            template
           }
         }
       }
@@ -128,4 +147,21 @@ export const createPages: GatsbyNode['createPages'] = async ({
       })
     })
   }
+
+  // for await (const pages of fetchGraphqlQuery<GraphqlDirectusPages>(
+  //   graphql,
+  //   pagesQuery,
+  //   'pages'
+  // )) {
+  //   pages.forEach(page => {
+  //     createPage({
+  //       path: pagePath(page.slug),
+  //       component: path.resolve(
+  //         config.gatsby.src,
+  //         `templates/${page.template}/index.tsx`
+  //       ),
+  //       context: { id: page.id },
+  //     })
+  //   })
+  // }
 }

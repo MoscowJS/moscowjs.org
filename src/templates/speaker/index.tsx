@@ -8,7 +8,7 @@ import type { WrappedWithDirectus, Speaker } from 'models'
 import {
   Container,
   // Footer,
-  // Header,
+  Header,
   Item,
   Markdown,
 } from 'components/layout'
@@ -59,7 +59,7 @@ type GraphqlDirectusTalks = {
 
 const SpeakerPage: FunctionComponent<
   PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
-> = ({ data }) => {
+> = ({ data, location }) => {
   const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)
 
@@ -75,7 +75,7 @@ const SpeakerPage: FunctionComponent<
   return (
     <>
       {/* <SEO title={speaker.Name} /> */}
-      {/* <Header location={location} /> */}
+      <Header location={location} />
       <Container as="main">
         <pre>{JSON.stringify(speaker, null, 2)}</pre>
         <Item>

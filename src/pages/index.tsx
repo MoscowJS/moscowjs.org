@@ -2,12 +2,12 @@ import React, { FunctionComponent } from 'react'
 import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
 
 // import SEO from 'utils/seo'
-import { Container, Hero, Panel } from 'components/layout'
+import { Container, Hero, Panel, Header } from 'components/layout'
 import { Event } from 'features/events/event'
 import { Meetup, WrappedWithDirectus } from 'models'
 import { EventsFeed } from 'features/events/eventsFeed'
 
-const IndexPage: FunctionComponent<PageProps> = () => {
+const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   const result = useStaticQuery<
     WrappedWithDirectus<{ meetups: Array<Meetup> }>
   >(graphql`
@@ -71,7 +71,7 @@ const IndexPage: FunctionComponent<PageProps> = () => {
     <>
       {/* <SEO title="Главная" /> */}
       <Hero image={void 0} height="800px">
-        {/* <Header location={location} /> */}
+        <Header location={location} />
         <Hero.Container verticalAlign="center">
           <Event event={latestEvent} isIndexPage={true} short={true} />
         </Hero.Container>
