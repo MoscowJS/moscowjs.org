@@ -47,12 +47,12 @@ const transformContacts = (speaker: Speaker) => {
   return result
 }
 
-type GraphqlDirectusTalks = {
+type GraphqlDirectusSpeakerById = {
   persons_by_id: Speaker
 }
 
 const SpeakerPage: FunctionComponent<
-  PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
+  PageProps<WrappedWithDirectus<GraphqlDirectusSpeakerById>>
 > = ({ data, location }) => {
   const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)

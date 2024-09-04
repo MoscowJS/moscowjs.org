@@ -25,14 +25,23 @@ const Speaker = styled.li`
 `
 
 export const SpeakersGrid: FunctionComponent<{
-  speakers: Array<{ persons_id: Speaker }>
+  speakers: Array<Pick<Speaker, 'name' | 'photo' | 'talks'>>
 }> = ({ speakers }) => {
   return (
     <SpeakersContainer>
-      {speakers.map(({ persons_id: speaker }) => {
+      {speakers.map(speaker => {
+        const companies: Array<string> = Array.from(
+          new Set(
+            speaker.talks
+              .map(({ talks_id }) =>
+                String(talks_id.company).normalize().trim()
+              )
+              .filter(company => Boolean(company))
+          ).keys()
+        )
         return (
           <Speaker key={speaker.name}>
-            <SpeakerPhoto speaker={speaker} />
+            <SpeakerPhoto speaker={speaker} companies={companies} />
           </Speaker>
         )
       })}

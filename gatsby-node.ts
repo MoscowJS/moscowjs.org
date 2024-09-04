@@ -112,7 +112,15 @@ export const createPages: GatsbyNode['createPages'] = async ({
     const query = `
       query {
         directus {
-          pages(filter: { template: { _eq: "page" } }, limit: ${limit}, offset: ${offset}) {
+          pages(
+            filter: {
+              _and: [
+                { template: { _in: ["speakers", "page"] } }
+                { status: { _eq: "published" } }
+              ]
+            }
+            limit: ${limit}, offset: ${offset}
+          ) {
             id
             slug
             template

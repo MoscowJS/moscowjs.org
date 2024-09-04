@@ -11,7 +11,7 @@ export type Speaker = {
   about?: string
   github?: string
   link?: string
-  photo?: {
+  photo: {
     id: string
     imageFile: {
       childImageSharp: {
@@ -24,8 +24,8 @@ export type Speaker = {
         }
       }
     }
-  }
-  talks?: Array<{
+  } | null
+  talks: Array<{
     talks_id: Talk
   }>
 }

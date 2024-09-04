@@ -10,7 +10,23 @@ import { speakerPath } from 'utils/paths'
 
 export const SpeakerPhoto: FunctionComponent<{
   speaker: Pick<Speaker, 'name' | 'photo'>
-}> = ({ speaker }) => {
+  companies?: Array<string> | string
+}> = ({ speaker, companies }) => {
+
+  companies = Array.isArray(companies)
+    ? companies
+    : typeof companies === 'string'
+    ? [companies]
+    : []
+
+  const company = companies.length ? (
+    <>
+      {', '}
+      <br />
+      <em>{companies.join(', ')}</em>
+    </>
+  ) : null
+
   return (
     <div>
       {speaker.photo ? (
@@ -34,13 +50,7 @@ export const SpeakerPhoto: FunctionComponent<{
         `}
       >
         <Link to={speakerPath(speaker.name)}>{speaker.name}</Link>
-        {/* {speaker.Company && (
-          <>
-            {', '}
-            <br />
-            <em>{speaker.Company}</em>
-          </>
-        )} */}
+        {company}
       </p>
     </div>
   )

@@ -50,9 +50,9 @@ export const Talk: FunctionComponent<{
 }> & {
   Description: typeof TalkDescription
 } = ({ talk, level }) => {
-  const { speakers } = talk
+  const speakers = talk.speakers.map(speaker => speaker.persons_id)
 
-  if (speakers?.length === 0) {
+  if (speakers.length === 0) {
     return null
   }
 
@@ -64,7 +64,10 @@ export const Talk: FunctionComponent<{
   ) : (
     <Item key={talk.title}>
       <Item.ImageContainer size="s">
-        <SpeakerPhoto speaker={talk.speakers[0]?.persons_id} />
+        <SpeakerPhoto
+          speaker={talk.speakers[0]?.persons_id}
+          companies={talk.company}
+        />
       </Item.ImageContainer>
       <Item.Content>
         <TalkDescription talk={talk} level={level} />
