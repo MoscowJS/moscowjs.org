@@ -3,6 +3,8 @@ import type { GatsbyConfig, PluginRef } from 'gatsby'
 
 import { config } from './config'
 
+console.log('++config:', config)
+
 const GATSBY_SRC_ROOT = config.gatsby.src ?? 'src'
 
 let datasourcePlugin: PluginRef
