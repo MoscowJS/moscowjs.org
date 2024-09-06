@@ -3,8 +3,14 @@ import assert from 'node:assert/strict'
 import type { CreatePagesArgs, GatsbyNode } from 'gatsby'
 
 import { config } from './config'
-import { speakerPath, talkPath, pagePath } from './src/utils/paths'
-import type { Page, Speaker, Talk, WrappedWithDirectus } from './src/models'
+import { speakerPath, talkPath, pagePath, eventPath } from './src/utils/paths'
+import type {
+  Page,
+  Speaker,
+  Talk,
+  Meetup,
+  WrappedWithDirectus,
+} from './src/models'
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   actions,
@@ -23,6 +29,9 @@ type GraphqlDirectusPersons = {
 }
 type GraphqlDirectusTalks = {
   talks: Array<Pick<Talk, 'id' | 'title'>>
+}
+type GraphqlDirectusEvents = {
+  meetups: Array<Pick<Meetup, 'id' | 'slug' | 'title'>>
 }
 type GraphqlDirectusPages = {
   pages: Array<Pick<Page, 'id' | 'slug' | 'template'>>
@@ -97,18 +106,22 @@ export const createPages: GatsbyNode['createPages'] = async ({
     return query
   }
 
+  function eventsQuery(limit: number, offset: number): string {
+    const query = `
+      query {
+        directus {
+          meetups(limit: ${limit}, offset: ${offset}) {
+            id
+            slug
+            title
+          }
+        }
+      }
+    `
+    return query
+  }
+
   function pagesQuery(limit: number, offset: number): string {
-    // const query = `
-    //   query {
-    //     directus {
-    //       pages(filter: { status: { _eq: "published" } }, limit: ${limit}, offset: ${offset}) {
-    //         id
-    //         slug
-    //         template
-    //       }
-    //     }
-    //   }
-    // `
     const query = `
       query {
         directus {
@@ -163,6 +176,20 @@ export const createPages: GatsbyNode['createPages'] = async ({
         path: talkPath(talk.title),
         component: path.resolve(config.gatsby.src, 'templates/talk/index.tsx'),
         context: { id: talk.id },
+      })
+    })
+  }
+
+  for await (const events of fetchGraphqlQuery<GraphqlDirectusEvents>(
+    graphql,
+    eventsQuery,
+    'meetups'
+  )) {
+    events.forEach(event => {
+      createPage({
+        path: eventPath(event.slug),
+        component: path.resolve(config.gatsby.src, 'templates/event/index.tsx'),
+        context: { id: event.id },
       })
     })
   }
