@@ -115,7 +115,7 @@ export const createPages: GatsbyNode['createPages'] = async ({
           pages(
             filter: {
               _and: [
-                { template: { _in: ["speakers", "page"] } }
+                { template: { _in: ["speakers", "page", "events"] } }
                 { status: { _eq: "published" } }
               ]
             }
