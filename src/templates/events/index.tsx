@@ -9,7 +9,7 @@ import { EventsFeed } from 'features/events/eventsFeed'
 const EventsPage: FunctionComponent<
   PageProps<
     WrappedWithDirectus<{
-      pages_by_id: Page
+      pages_by_id: Pick<Page, 'title' | 'content'>
       meetups: Array<Meetup>
     }>
   >
