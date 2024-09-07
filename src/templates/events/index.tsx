@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
 import type { Page, Meetup, WrappedWithDirectus } from '../../models'
 import { Container, Footer, Header, Markdown } from '../../components/layout'
 import { EventsFeed } from '../../features/events/eventsFeed'
+import SEO from '../../utils/seo'
 
 const EventsPage: FunctionComponent<
   PageProps<
@@ -18,7 +18,7 @@ const EventsPage: FunctionComponent<
 
   return (
     <>
-      {/* <SEO title={page.title} /> */}
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
         <Markdown>{page.content}</Markdown>

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
 import type { Page as PageType, WrappedWithDirectus } from '../../models'
 import { Container, Footer, Header, Markdown } from '../../components/layout'
+import SEO from '../../utils/seo'
 
 const Page: FunctionComponent<
   PageProps<WrappedWithDirectus<{ pages_by_id: PageType }>>
@@ -11,7 +11,7 @@ const Page: FunctionComponent<
   const page = data.directus.pages_by_id
   return (
     <>
-      {/* <SEO title={page.title} /> */}
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
         <Markdown>{page.content}</Markdown>

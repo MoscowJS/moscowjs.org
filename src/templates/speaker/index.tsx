@@ -3,7 +3,7 @@ import { graphql, PageProps } from 'gatsby'
 import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
-// import SEO from "utils/seo"
+import SEO from '../../utils/seo'
 import type { WrappedWithDirectus, Speaker } from '../../models'
 import {
   Container,
@@ -74,7 +74,7 @@ const SpeakerPage: FunctionComponent<
 
   return (
     <>
-      {/* <SEO title={speaker.Name} /> */}
+      <SEO title={speaker.name} />
       <Header location={location} />
       <Container as="main">
         <Item>

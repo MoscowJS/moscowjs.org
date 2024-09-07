@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
 import type { Meetup, WrappedWithDirectus } from '../../models'
 import { Container, Footer, Header } from '../../components/layout'
 import { Event } from '../../features/events/event'
+import SEO from '../../utils/seo'
 
 type GraphqlDirectusMeetup = {
   meetups_by_id: Meetup
@@ -16,7 +16,7 @@ const MeetupPage: FunctionComponent<
   const { meetups_by_id: meetup } = data.directus
   return (
     <>
-      {/* <SEO title={data.airtablemeetups.data.Title} /> */}
+      <SEO title={meetup.title} />
       <Header location={location} />
       <Container as="main">
         <Event event={meetup} />

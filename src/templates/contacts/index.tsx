@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { UserX } from 'react-feather'
 import Img from 'gatsby-image'
 
-// import SEO from "utils/seo"
 import type {
   Page as PageType,
   Speaker,
@@ -18,6 +17,7 @@ import {
   Markdown,
 } from '../../components/layout'
 import { rhythm } from '../../utils/typography'
+import SEO from '../../utils/seo'
 
 const Grid = styled.ul`
   --item-width: ${rhythm(4)};
@@ -71,7 +71,7 @@ const Page: FunctionComponent<
 
   return (
     <>
-      {/* <SEO title={data.airtablepages.data.title} /> */}
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
         <Markdown>{page.content}</Markdown>

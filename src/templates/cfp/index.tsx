@@ -1,26 +1,31 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
-import type { Page as PageType, WrappedWithDirectus } from '../../models'
+import type {
+  Config,
+  Page as PageType,
+  WrappedWithDirectus,
+} from '../../models'
 import { Container, Footer, Header, Markdown } from '../../components/layout'
-// import { transformConfig } from 'utils/transformConfig'
+import { transformConfig } from '../../utils/transformConfig'
+import SEO from '../../utils/seo'
 
 const CFP: FunctionComponent<
   PageProps<
     WrappedWithDirectus<{
+      config: Array<Pick<Config, 'name' | 'value'>>
       pages_by_id: Pick<PageType, 'title' | 'content'>
     }>
   >
 > = ({ data, location }) => {
-  // const config = transformConfig(data.allAirtableconfig.nodes)
-  const formType = true ? 'airtable' : 'typeform'
+  const { pages_by_id: page, config } = data.directus
 
-  const { pages_by_id: page } = data.directus
+  const transformedConfig = transformConfig(config)
+  const formType = transformedConfig?.cfpform?.value ?? 'airtable'
 
   return (
     <>
-      {/* <SEO title={page.title} /> */}
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
         {formType === 'airtable' && (
@@ -54,6 +59,10 @@ const CFP: FunctionComponent<
 export const query = graphql`
   query ($id: ID!) {
     directus {
+      config(filter: { type: { _eq: "qna" } }) {
+        name
+        value
+      }
       pages_by_id(id: $id) {
         title
         content

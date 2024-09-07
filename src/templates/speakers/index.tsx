@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
+import SEO from '../../utils/seo'
 import type { Page, Speaker, WrappedWithDirectus } from '../../models'
 import { Container, Footer, Header, Markdown } from '../../components/layout'
 import { SpeakersGrid } from '../../features/speakers/speakersGrid'
@@ -16,11 +16,11 @@ const SpeakersPage: FunctionComponent<
 > = ({ data, location }) => {
   const {
     persons: speakers,
-    pages_by_id: { content },
+    pages_by_id: { content, title },
   } = data.directus
   return (
     <>
-      {/* <SEO title={data.airtablepages.data.title} /> */}
+      <SEO title={title} />
       <Header location={location} />
       <Container as="main">
         <Markdown>{content}</Markdown>

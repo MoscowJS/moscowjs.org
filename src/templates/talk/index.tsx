@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
-// import SEO from "utils/seo"
+import SEO from '../../utils/seo'
 import type { Talk as TalkType, WrappedWithDirectus } from '../../models'
 import { Container, Header, Footer } from '../../components/layout'
 import { Talk } from '../../features/talks/talk'
@@ -17,7 +17,7 @@ const TalkPage: FunctionComponent<
 
   return (
     <>
-      {/* <SEO title={talk.Title} /> */}
+      <SEO title={talk.title} />
       <Header location={location} />
       <Container as="main">
         <Talk talk={talk} level={1} />

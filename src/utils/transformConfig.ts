@@ -1,8 +1,13 @@
-import type { ConfigData } from '../models'
+import type { Config } from '../models'
 
-export const transformConfig = (records: Array<{ data: ConfigData }>) => {
-  return records.reduce<{ [k in string]: ConfigData }>((result, record) => {
-    result[record.data.name] = record.data
-    return result
-  }, {})
+export const transformConfig = (
+  records: Array<Pick<Config, 'name' | 'value'>>
+) => {
+  return records.reduce<{ [k in string]: Pick<Config, 'name' | 'value'> }>(
+    (result, record) => {
+      result[record.name] = record
+      return result
+    },
+    {}
+  )
 }

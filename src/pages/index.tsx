@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
 
-// import SEO from 'utils/seo'
 import type { Meetup, WrappedWithDirectus } from '../models'
 import { Event } from '../features/events/event'
 import { EventsFeed } from '../features/events/eventsFeed'
 import { Container, Hero, Panel, Header, Footer } from '../components/layout'
+import SEO from '../utils/seo'
 
 type GraphqlDirectusMeetupsCount = {
   count: {
@@ -80,7 +80,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
 
   return (
     <>
-      {/* <SEO title="Главная" /> */}
+      <SEO title="Главная" />
       <Hero image={void 0} height="800px">
         <Header location={location} />
         <Hero.Container verticalAlign="center">
