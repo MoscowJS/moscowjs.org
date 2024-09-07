@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { Link } from 'gatsby'
 
-import { Meetup } from 'models'
-import { eventPath } from 'utils/paths'
-import { Markdown } from 'components/layout'
+import type { Meetup } from '../../../models'
+import { eventPath } from '../../../utils/paths'
+import { Markdown } from '../../../components/layout'
 
 export const EventLink: FunctionComponent<{ event: Meetup }> = ({ event }) => {
   const path = eventPath(event.slug)

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
-
 import styled from 'styled-components'
-import { getSize } from 'utils/typography'
-import logo from 'static/logo.png'
-import starry from 'static/starry_background.png'
+
+import logo from '../../../static/logo.png'
+import starry from '../../../static/starry_background.png'
+import { getSize } from '../../../utils/typography'
 
 const Number = styled.span<{
   size: string

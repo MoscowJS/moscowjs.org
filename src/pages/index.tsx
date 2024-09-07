@@ -2,10 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
 
 // import SEO from 'utils/seo'
-import { Container, Hero, Panel, Header, Footer } from 'components/layout'
-import { Event } from 'features/events/event'
-import { Meetup, WrappedWithDirectus } from 'models'
-import { EventsFeed } from 'features/events/eventsFeed'
+import type { Meetup, WrappedWithDirectus } from '../models'
+import { Event } from '../features/events/event'
+import { EventsFeed } from '../features/events/eventsFeed'
+import { Container, Hero, Panel, Header, Footer } from '../components/layout'
 
 type GraphqlDirectusMeetupsCount = {
   count: {

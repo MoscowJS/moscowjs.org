@@ -5,9 +5,19 @@ import { UserX } from 'react-feather'
 import Img from 'gatsby-image'
 
 // import SEO from "utils/seo"
-import { Container, Footer, Header, Item, Markdown } from 'components/layout'
-import { Page as PageType, Speaker, WrappedWithDirectus } from 'models'
-import { rhythm } from 'utils/typography'
+import type {
+  Page as PageType,
+  Speaker,
+  WrappedWithDirectus,
+} from '../../models'
+import {
+  Container,
+  Footer,
+  Header,
+  Item,
+  Markdown,
+} from '../../components/layout'
+import { rhythm } from '../../utils/typography'
 
 const Grid = styled.ul`
   --item-width: ${rhythm(4)};

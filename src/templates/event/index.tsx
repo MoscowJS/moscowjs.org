@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import type { Meetup, WrappedWithDirectus } from 'models'
-import { Container, Footer, Header } from 'components/layout'
-import { Event } from 'features/events/event'
+import type { Meetup, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header } from '../../components/layout'
+import { Event } from '../../features/events/event'
 
 type GraphqlDirectusMeetup = {
   meetups_by_id: Meetup

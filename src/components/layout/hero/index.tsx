@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { FluidObject } from 'gatsby-image'
 import Img from 'gatsby-image/withIEPolyfill'
 
-import { rhythm } from 'utils/typography'
-import { Container } from 'components/layout'
+import { rhythm } from '../../../utils/typography'
+import { Container } from '../container'
 
 enum flexAlign {
   auto = 'auto',

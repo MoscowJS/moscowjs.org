@@ -2,7 +2,7 @@ import React, { type FunctionComponent, type ReactNode } from 'react'
 import { Icon } from 'react-feather'
 import styled from 'styled-components'
 
-import { rhythm } from 'utils/typography'
+import { rhythm } from '../../../utils/typography'
 import { Item } from '../item'
 
 const SmallHeader = styled(Item.Header)`

@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+
 import { IconRound } from '../iconRound'
 
 const transformNumber = (n: number) => {

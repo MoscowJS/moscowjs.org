@@ -156,17 +156,6 @@ const gatsbyConfig: GatsbyConfig = {
         pathToConfigModule: `${GATSBY_SRC_ROOT}/utils/typography`,
       },
     },
-    {
-      resolve: 'gatsby-plugin-root-import',
-      options: {
-        src: path.join(__dirname, `${GATSBY_SRC_ROOT}`),
-        components: path.join(__dirname, `${GATSBY_SRC_ROOT}/components`),
-        models: path.join(__dirname, `${GATSBY_SRC_ROOT}/models`),
-        static: path.join(__dirname, `${GATSBY_SRC_ROOT}/static`),
-        features: path.join(__dirname, `${GATSBY_SRC_ROOT}/features`),
-        utils: path.join(__dirname, `${GATSBY_SRC_ROOT}/utils`),
-      },
-    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // {

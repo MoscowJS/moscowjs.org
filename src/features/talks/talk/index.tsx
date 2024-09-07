@@ -1,16 +1,14 @@
 import React, { FunctionComponent } from 'react'
-
+import { Link } from 'gatsby'
 // import styled from 'styled-components'
 
-import { talkPath } from 'utils/paths'
 // import { rhythm } from 'utils/typography'
+import type { Talk as TalkType } from '../../../models'
+import { talkPath } from '../../../utils/paths'
+import { Item, Markdown } from '../../../components/layout'
 
 import { SpeakerPhoto } from '../../speakers/speakerPhoto'
 import { SpeakersGrid } from '../../speakers/speakersGrid'
-
-import { Talk as TalkType } from 'models'
-import { Item, Markdown } from 'components/layout'
-import { Link } from 'gatsby'
 
 // const Meta = styled.a`
 //   display: inline-block;

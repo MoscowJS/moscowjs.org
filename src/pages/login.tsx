@@ -2,7 +2,7 @@ import React, { FunctionComponent, Suspense } from 'react'
 import type { PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import { Container, Header, Footer } from 'components/layout'
+import { Container, Header, Footer } from '../components/layout'
 
 // const LoginContainer = React.lazy(
 //   () => import("../features/login/loginContainer")

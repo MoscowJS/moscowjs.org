@@ -1,18 +1,16 @@
 import React, { FunctionComponent } from 'react'
-
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
-import type { Speaker } from 'models'
-import { rhythm } from 'utils/typography'
-import { speakerPath } from 'utils/paths'
+import type { Speaker } from '../../../models'
+import { rhythm } from '../../../utils/typography'
+import { speakerPath } from '../../../utils/paths'
 
 export const SpeakerPhoto: FunctionComponent<{
   speaker: Pick<Speaker, 'name' | 'photo'>
   companies?: Array<string> | string
 }> = ({ speaker, companies }) => {
-
   companies = Array.isArray(companies)
     ? companies
     : typeof companies === 'string'

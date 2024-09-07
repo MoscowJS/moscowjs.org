@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import { Page as PageType, WrappedWithDirectus } from 'models'
-import { Container, Footer, Header, Markdown } from 'components/layout'
+import type { Page as PageType, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
 
 const Page: FunctionComponent<
   PageProps<

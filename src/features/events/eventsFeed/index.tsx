@@ -2,11 +2,11 @@ import React, { type FunctionComponent } from 'react'
 import { ru } from 'date-fns/locale'
 import { format } from 'date-fns'
 
-import { Meetup } from 'models'
+import type { Meetup } from '../../../models'
+import { Item, Markdown } from '../../../components/layout'
+import { airtableDateFix } from '../../../utils/airtableDateFix'
 import { EventLogo } from '../eventLogo'
-import { EventLink } from 'features/events/eventLink'
-import { Item, Markdown } from 'components/layout'
-import { airtableDateFix } from 'utils/airtableDateFix'
+import { EventLink } from '../eventLink'
 
 const formatDate = (date: string) =>
   format(airtableDateFix(new Date(date)), 'd MMMM y, HH:mm', {

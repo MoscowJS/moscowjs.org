@@ -3,11 +3,17 @@ import { graphql, PageProps } from 'gatsby'
 import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
-import type { WrappedWithDirectus, Speaker } from 'models'
 // import SEO from "utils/seo"
-import { Container, Footer, Header, Item, Markdown } from 'components/layout'
-import { EventLogo } from 'features/events/eventLogo'
-import { Talk } from 'features/talks/talk'
+import type { WrappedWithDirectus, Speaker } from '../../models'
+import {
+  Container,
+  Footer,
+  Header,
+  Item,
+  Markdown,
+} from '../../components/layout'
+import { EventLogo } from '../../features/events/eventLogo'
+import { Talk } from '../../features/talks/talk'
 
 const transformContacts = (speaker: Speaker) => {
   const result = []

@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import type { Page, Meetup, WrappedWithDirectus } from 'models'
-import { Container, Footer, Header, Markdown } from 'components/layout'
-import { EventsFeed } from 'features/events/eventsFeed'
+import type { Page, Meetup, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { EventsFeed } from '../../features/events/eventsFeed'
 
 const EventsPage: FunctionComponent<
   PageProps<

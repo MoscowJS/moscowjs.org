@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 
-import { NavigationItem } from './index.h'
-import { rhythm } from 'utils/typography'
+import type { NavigationItem } from './index.h'
+import { rhythm } from '../../../utils/typography'
 
 const HeaderMenuContainer = styled.ul`
   display: none;

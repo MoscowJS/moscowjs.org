@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react'
-import styled from 'styled-components'
 import { Calendar, MapPin, PenTool, Video } from 'react-feather'
-
-import { Meetup } from 'models'
-import { EventLink } from 'features/events/eventLink'
-import { EventTimeTable } from 'features/events/eventTimeTable'
-import { Markdown, Meta } from 'components/layout'
-import { Talk } from 'features/talks/talk'
-// import { PartnerLink } from 'features/partners'
+import styled from 'styled-components'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
-import { airtableDateFix } from 'utils/airtableDateFix'
-import { rhythm } from 'utils/typography'
+
+import type { Meetup } from '../../../models'
+import { Markdown, Meta } from '../../../components/layout'
+import { airtableDateFix } from '../../../utils/airtableDateFix'
+import { rhythm } from '../../../utils/typography'
+import { EventLink } from '../eventLink'
+import { EventTimeTable } from '../eventTimeTable'
+import { Talk } from '../../talks'
+// import { PartnerLink } from 'features/partners'
 
 type EventProps = {
   event: Meetup

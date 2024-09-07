@@ -2,9 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { useMenuState, Menu, MenuItem, MenuButton } from 'reakit/Menu'
 import { Menu as MenuIcon } from 'react-feather'
 import styled from 'styled-components'
-import { rhythm } from 'utils/typography'
-import { NavigationItem } from './index.h'
 import { Link } from 'gatsby'
+
+import { rhythm } from '../../../utils/typography'
+import { NavigationItem } from './index.h'
 
 const HMMBurger = styled(MenuButton)`
   cursor: pointer;

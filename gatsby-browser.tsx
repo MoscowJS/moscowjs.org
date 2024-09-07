@@ -1,9 +1,8 @@
 import React from 'react'
-import { GlobalLayout } from 'components/layout'
+import type { GatsbyBrowser } from 'gatsby'
 
 // const { auth } = require("features/firebase")
-
-import type { GatsbyBrowser } from 'gatsby'
+import { GlobalLayout } from './src/components/layout'
 
 export const wrapPageElement: GatsbyBrowser['wrapPageElement'] = ({
   element,

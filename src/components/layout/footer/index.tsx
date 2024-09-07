@@ -3,11 +3,14 @@ import { Twitter, Youtube } from 'react-feather'
 import styled from 'styled-components'
 import { graphql, Link, useStaticQuery } from 'gatsby'
 
-import type { Navigation as NavigationType, WrappedWithDirectus } from 'models'
-import { Container } from 'components/layout'
-import { pagePath } from 'utils/paths'
-import { rhythm } from 'utils/typography'
+import type {
+  Navigation as NavigationType,
+  WrappedWithDirectus,
+} from '../../../models'
+import { pagePath } from '../../../utils/paths'
+import { rhythm } from '../../../utils/typography'
 import { Telegram } from '../../icons/telegram'
+import { Container } from '../container'
 
 const FooterContainer = styled(Container)`
   @media (min-width: 768px) {

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { getSize } from 'utils/typography'
+import { getSize } from '../../../utils/typography'
 
 const getFontSize = (children: any, size?: string) => {
   if (typeof children !== 'string') {

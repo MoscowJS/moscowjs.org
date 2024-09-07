@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 // import { Link } from 'gatsby'
 
-import { Meetup } from 'models'
 // import { talkPath } from 'utils/paths'
-import { rhythm } from 'utils/typography'
-import { airtableDateFix } from 'utils/airtableDateFix'
+import type { Meetup } from '../../../models'
+import { rhythm } from '../../../utils/typography'
+import { airtableDateFix } from '../../../utils/airtableDateFix'
 
 const sceneOrder: {
   [k: string]: number

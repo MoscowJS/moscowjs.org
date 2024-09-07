@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react'
-
 import styled from 'styled-components'
 
-import type { Speaker } from 'models'
-import { rhythm } from 'utils/typography'
+import type { Speaker } from '../../../models'
+import { rhythm } from '../../../utils/typography'
 import { SpeakerPhoto } from '../speakerPhoto'
 
 const SpeakersContainer = styled.ul`

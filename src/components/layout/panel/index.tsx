@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { rhythm } from 'utils/typography'
+import { rhythm } from '../../../utils/typography'
 
 export const Panel = styled.div`
   border: 2px solid var(--color-primary);

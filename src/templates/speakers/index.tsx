@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
 // import SEO from "utils/seo"
-import type { Page, Speaker, WrappedWithDirectus } from 'models'
-import { Container, Footer, Header, Markdown } from 'components/layout'
-import { SpeakersGrid } from 'features/speakers/speakersGrid'
+import type { Page, Speaker, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { SpeakersGrid } from '../../features/speakers/speakersGrid'
 
 const SpeakersPage: FunctionComponent<
   PageProps<
