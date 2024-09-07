@@ -46,3 +46,27 @@ export const config = {
     datasource: process.env['GATSBY_DATASOURCE'],
   },
 }
+
+function obfuscateString(key?: string, count = 6): string | undefined {
+  const obfuscateRegexp = new RegExp(`.{${count}}$`)
+  return key?.replace(obfuscateRegexp, '*'.repeat(count))
+}
+
+if (
+  typeof process.env['GATSBY_PRINT_CONFIG'] === 'string' &&
+  process.env['GATSBY_PRINT_CONFIG'] === 'true'
+) {
+  const obfuscatedConfig = {
+    ...config,
+    airtable: {
+      ...config.airtable,
+      apiKey: obfuscateString(config.airtable.apiKey, 10),
+    },
+    directus: {
+      ...config.directus,
+      email: obfuscateString(config.directus.email),
+      password: obfuscateString(config.directus.password),
+    },
+  }
+  console.log('config: ', JSON.stringify(obfuscatedConfig, null, 2))
+}
