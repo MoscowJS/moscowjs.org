@@ -62,6 +62,11 @@ export const query = graphql`
                 }
               }
             }
+            talks {
+              talks_id {
+                company
+              }
+            }
           }
         }
         meetup_id {
