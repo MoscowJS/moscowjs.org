@@ -4,9 +4,9 @@ import type { PageProps } from 'gatsby'
 import { Container, Header, Footer } from '../components/layout'
 import SEO from '../utils/seo'
 
-// const LoginContainer = React.lazy(
-//   () => import("../features/login/loginContainer")
-// )
+const LoginContainer = React.lazy(
+  () => import('../features/login/loginContainer')
+)
 
 const Page: FunctionComponent<PageProps> = ({ location }) => {
   return (
@@ -16,7 +16,7 @@ const Page: FunctionComponent<PageProps> = ({ location }) => {
       <Container as="main">
         {typeof window !== 'undefined' && (
           <Suspense fallback={<p>Загрузка...</p>}>
-            {/* <LoginContainer /> */}
+            <LoginContainer />
           </Suspense>
         )}
       </Container>
