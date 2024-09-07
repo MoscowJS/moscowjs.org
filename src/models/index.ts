@@ -5,6 +5,7 @@ export * from './meetup.h'
 export * from './page.h'
 export * from './navigation.h'
 export * from './question.h'
+export * from './partners.h'
 
 export type WrappedWithDirectus<TDataType> = {
   directus: TDataType

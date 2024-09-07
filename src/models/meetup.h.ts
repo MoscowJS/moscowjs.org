@@ -1,3 +1,4 @@
+import type { Partner } from './partners.h'
 import type { Talk } from './talk.h'
 
 export type Meetup = {
@@ -30,11 +31,6 @@ export type Meetup = {
     }
   }>
   partners: Array<{
-    partners_id: {
-      id: string
-      name: string
-      link: string
-      description: string
-    }
+    partners_id: Partner
   }>
 }

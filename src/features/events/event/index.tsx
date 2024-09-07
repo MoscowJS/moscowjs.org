@@ -8,10 +8,10 @@ import type { Meetup } from '../../../models'
 import { Markdown, Meta } from '../../../components/layout'
 import { airtableDateFix } from '../../../utils/airtableDateFix'
 import { rhythm } from '../../../utils/typography'
-import { EventLink } from '../eventLink'
-import { EventTimeTable } from '../eventTimeTable'
+import { PartnerLink } from '../../partners'
 import { Talk } from '../../talks'
-// import { PartnerLink } from 'features/partners'
+import { EventTimeTable } from '../eventTimeTable'
+import { EventLink } from '../eventLink'
 
 type EventProps = {
   event: Meetup
@@ -170,12 +170,12 @@ export const Event: FunctionComponent<EventProps> = ({
         </>
       )}
 
-      {!short && event.partners && (
+      {!short && event.partners && event.partners.length !== 0 && (
         <Section>
           <h3>Партнеры мероприятия</h3>
-          {/* {event.partners.map(({ partners_id: partner }) => (
-            <PartnerLink partnerData={partner} />
-          ))} */}
+          {event.partners.map(({ partners_id: partner }) => (
+            <PartnerLink partner={partner} />
+          ))}
         </Section>
       )}
     </article>
