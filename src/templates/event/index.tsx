@@ -41,12 +41,17 @@ export const query = graphql`
         registration_link
         announcement_short
         announcement_long
+        timetable
         slug
         stream_link
         video_link
         talks {
           id
+          title
+          theses
           company
+          scene
+          start_time
           speakers {
             persons_id {
               name

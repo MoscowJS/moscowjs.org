@@ -12,6 +12,7 @@ export type Talk = {
   publish: string
   company: string
   scene: string
+  start_time?: string
   meetup_id?: Meetup
   speakers: Array<{ persons_id: Speaker }>
 }

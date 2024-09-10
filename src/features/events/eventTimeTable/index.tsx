@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { format } from 'date-fns'
-// import { Link } from 'gatsby'
+import { Link } from 'gatsby'
 
-// import { talkPath } from 'utils/paths'
-import type { Meetup } from '../../../models'
+import { talkPath } from '../../../utils/paths'
+import type { Meetup, Talk, Speaker } from '../../../models'
 import { rhythm } from '../../../utils/typography'
 import { airtableDateFix } from '../../../utils/airtableDateFix'
 
@@ -20,19 +20,28 @@ const sceneOrder: {
   'Третий зал': 30,
 }
 
-// type TableRows = {
-//   [K: string]:
-//     | {
-//         keynote: false
-//         talks: {
-//           [K: string]: Talk
-//         }
-//       }
-//     | {
-//         keynote: true
-//         talk: Talk
-//       }
-// }
+type TimeTableTalk = Pick<
+  Talk,
+  'id' | 'title' | 'company' | 'scene' | 'start_time'
+> & {
+  speakers: Array<{
+    persons_id: Pick<Speaker, 'name'>
+  }>
+}
+
+type TableRows = {
+  [K: string]:
+    | {
+        keynote: false
+        talks: {
+          [K: string]: TimeTableTalk
+        }
+      }
+    | {
+        keynote: true
+        talk: TimeTableTalk
+      }
+}
 
 const TimetableContainer = styled.div`
   overflow-x: scroll;
@@ -63,29 +72,31 @@ const TimetableContainer = styled.div`
   }
 `
 
-// const TalkCell = (props: { talk: Talk }) => {
-//   const { talk } = props
+const TalkCell = (props: { talk: TimeTableTalk }) => {
+  const { talk } = props
 
-//   return (
-//     <>
-//       <h5>
-//         {talk.speakers
-//           .map(({ persons_id: speaker }) => `${speaker.name}`)
-//           .join(', ')}
-//       </h5>
-//       <h4>
-//         <Link to={talkPath(talk.title)}>{talk.title}</Link>
-//       </h4>
-//     </>
-//   )
-// }
+  return (
+    <>
+      <h5>
+        {talk.speakers
+          .map(({ persons_id: speaker }) => `${speaker.name}`)
+          .join(', ')}
+      </h5>
+      <h4>
+        <Link to={talkPath(talk.title)}>{talk.title}</Link>
+      </h4>
+    </>
+  )
+}
 
 const formatHoursMins = (date: string) =>
   format(airtableDateFix(new Date(date)), 'HH:mm')
 
-export const EventTimeTable: FunctionComponent<{ event: Meetup }> = ({
-  event,
-}) => {
+export const EventTimeTable: FunctionComponent<{
+  event: Pick<Meetup, 'timetable' | 'date_start' | 'date_end' | 'type'> & {
+    talks: Array<TimeTableTalk>
+  }
+}> = ({ event }) => {
   if (!event.timetable || !event.talks) {
     return null
   }
@@ -101,34 +112,34 @@ export const EventTimeTable: FunctionComponent<{ event: Meetup }> = ({
     return ao - bo
   })
 
-  // const times: string[] = [
-  //   ...new Set(event.talks.map(talk => talk.start)),
-  // ].filter(x => x) as string[]
+  const times: Array<string> = [
+    ...new Set(event.talks.map(talk => talk.start_time)),
+  ]
+    .filter((time): time is string => Boolean(time))
+    .sort((a, b) => {
+      const [ah, am] = a.split(':').map(x => +x)
+      const [bh, bm] = b.split(':').map(x => +x)
 
-  // times.sort((a, b) => {
-  //   const [ah, am] = a!.split(':').map(x => +x)
-  //   const [bh, bm] = b!.split(':').map(x => +x)
+      return ah - bh || am - bm
+    })
 
-  //   return ah - bh || am - bm
-  // })
+  const tableRows: TableRows = event.talks.reduce((result, talk) => {
+    const time = talk.start_time!
+    const scene = talk.scene
 
-  // const tableRows: TableRows = event.talks.reduce((result, talk) => {
-  //   const time = talk.start!
-  //   const scene = talk.scene
+    if (!scene) {
+      result[time] = { keynote: true, talk }
+      return result
+    }
 
-  //   if (!scene) {
-  //     result[time] = { keynote: true, talk }
-  //     return result
-  //   }
+    result[time] = result[time] || {
+      keynote: false,
+      talks: {},
+    }
+    ;(result[time] as any).talks[scene] = talk
 
-  //   result[time] = result[time] || {
-  //     keynote: false,
-  //     talks: {},
-  //   }
-  //   ;(result[time] as any).talks[scene] = talk
-
-  //   return result
-  // }, {} as TableRows)
+    return result
+  }, {} as TableRows)
 
   return (
     <>
@@ -147,18 +158,19 @@ export const EventTimeTable: FunctionComponent<{ event: Meetup }> = ({
             <tr>
               <td>{formatHoursMins(event.date_start)}</td>
               <td colSpan={scenes.length}>
-                {event.type === 'Offline'
+                {event.type === 'offline'
                   ? 'Регистрация, кофе, открытие'
                   : 'Открытие'}
               </td>
             </tr>
-            {/* {times.map(time => {
+            {times.map(time => {
+              const timeHhMm = time.replace(/:00$/, '')
               const talks = tableRows[time]
 
               if (talks.keynote) {
                 return (
                   <tr>
-                    <td>{time}</td>
+                    <td>{timeHhMm}</td>
                     <td colSpan={scenes.length}>
                       <TalkCell talk={talks.talk} />
                     </td>
@@ -168,7 +180,7 @@ export const EventTimeTable: FunctionComponent<{ event: Meetup }> = ({
 
               return (
                 <tr>
-                  <td>{time}</td>
+                  <td>{timeHhMm}</td>
                   {scenes.map(scene => {
                     const talk = talks.talks[scene]
 
@@ -184,8 +196,8 @@ export const EventTimeTable: FunctionComponent<{ event: Meetup }> = ({
                   })}
                 </tr>
               )
-            })} */}
-            {event.type === 'Offline' ? (
+            })}
+            {event.type === 'offline' ? (
               <tr>
                 <td>{formatHoursMins(event.date_end)}</td>
                 <td colSpan={scenes.length}>Афтепати</td>
