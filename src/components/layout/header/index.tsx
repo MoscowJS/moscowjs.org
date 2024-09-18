@@ -8,6 +8,7 @@ import { rhythm } from '../../../utils/typography'
 import { Container } from '../container'
 import { HeaderMenu } from './headerMenu'
 import { HeaderMobileMenu } from './headerMobileMenu'
+import { FixedObject } from 'gatsby-image'
 
 // import moon from './moon.svg'
 // import sun from './sun.svg'
@@ -76,8 +77,14 @@ export const Header: FunctionComponent<{
 }> = ({ location }) => {
   const {
     directus: { navigation },
+    directus_system: { files_by_id: logo },
   } = useStaticQuery<
-    WrappedWithDirectus<{ navigation: Array<Navigation> }>
+    WrappedWithDirectus<
+      { navigation: Array<Navigation> },
+      {
+        files_by_id: { imageFile: { childImageSharp: { fixed: FixedObject } } }
+      }
+    >
   >(graphql`
     query {
       directus {
@@ -93,6 +100,18 @@ export const Header: FunctionComponent<{
           slug
           title
           order
+        }
+      }
+      directus_system {
+        files_by_id(id: "ba4413cc-8879-4786-b325-dc6ceca4ae41") {
+          id
+          imageFile {
+            childImageSharp {
+              fixed(width: 120, quality: 100) {
+                ...GatsbyImageSharpFixed
+              }
+            }
+          }
         }
       }
     }
@@ -113,7 +132,7 @@ export const Header: FunctionComponent<{
         <HeaderLink to="/">
           <HeaderTitle
             as={location.pathname === '/' ? 'h1' : 'h2'}
-            logo={'fixed.src'}
+            logo={logo.imageFile.childImageSharp.fixed.src}
           >
             MoscowJS
           </HeaderTitle>

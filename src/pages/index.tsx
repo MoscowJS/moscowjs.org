@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
+import { FluidObject } from 'gatsby-image'
 
 import type { Meetup, WrappedWithDirectus } from '../models'
 import { Event } from '../features/events/event'
@@ -15,12 +16,39 @@ type GraphqlDirectusMeetupsCount = {
 
 const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   const result = useStaticQuery<
-    WrappedWithDirectus<{
-      meetups: Array<Meetup>
-      meetups_aggregated: Array<GraphqlDirectusMeetupsCount>
-    }>
+    WrappedWithDirectus<
+      {
+        meetups: Array<Meetup>
+        meetups_aggregated: Array<GraphqlDirectusMeetupsCount>
+      },
+      {
+        files_by_id: { imageFile: { childImageSharp: { fluid: FluidObject } } }
+      }
+    >
   >(graphql`
     query {
+      directus_system {
+        files_by_id(id: "76bc020e-4b39-45d5-8eb6-b6f72066dff9") {
+          id
+          imageFile {
+            childImageSharp {
+              fluid(
+                grayscale: true
+                maxWidth: 2560
+                maxHeight: 800
+                fit: COVER
+              ) {
+                base64
+                tracedSVG
+                srcWebp
+                srcSetWebp
+                originalImg
+                originalName
+              }
+            }
+          }
+        }
+      }
       directus {
         meetups_aggregated(filter: { publish: { _eq: true } }) {
           count {
@@ -81,7 +109,12 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
   return (
     <>
       <SEO title="Главная" />
-      <Hero image={void 0} height="800px">
+      <Hero
+        image={
+          result.directus_system.files_by_id.imageFile.childImageSharp.fluid
+        }
+        height="800px"
+      >
         <Header location={location} />
         <Hero.Container verticalAlign="center">
           <Event event={latestEvent} isIndexPage={true} short={true} />

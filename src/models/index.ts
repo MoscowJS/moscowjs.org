@@ -7,6 +7,7 @@ export * from './navigation.h'
 export * from './question.h'
 export * from './partners.h'
 
-export type WrappedWithDirectus<TDataType> = {
-  directus: TDataType
+export type WrappedWithDirectus<TDirectusType, TDirectusSystemType = never> = {
+  directus: TDirectusType
+  directus_system: TDirectusSystemType
 }
