@@ -104,8 +104,7 @@ if (config.gatsby.datasource === 'airtable') {
     options: {
       url: config.directus.url,
       auth: {
-        email: config.directus.email,
-        password: config.directus.password,
+        token: config.directus.token,
       },
     },
   }

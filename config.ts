@@ -22,11 +22,8 @@ if (
 if (typeof process.env['DIRECTUS_URL'] !== 'string') {
   throw new Error('ENV DIRECTUS_URL is required')
 }
-if (typeof process.env['DIRECTUS_EMAIL'] !== 'string') {
-  throw new Error('ENV DIRECTUS_EMAIL is required')
-}
-if (typeof process.env['DIRECTUS_PASSWORD'] !== 'string') {
-  throw new Error('ENV DIRECTUS_PASSWORD is required')
+if (typeof process.env['DIRECTUS_TOKEN'] !== 'string') {
+  throw new Error('ENV DIRECTUS_TOKEN is required')
 }
 
 export const config = {
@@ -37,8 +34,7 @@ export const config = {
   },
   directus: {
     url: process.env['DIRECTUS_URL'],
-    email: process.env['DIRECTUS_EMAIL'],
-    password: process.env['DIRECTUS_PASSWORD'],
+    token: process.env['DIRECTUS_TOKEN'],
   },
   gatsby: {
     src: process.env['GATSBY_SRC_ROOT'],
@@ -64,8 +60,7 @@ if (
     },
     directus: {
       ...config.directus,
-      email: obfuscateString(config.directus.email),
-      password: obfuscateString(config.directus.password),
+      token: obfuscateString(config.directus.token, 10),
     },
   }
   console.log('config: ', JSON.stringify(obfuscatedConfig, null, 2))
