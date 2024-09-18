@@ -4,12 +4,11 @@ import { format } from 'date-fns'
 
 import type { Meetup } from '../../../models'
 import { Item, Markdown } from '../../../components/layout'
-import { airtableDateFix } from '../../../utils/airtableDateFix'
 import { EventLogo } from '../eventLogo'
 import { EventLink } from '../eventLink'
 
 const formatDate = (date: string) =>
-  format(airtableDateFix(new Date(date)), 'd MMMM y, HH:mm', {
+  format(new Date(date), 'd MMMM y, HH:mm', {
     locale: ru,
   })
 
@@ -28,7 +27,7 @@ export const EventsFeed: FunctionComponent<{
               <time dateTime={formatDate(meetup.date_start)}>
                 {formatDate(meetup.date_start)}
               </time>
-              {Array.isArray(meetup.companies) && (
+              {Boolean(meetup.companies?.length) && (
                 <>
                   {' '}
                   (

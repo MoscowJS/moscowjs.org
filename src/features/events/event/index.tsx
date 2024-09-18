@@ -6,7 +6,6 @@ import { ru } from 'date-fns/locale'
 
 import type { Meetup } from '../../../models'
 import { Markdown, Meta } from '../../../components/layout'
-import { airtableDateFix } from '../../../utils/airtableDateFix'
 import { rhythm } from '../../../utils/typography'
 import { PartnerLink } from '../../partners'
 import { Talk } from '../../talks'
@@ -28,7 +27,7 @@ const Section = styled.section`
 `
 
 const MetaDate = ({ event }: EventProps) => {
-  const date = airtableDateFix(new Date(event.date_start))
+  const date = new Date(event.date_start)
   const formattedDate = format(date, 'd MMMM y, HH:mm', {
     locale: ru,
   })

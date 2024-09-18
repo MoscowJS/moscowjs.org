@@ -6,7 +6,6 @@ import { Link } from 'gatsby'
 import { talkPath } from '../../../utils/paths'
 import type { Meetup, Talk, Speaker } from '../../../models'
 import { rhythm } from '../../../utils/typography'
-import { airtableDateFix } from '../../../utils/airtableDateFix'
 
 const sceneOrder: {
   [k: string]: number
@@ -89,8 +88,7 @@ const TalkCell = (props: { talk: TimeTableTalk }) => {
   )
 }
 
-const formatHoursMins = (date: string) =>
-  format(airtableDateFix(new Date(date)), 'HH:mm')
+const formatHoursMins = (date: string) => format(new Date(date), 'HH:mm')
 
 export const EventTimeTable: FunctionComponent<{
   event: Pick<Meetup, 'timetable' | 'date_start' | 'date_end' | 'type'> & {
