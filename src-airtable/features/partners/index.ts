@@ -1,1 +1,0 @@
-export { PartnerLink } from "./partnerLink"
