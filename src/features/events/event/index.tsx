@@ -118,7 +118,7 @@ const TalksList = ({ event }: EventProps) => {
             : 'О чём будем говорить'}
         </h3>
         {event.talks.map(talk => {
-          return <Talk talk={talk} level={2} key={talk.title} />
+          return <Talk event={event} talk={talk} level={2} key={talk.title} />
         })}
       </>
     )

@@ -52,6 +52,8 @@ export const query = graphql`
           company
           scene
           start_time
+          slides_url
+          record
           speakers {
             persons_id {
               name

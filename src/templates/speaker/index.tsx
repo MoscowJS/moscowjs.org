@@ -4,7 +4,7 @@ import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
 import SEO from '../../utils/seo'
-import type { WrappedWithDirectus, Speaker } from '../../models'
+import type { WrappedWithDirectus, Speaker, Meetup } from '../../models'
 import {
   Container,
   Footer,
@@ -107,6 +107,14 @@ const SpeakerPage: FunctionComponent<
         <h2>Доклады</h2>
         {talks.map(meetupData => {
           const talk = meetupData['talks_id']
+          const meetup = talk.meetup_id!
+
+          const event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'> = {
+            id: meetup.id,
+            slug: meetup.slug,
+            title: meetup.title,
+            date_start: meetup.date_start,
+          }
 
           return (
             <Item>
@@ -114,7 +122,7 @@ const SpeakerPage: FunctionComponent<
                 <EventLogo size="xs" title={talk.meetup_id?.title ?? ''} />
               </Item.ImageContainer>
               <Item.Content verticalAlign="center">
-                <Talk.Description talk={talk} level={2} />
+                <Talk.Description event={event} talk={talk} level={2} />
               </Item.Content>
             </Item>
           )
@@ -163,8 +171,9 @@ export const query = graphql`
             theses
             meetup_id {
               id
-              date_start
+              slug
               title
+              date_start
             }
           }
         }
