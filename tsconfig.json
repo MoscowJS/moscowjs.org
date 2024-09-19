@@ -8,6 +8,5 @@
     "baseUrl": ".",
     "jsx": "react",
     "incremental": true
-  },
-  "exclude": ["src-airtable"]
+  }
 }

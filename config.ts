@@ -1,12 +1,3 @@
-if (typeof process.env['AIRTABLE_API_KEY'] !== 'string') {
-  throw new Error('ENV AIRTABLE_API_KEY is required')
-}
-if (typeof process.env['AIRTABLE_BASE_ID'] !== 'string') {
-  throw new Error('ENV AIRTABLE_BASE_ID is required')
-}
-if (typeof process.env['AIRTABLE_META_BASE_ID'] !== 'string') {
-  throw new Error('ENV AIRTABLE_META_BASE_ID is required')
-}
 if (typeof process.env['GATSBY_SRC_ROOT'] !== 'string') {
   throw new Error('ENV GATSBY_SRC_ROOT is required')
 }
@@ -15,7 +6,7 @@ if (typeof process.env['SITE_URL'] !== 'string') {
 }
 if (
   typeof process.env['GATSBY_DATASOURCE'] !== 'string' ||
-  !['airtable', 'directus'].includes(process.env['GATSBY_DATASOURCE'])
+  !['directus'].includes(process.env['GATSBY_DATASOURCE'])
 ) {
   throw new Error('ENV GATSBY_DATASOURCE invalid')
 }
@@ -27,11 +18,6 @@ if (typeof process.env['DIRECTUS_TOKEN'] !== 'string') {
 }
 
 export const config = {
-  airtable: {
-    apiKey: process.env['AIRTABLE_API_KEY'],
-    baseId: process.env['AIRTABLE_BASE_ID'],
-    metaBaseId: process.env['AIRTABLE_META_BASE_ID'],
-  },
   directus: {
     url: process.env['DIRECTUS_URL'],
     token: process.env['DIRECTUS_TOKEN'],
@@ -54,10 +40,6 @@ if (
 ) {
   const obfuscatedConfig = {
     ...config,
-    airtable: {
-      ...config.airtable,
-      apiKey: obfuscateString(config.airtable.apiKey, 10),
-    },
     directus: {
       ...config.directus,
       token: obfuscateString(config.directus.token, 10),

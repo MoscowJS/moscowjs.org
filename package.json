@@ -27,7 +27,6 @@
     "gatsby-plugin-sharp": "^4.25.1",
     "gatsby-plugin-styled-components": "^5.25.0",
     "gatsby-plugin-typography": "^4.25.0",
-    "gatsby-source-airtable": "^2.2.1",
     "gatsby-source-filesystem": "^4.25.0",
     "gatsby-source-graphql": "^4.25.0",
     "gatsby-transformer-sharp": "^4.25.0",
