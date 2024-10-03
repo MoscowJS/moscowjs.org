@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 
-import type { Meetup, Talk as TalkType } from '../../../models'
+import type { Meetup, Paper, Talk as TalkType } from '../../../models'
 import { eventPath, talkPath } from '../../../utils/paths'
 import { rhythm } from '../../../utils/typography'
 import { Item, Markdown } from '../../../components/layout'
@@ -17,7 +17,12 @@ const Meta = styled.a`
 
 const TalkDescription: FunctionComponent<{
   event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'>
-  talk: TalkType
+  talk: Pick<
+    TalkType,
+    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
+  > & {
+    paper: Pick<Paper, 'id' | 'title' | 'theses'>
+  }
   level: 1 | 2 | 3
 }> = ({ event, talk, level }) => {
   const tag = (['h1', 'h2', 'h3'] as const)[level - 1]
@@ -31,9 +36,9 @@ const TalkDescription: FunctionComponent<{
         </time>
       </Item.Meta>
       <Item.Header as={tag}>
-        <Link to={talkPath(talk.title)}>{talk.title}</Link>
+        <Link to={talkPath(talk.paper.title)}>{talk.paper.title}</Link>
       </Item.Header>
-      <Markdown>{talk.theses}</Markdown>
+      <Markdown>{talk.paper.theses}</Markdown>
       <p>
         {talk.slides_url && <Meta href={talk.slides_url}>Слайды</Meta>}
         {talk.record && <Meta href={talk.record}>Запись</Meta>}
@@ -44,7 +49,12 @@ const TalkDescription: FunctionComponent<{
 
 export const Talk: FunctionComponent<{
   event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'>
-  talk: TalkType
+  talk: Pick<
+    TalkType,
+    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
+  > & {
+    paper: Pick<Paper, 'id' | 'title' | 'theses'>
+  }
   level: 1 | 2 | 3
 }> & {
   Description: typeof TalkDescription
@@ -61,7 +71,7 @@ export const Talk: FunctionComponent<{
       <SpeakersGrid speakers={speakers} />
     </>
   ) : (
-    <Item key={talk.title}>
+    <Item key={talk.paper.title}>
       <Item.ImageContainer size="s">
         <SpeakerPhoto
           speaker={talk.speakers[0]?.persons_id}

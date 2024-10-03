@@ -21,7 +21,7 @@ const sceneOrder: {
 
 type TimeTableTalk = Pick<
   Talk,
-  'id' | 'title' | 'company' | 'scene' | 'start_time'
+  'id' | 'paper' | 'company' | 'scene' | 'start_time'
 > & {
   speakers: Array<{
     persons_id: Pick<Speaker, 'name'>
@@ -79,10 +79,11 @@ const TalkCell = (props: { talk: TimeTableTalk }) => {
       <h5>
         {talk.speakers
           .map(({ persons_id: speaker }) => `${speaker.name}`)
+
           .join(', ')}
       </h5>
       <h4>
-        <Link to={talkPath(talk.title)}>{talk.title}</Link>
+        <Link to={talkPath(talk.paper.title)}>{talk.paper.title}</Link>
       </h4>
     </>
   )

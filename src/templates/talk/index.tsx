@@ -3,6 +3,7 @@ import { graphql, PageProps } from 'gatsby'
 
 import SEO from '../../utils/seo'
 import type {
+  Paper,
   Meetup,
   Talk as TalkType,
   WrappedWithDirectus,
@@ -11,7 +12,12 @@ import { Container, Header, Footer } from '../../components/layout'
 import { Talk } from '../../features/talks/talk'
 
 type GraphqlDirectusTalks = {
-  talks_by_id: TalkType
+  talks_by_id: Pick<
+    TalkType,
+    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
+  > & {
+    paper: Pick<Paper, 'id' | 'title' | 'theses'>
+  }
 }
 
 const TalkPage: FunctionComponent<
@@ -29,7 +35,7 @@ const TalkPage: FunctionComponent<
 
   return (
     <>
-      <SEO title={talk.title} />
+      <SEO title={talk.paper.title} />
       <Header location={location} />
       <Container as="main">
         <Talk event={event} talk={talk} level={1} />
@@ -44,12 +50,14 @@ export const query = graphql`
     directus {
       talks_by_id(id: $id) {
         id
-        status
-        title
+        paper {
+          id
+          title
+          theses
+        }
         slides_url
         record
         type
-        theses
         publish
         company
         scene

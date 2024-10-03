@@ -47,8 +47,11 @@ export const query = graphql`
         video_link
         talks {
           id
-          title
-          theses
+          paper {
+            id
+            title
+            theses
+          }
           company
           scene
           start_time
@@ -60,7 +63,9 @@ export const query = graphql`
               talks {
                 talks_id {
                   id
-                  title
+                  paper {
+                    title
+                  }
                 }
               }
               photo {

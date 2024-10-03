@@ -28,7 +28,7 @@ type GraphqlDirectusPersons = {
   persons: Array<Pick<Speaker, 'id' | 'name'>>
 }
 type GraphqlDirectusTalks = {
-  talks: Array<Pick<Talk, 'id' | 'title'>>
+  talks: Array<Pick<Talk, 'id' | 'paper'>>
 }
 type GraphqlDirectusEvents = {
   meetups: Array<Pick<Meetup, 'id' | 'slug' | 'title'>>
@@ -98,7 +98,9 @@ export const createPages: GatsbyNode['createPages'] = async ({
         directus {
           talks(limit: ${limit}, offset: ${offset}) {
             id
-            title
+            paper {
+			        title
+		        }
           }
         }
       }
@@ -167,13 +169,13 @@ export const createPages: GatsbyNode['createPages'] = async ({
     'talks'
   )) {
     talks.forEach(talk => {
-      if (!talk.title) {
+      if (!talk.paper.title) {
         console.error('Talk wrong format', talk.id)
         return
       }
 
       createPage({
-        path: talkPath(talk.title),
+        path: talkPath(talk.paper.title),
         component: path.resolve(config.gatsby.src, 'templates/talk/index.tsx'),
         context: { id: talk.id },
       })

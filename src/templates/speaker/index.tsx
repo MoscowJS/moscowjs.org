@@ -167,8 +167,11 @@ export const query = graphql`
         talks {
           talks_id {
             id
-            title
-            theses
+            paper {
+              id
+              title
+              theses
+            }
             meetup_id {
               id
               slug
