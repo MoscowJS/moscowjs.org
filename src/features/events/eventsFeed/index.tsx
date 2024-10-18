@@ -2,7 +2,7 @@ import React, { type FunctionComponent } from 'react'
 import { ru } from 'date-fns/locale'
 import { format } from 'date-fns'
 
-import type { Meetup } from '../../../models'
+import type { Company, Meetup } from '../../../models'
 import { Item, Markdown } from '../../../components/layout'
 import { EventLogo } from '../eventLogo'
 import { EventLink } from '../eventLink'
@@ -13,7 +13,17 @@ const formatDate = (date: string) =>
   })
 
 export const EventsFeed: FunctionComponent<{
-  events: Array<Meetup>
+  events: Array<
+    Pick<
+      Meetup<never, never, Company, never>,
+      | 'id'
+      | 'slug'
+      | 'title'
+      | 'date_start'
+      | 'announcement_short'
+      | 'companies'
+    >
+  >
 }> = ({ events }) => {
   return (
     <>

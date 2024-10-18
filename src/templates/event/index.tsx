@@ -88,7 +88,7 @@ export const query = graphql`
             }
           }
         }
-        venue_id {
+        venue {
           id
           name
           slug

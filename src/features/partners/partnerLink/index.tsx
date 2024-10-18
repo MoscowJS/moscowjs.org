@@ -12,7 +12,7 @@ const SmallHeader = styled(Item.Header)`
   margin-bottom: 0;
 `
 export const PartnerLink: FunctionComponent<{
-  partner: Partner
+  partner: Pick<Partner, 'id' | 'name' | 'link' | 'description'>
 }> = ({ partner }) => {
   return (
     <Item>

@@ -6,6 +6,7 @@ import { config } from './config'
 import { speakerPath, talkPath, pagePath, eventPath } from './src/utils/paths'
 import type {
   Page,
+  Paper,
   Speaker,
   Talk,
   Meetup,
@@ -28,7 +29,7 @@ type GraphqlDirectusPersons = {
   persons: Array<Pick<Speaker, 'id' | 'name'>>
 }
 type GraphqlDirectusTalks = {
-  talks: Array<Pick<Talk, 'id' | 'paper'>>
+  talks: Array<Pick<Talk<never, never, Pick<Paper, 'title'>>, 'id' | 'paper'>>
 }
 type GraphqlDirectusEvents = {
   meetups: Array<Pick<Meetup, 'id' | 'slug' | 'title'>>

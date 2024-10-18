@@ -4,7 +4,14 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-import type { Meetup } from '../../../models'
+import type {
+  Company,
+  Meetup,
+  Paper,
+  Partner,
+  Speaker,
+  Talk as TalkType,
+} from '../../../models'
 import { Markdown, Meta } from '../../../components/layout'
 import { rhythm } from '../../../utils/typography'
 import { PartnerLink } from '../../partners'
@@ -13,7 +20,47 @@ import { EventTimeTable } from '../eventTimeTable'
 import { EventLink } from '../eventLink'
 
 type EventProps = {
-  event: Meetup
+  event: Pick<
+    Meetup<
+      Pick<
+        TalkType<
+          Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+          Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+          Pick<Paper, 'id' | 'title' | 'theses'>
+        >,
+        | 'id'
+        | 'paper'
+        | 'company'
+        | 'scene'
+        | 'start_time'
+        | 'speakers'
+        | 'meetup_id'
+        | 'slides_url'
+        | 'record'
+      >,
+      never,
+      Pick<Company, 'id' | 'name'>,
+      Pick<Partner, 'id' | 'name' | 'link' | 'description'>
+    >,
+    | 'id'
+    | 'type'
+    | 'slug'
+    | 'title'
+    | 'title_formatted'
+    | 'talks'
+    | 'status'
+    | 'address'
+    | 'partners'
+    | 'date_start'
+    | 'date_end'
+    | 'companies'
+    | 'timetable'
+    | 'stream_link'
+    | 'video_link'
+    | 'registration_link'
+    | 'announcement_short'
+    | 'announcement_long'
+  >
   short?: boolean
   isIndexPage?: boolean
 }
@@ -87,7 +134,7 @@ const MetaRegistration = ({ event }: EventProps) => {
     return null
   }
 
-  if (event.type === 'Online') {
+  if (event.type === 'online') {
     return null
   }
 

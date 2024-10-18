@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 
-import type { Speaker } from '../../../models'
+import type { Speaker, Talk } from '../../../models'
 import { rhythm } from '../../../utils/typography'
 import { SpeakerPhoto } from '../speakerPhoto'
 
@@ -24,7 +24,9 @@ const Speaker = styled.li`
 `
 
 export const SpeakersGrid: FunctionComponent<{
-  speakers: Array<Pick<Speaker, 'name' | 'photo' | 'talks'>>
+  speakers: Array<
+    Pick<Speaker<Pick<Talk, 'id' | 'company'>>, 'name' | 'photo' | 'talks'>
+  >
 }> = ({ speakers }) => {
   return (
     <SpeakersContainer>

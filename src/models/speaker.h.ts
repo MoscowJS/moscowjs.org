@@ -1,6 +1,12 @@
+import type { Meetup } from './meetup.h'
+import type { Paper } from './paper.h'
 import type { Talk } from './talk.h'
 
-export type Speaker = {
+export type Speaker<
+  TTalk extends Partial<
+    Talk<Partial<Meetup>, Partial<Speaker>, Partial<Paper>>
+  > = never
+> = {
   id: string
   status: string
   telegram: string
@@ -26,6 +32,6 @@ export type Speaker = {
     }
   } | null
   talks: Array<{
-    talks_id: Talk
+    talks_id: TTalk
   }>
 }

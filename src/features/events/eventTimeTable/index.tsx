@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { Link } from 'gatsby'
 
 import { talkPath } from '../../../utils/paths'
-import type { Meetup, Talk, Speaker } from '../../../models'
+import type { Meetup, Talk, Speaker, Paper } from '../../../models'
 import { rhythm } from '../../../utils/typography'
 
 const sceneOrder: {
@@ -20,13 +20,9 @@ const sceneOrder: {
 }
 
 type TimeTableTalk = Pick<
-  Talk,
-  'id' | 'paper' | 'company' | 'scene' | 'start_time'
-> & {
-  speakers: Array<{
-    persons_id: Pick<Speaker, 'name'>
-  }>
-}
+  Talk<never, Pick<Speaker, 'id' | 'name'>, Pick<Paper, 'id' | 'title'>>,
+  'id' | 'paper' | 'company' | 'scene' | 'start_time' | 'speakers'
+>
 
 type TableRows = {
   [K: string]:
@@ -92,9 +88,10 @@ const TalkCell = (props: { talk: TimeTableTalk }) => {
 const formatHoursMins = (date: string) => format(new Date(date), 'HH:mm')
 
 export const EventTimeTable: FunctionComponent<{
-  event: Pick<Meetup, 'timetable' | 'date_start' | 'date_end' | 'type'> & {
-    talks: Array<TimeTableTalk>
-  }
+  event: Pick<
+    Meetup<TimeTableTalk>,
+    'timetable' | 'date_start' | 'date_end' | 'type' | 'talks'
+  >
 }> = ({ event }) => {
   if (!event.timetable || !event.talks) {
     return null

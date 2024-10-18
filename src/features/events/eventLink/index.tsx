@@ -5,7 +5,9 @@ import type { Meetup } from '../../../models'
 import { eventPath } from '../../../utils/paths'
 import { Markdown } from '../../../components/layout'
 
-export const EventLink: FunctionComponent<{ event: Meetup }> = ({ event }) => {
+export const EventLink: FunctionComponent<{
+  event: Pick<Meetup, 'id' | 'slug' | 'title' | 'title_formatted'>
+}> = ({ event }) => {
   const path = eventPath(event.slug)
 
   return event.title_formatted ? (

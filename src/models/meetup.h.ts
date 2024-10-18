@@ -1,36 +1,43 @@
 import type { Partner } from './partners.h'
 import type { Talk } from './talk.h'
+import type { Venue } from './venue.h'
+import type { Company } from './company.h'
+import type { Speaker } from './speaker.h'
+import type { Paper } from './paper.h'
 
-export type Meetup = {
+type MeetupStatus = 'выбор площадки' | 'завершен' | 'подготовка'
+type MeetupType = 'online' | 'offline'
+
+export type Meetup<
+  TTalk extends Partial<
+    Talk<Partial<Meetup>, Partial<Speaker>, Partial<Paper>>
+  > = never,
+  TVenue extends Partial<Venue> = never,
+  TCompany extends Partial<Company> = never,
+  TPartner extends Partial<Partner> = never
+> = {
   id: string
-  title: string
-  type: string
+  status: MeetupStatus
+  publish: boolean
+  type: MeetupType
+  slug: string
   date_start: string
   date_end: string
+  title: string
+  title_formatted?: string
   address: string
-  status: string
-  title_formatted: string
-  registration_link: string
-  announcement_short: string
   announcement_long: string
-  slug: string
-  stream_link: string
-  video_link: string
+  announcement_short: string
+  registration_link?: string
+  video_link?: string
+  stream_link?: string
   timetable: boolean
-  talks: Array<Talk>
-  venue_id: {
-    id: string
-    name: string
-    slug: string
-  }
+  talks: Array<TTalk>
+  venue: TVenue
   companies: Array<{
-    companies_id: {
-      id: string
-      name: string
-      slug: string
-    }
+    companies_id: TCompany
   }>
   partners: Array<{
-    partners_id: Partner
+    partners_id: TPartner
   }>
 }

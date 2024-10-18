@@ -5,20 +5,12 @@ import SEO from '../../utils/seo'
 import type {
   Paper,
   Meetup,
+  Speaker,
   Talk as TalkType,
   WrappedWithDirectus,
 } from '../../models'
 import { Container, Header, Footer } from '../../components/layout'
 import { Talk } from '../../features/talks/talk'
-
-type GraphqlDirectusTalks = {
-  talks_by_id: Pick<
-    TalkType,
-    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
-  > & {
-    paper: Pick<Paper, 'id' | 'title' | 'theses'>
-  }
-}
 
 const TalkPage: FunctionComponent<
   PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
@@ -43,6 +35,17 @@ const TalkPage: FunctionComponent<
       <Footer />
     </>
   )
+}
+
+type GraphqlDirectusTalks = {
+  talks_by_id: Pick<
+    TalkType<
+      Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+      Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+      Pick<Paper, 'id' | 'title' | 'theses'>
+    >,
+    'meetup_id' | 'speakers' | 'paper' | 'company' | 'slides_url' | 'record'
+  >
 }
 
 export const query = graphql`

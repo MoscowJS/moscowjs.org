@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 
-import type { Meetup, Paper, Talk as TalkType } from '../../../models'
+import type { Meetup, Paper, Speaker, Talk as TalkType } from '../../../models'
 import { eventPath, talkPath } from '../../../utils/paths'
 import { rhythm } from '../../../utils/typography'
 import { Item, Markdown } from '../../../components/layout'
@@ -18,11 +18,13 @@ const Meta = styled.a`
 const TalkDescription: FunctionComponent<{
   event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'>
   talk: Pick<
-    TalkType,
-    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
-  > & {
-    paper: Pick<Paper, 'id' | 'title' | 'theses'>
-  }
+    TalkType<
+      Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+      Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+      Pick<Paper, 'id' | 'title' | 'theses'>
+    >,
+    'meetup_id' | 'speakers' | 'paper' | 'company' | 'slides_url' | 'record'
+  >
   level: 1 | 2 | 3
 }> = ({ event, talk, level }) => {
   const tag = (['h1', 'h2', 'h3'] as const)[level - 1]
@@ -50,11 +52,13 @@ const TalkDescription: FunctionComponent<{
 export const Talk: FunctionComponent<{
   event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'>
   talk: Pick<
-    TalkType,
-    'meetup_id' | 'speakers' | 'company' | 'slides_url' | 'record'
-  > & {
-    paper: Pick<Paper, 'id' | 'title' | 'theses'>
-  }
+    TalkType<
+      Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+      Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+      Pick<Paper, 'id' | 'title' | 'theses'>
+    >,
+    'meetup_id' | 'speakers' | 'paper' | 'company' | 'slides_url' | 'record'
+  >
   level: 1 | 2 | 3
 }> & {
   Description: typeof TalkDescription

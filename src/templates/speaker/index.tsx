@@ -4,7 +4,13 @@ import Img from 'gatsby-image'
 import { UserX } from 'react-feather'
 
 import SEO from '../../utils/seo'
-import type { WrappedWithDirectus, Speaker, Meetup } from '../../models'
+import type {
+  WrappedWithDirectus,
+  Speaker,
+  Meetup,
+  Paper,
+  Talk as TalkType,
+} from '../../models'
 import {
   Container,
   Footer,
@@ -15,7 +21,7 @@ import {
 import { EventLogo } from '../../features/events/eventLogo'
 import { Talk } from '../../features/talks/talk'
 
-const transformContacts = (speaker: Speaker) => {
+const transformContacts = (speaker: PersonsByIdSpeaker) => {
   const result = []
 
   if (speaker.telegram) {
@@ -51,10 +57,6 @@ const transformContacts = (speaker: Speaker) => {
   }
 
   return result
-}
-
-type GraphqlDirectusSpeakerById = {
-  persons_by_id: Speaker
 }
 
 const SpeakerPage: FunctionComponent<
@@ -131,6 +133,18 @@ const SpeakerPage: FunctionComponent<
       <Footer />
     </>
   )
+}
+
+type PersonsByIdSpeaker = Speaker<
+  TalkType<
+    Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+    never,
+    Pick<Paper, 'id' | 'title' | 'theses'>
+  >
+>
+
+type GraphqlDirectusSpeakerById = {
+  persons_by_id: PersonsByIdSpeaker
 }
 
 export const query = graphql`

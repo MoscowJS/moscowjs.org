@@ -59,7 +59,7 @@ export const query = graphql`
           id
           company
         }
-        venue_id {
+        venue {
           id
           name
           slug

@@ -78,7 +78,7 @@ const IndexPage: FunctionComponent<PageProps> = ({ location }) => {
             id
             company
           }
-          venue_id {
+          venue {
             id
             name
             slug
