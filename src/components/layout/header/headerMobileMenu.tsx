@@ -39,6 +39,7 @@ const HMMBurger = styled(MenuButton)`
 
 const HMMTOuterContainer = styled(Menu)`
   z-index: 100;
+  transform: translate3d(0px, 66px, 0px)!important;
 `
 
 const HMMContainer = styled.div`
