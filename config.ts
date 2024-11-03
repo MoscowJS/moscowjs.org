@@ -4,12 +4,6 @@ if (typeof process.env['GATSBY_SRC_ROOT'] !== 'string') {
 if (typeof process.env['SITE_URL'] !== 'string') {
   throw new Error('ENV SITE_URL is required')
 }
-if (
-  typeof process.env['GATSBY_DATASOURCE'] !== 'string' ||
-  !['directus'].includes(process.env['GATSBY_DATASOURCE'])
-) {
-  throw new Error('ENV GATSBY_DATASOURCE invalid')
-}
 if (typeof process.env['DIRECTUS_URL'] !== 'string') {
   throw new Error('ENV DIRECTUS_URL is required')
 }
@@ -25,7 +19,6 @@ export const config = {
   gatsby: {
     src: process.env['GATSBY_SRC_ROOT'],
     siteUrl: process.env['SITE_URL'],
-    datasource: process.env['GATSBY_DATASOURCE'],
   },
 }
 
