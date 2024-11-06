@@ -21,3 +21,12 @@ jobs:
         run: npm run lint:prettier
       - name: Typescript
         run: npm run lint:tsc
+      - name: Gatsby Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+          GATSBY_SRC_ROOT: src
+          GATSBY_PRINT_CONFIG: true
+          SITE_URL: ${{ secrets.SITE_URL }}
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
