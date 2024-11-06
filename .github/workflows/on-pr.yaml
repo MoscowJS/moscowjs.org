@@ -3,7 +3,7 @@ name: Pull request check
 on:
   pull_request:
     branches:
-      - $default-branch
+      - main
 
 jobs:
   checks:
