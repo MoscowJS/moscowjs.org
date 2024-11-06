@@ -64,7 +64,8 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "node --require dotenv/config node_modules/.bin/gatsby develop",
-    "lint": "prettier . --check",
+    "lint:prettier": "prettier . --check",
+    "lint:tsc": "tsc --noEmit --skipLibCheck --incremental --pretty",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
