@@ -63,6 +63,7 @@ export const query = graphql`
               talks {
                 talks_id {
                   id
+                  company
                   paper {
                     title
                   }
