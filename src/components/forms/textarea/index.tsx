@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import React, {
   SyntheticEvent,
   useCallback,
@@ -6,8 +5,9 @@ import React, {
   useRef,
   useState,
   FunctionComponent,
-} from "react"
-import { Input } from "reakit/Input"
+} from 'react'
+import styled from 'styled-components'
+import { Input } from 'reakit/Input'
 
 const TextareaInner = styled.textarea`
   display: block;
@@ -48,7 +48,7 @@ export const Textarea: FunctionComponent<{
   }, [textareaRef, textareaRef.current])
 
   const handleChange = useCallback(
-    event => {
+    (event: any) => {
       onChange && onChange(event)
 
       if (!autosize) {

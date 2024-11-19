@@ -1,31 +1,28 @@
-import React, { FunctionComponent } from "react"
-import { ConfigData } from "../models/config.h"
-import { graphql, useStaticQuery } from "gatsby"
-import { Helmet, HelmetProps } from "react-helmet"
+import React, { FunctionComponent } from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+import { Helmet, HelmetProps } from 'react-helmet'
+
+import type { Config, WrappedWithDirectus } from '../models'
 
 const SEO: FunctionComponent<{
   description?: string
   lang?: string
-  meta?: HelmetProps["meta"]
+  meta?: HelmetProps['meta']
   title?: string
-}> = ({ description = "", lang = "ru", meta = [], title }) => {
+}> = ({ description = '', lang = 'ru', meta = [], title }) => {
   const {
-    allAirtableconfig: { nodes },
-  } = useStaticQuery<{
-    allAirtableconfig: {
-      nodes: Array<{
-        data: ConfigData
-      }>
-    }
-  }>(
+    directus: { config },
+  } = useStaticQuery<
+    WrappedWithDirectus<{
+      config: Array<Pick<Config, 'name' | 'value'>>
+    }>
+  >(
     graphql`
       query {
-        allAirtableconfig(filter: { data: { type: { eq: "meta" } } }) {
-          nodes {
-            data {
-              name
-              value
-            }
+        directus {
+          config {
+            name
+            value
           }
         }
       }
@@ -36,12 +33,12 @@ const SEO: FunctionComponent<{
     description?: string
     title?: string
     author?: string
-  } = nodes.reduce((result, { data }) => {
+  } = config.reduce((result, data) => {
     result[data.name] = data.value
     return result
   }, {} as any)
 
-  const metaDescription = description || site.description
+  const metaDescription = description ?? site.description
   const defaultTitle = site.title
 
   return (
@@ -50,7 +47,7 @@ const SEO: FunctionComponent<{
         lang,
       }}
       title={title}
-      titleTemplate={defaultTitle ? `${defaultTitle} — %s` : undefined}
+      titleTemplate={defaultTitle ? `${defaultTitle} — %s` : undefined}
       meta={[
         {
           name: `description`,

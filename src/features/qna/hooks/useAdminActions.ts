@@ -1,12 +1,13 @@
-import { database, auth } from "features/firebase"
-import { useContext } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { SessionContext } from ".."
-import { useIsAdmin } from "./useIsAdmin"
+import { useContext } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+import { useIsAdmin } from './useIsAdmin'
+import { SessionContext } from '../sessionContext'
+import { database, auth } from '../../firebase'
 
 export const useAdminActions = (questionId: string) => {
   const sessionId = useContext(SessionContext)
-  const sessionRef = "questions/" + sessionId
+  const sessionRef = 'questions/' + sessionId
 
   const [user] = useAuthState(auth())
   const isAdmin = useIsAdmin()

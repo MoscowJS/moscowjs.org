@@ -1,50 +1,61 @@
-import React from "react"
-import { EventLogo } from "../eventLogo"
-import { EventData } from "models/event.h"
-import { EventLink } from "features/events/eventLink"
-import { FunctionComponent } from "react"
-import { Item, Markdown } from "components/layout"
-import { format } from "date-fns"
-import { ru } from "date-fns/locale"
-import { airtableDateFix } from "utils/airtableDateFix"
+import React, { type FunctionComponent } from 'react'
+import { ru } from 'date-fns/locale'
+import { format } from 'date-fns'
+
+import type { Company, Meetup } from '../../../models'
+import { Item, Markdown } from '../../../components/layout'
+import { EventLogo } from '../eventLogo'
+import { EventLink } from '../eventLink'
 
 const formatDate = (date: string) =>
-  format(airtableDateFix(new Date(date)), "d MMMM y, HH:mm", {
+  format(new Date(date), 'd MMMM y, HH:mm', {
     locale: ru,
   })
 
 export const EventsFeed: FunctionComponent<{
-  events: Array<{ data: EventData }>
+  events: Array<
+    Pick<
+      Meetup<never, never, Company, never>,
+      | 'id'
+      | 'slug'
+      | 'title'
+      | 'date_start'
+      | 'announcement_short'
+      | 'companies'
+    >
+  >
 }> = ({ events }) => {
   return (
     <>
-      {events.map(({ data }) => (
-        <Item key={data.Slug}>
+      {events.map(meetup => (
+        <Item key={meetup.slug}>
           <Item.ImageContainer size="s">
-            <EventLogo size="s" title={data.Title} />
+            <EventLogo size="s" title={meetup.title} />
           </Item.ImageContainer>
           <Item.Content>
             <Item.Meta>
-              <time dateTime={formatDate(data.Date)}>
-                {formatDate(data.Date)}
+              <time dateTime={formatDate(meetup.date_start)}>
+                {formatDate(meetup.date_start)}
               </time>
-              {data.Company && (
+              {Boolean(meetup.companies?.length) && (
                 <>
-                  {" "}
+                  {' '}
                   (
                   <em>
-                    {data.Company.map(({ data }) => data.Name).join(", ")}
+                    {meetup.companies
+                      .map(({ companies_id: company }) => company.name)
+                      .join(', ')}
                   </em>
                   )
                 </>
               )}
             </Item.Meta>
             <Item.Header>
-              <EventLink event={data} />
+              <EventLink event={meetup} />
             </Item.Header>
-            {data.Short_Announcement && (
+            {meetup.announcement_short && (
               <div>
-                <Markdown>{data.Short_Announcement}</Markdown>
+                <Markdown>{meetup.announcement_short}</Markdown>
               </div>
             )}
           </Item.Content>

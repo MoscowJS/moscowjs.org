@@ -1,12 +1,16 @@
-import React from "react"
-import styled from "styled-components"
-import { NavigationData } from "../../../models/navigation.h"
-import { pagePath } from "../../../utils/paths"
-import { rhythm } from "../../../utils/typography"
-import { Telegram } from "../../icons/telegram"
-import { Container } from "components/layout"
-import { Twitter, Youtube } from "react-feather"
-import { graphql, Link, useStaticQuery } from "gatsby"
+import React from 'react'
+import { Twitter, Youtube } from 'react-feather'
+import styled from 'styled-components'
+import { graphql, Link, useStaticQuery } from 'gatsby'
+
+import type {
+  Navigation as NavigationType,
+  WrappedWithDirectus,
+} from '../../../models'
+import { pagePath } from '../../../utils/paths'
+import { rhythm } from '../../../utils/typography'
+import { Telegram } from '../../icons/telegram'
+import { Container } from '../container'
 
 const FooterContainer = styled(Container)`
   @media (min-width: 768px) {
@@ -40,36 +44,32 @@ const Navigation = styled.nav`
 
 export const Footer = () => {
   const {
-    allAirtablenavigation: { nodes },
-  } = useStaticQuery<{
-    allAirtablenavigation: {
-      nodes: Array<{
-        data: NavigationData
-      }>
-    }
-  }>(graphql`
-    {
-      allAirtablenavigation(
-        filter: {
-          data: { navigation: { eq: "footer-left" }, show: { eq: true } }
-        }
-        sort: { fields: data___order, order: ASC }
-      ) {
-        nodes {
-          data {
-            customUrl
-            slug
-            title
+    directus: { navigation },
+  } = useStaticQuery<
+    WrappedWithDirectus<{ navigation: Array<NavigationType> }>
+  >(graphql`
+    query {
+      directus {
+        navigation(
+          filter: {
+            status: { _eq: "published" }
+            navigation: { _eq: "footer-left" }
           }
+          sort: ["order"]
+        ) {
+          id
+          customUrl
+          slug
+          title
         }
       }
     }
   `)
 
-  const navigation = nodes.map(({ data }) => ({
-    external: !!data.customUrl,
-    url: data.customUrl || pagePath(data.slug[0]),
-    title: data.title,
+  const navigations = navigation.map(nav => ({
+    external: !!nav.customUrl,
+    url: nav.customUrl || pagePath(nav.slug[0]),
+    title: nav.title,
   }))
 
   return (
@@ -77,7 +77,7 @@ export const Footer = () => {
       <Column>
         <div>© 2011 — {new Date().getFullYear()}, MoscowJS Team</div>
         <Navigation>
-          {navigation.map(({ external, url, title }) => {
+          {navigations.map(({ external, url, title }) => {
             return (
               <div key={url}>
                 {external ? (

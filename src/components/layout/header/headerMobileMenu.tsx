@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from "react"
-import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu"
-import { Menu as MenuIcon } from "react-feather"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
-import { NavigationItem } from "./index.h"
-import { Link } from "gatsby"
+import React, { FunctionComponent } from 'react'
+import { useMenuState, Menu, MenuItem, MenuButton } from 'reakit/Menu'
+import { Menu as MenuIcon } from 'react-feather'
+import styled from 'styled-components'
+import { Link } from 'gatsby'
+
+import { rhythm } from '../../../utils/typography'
+import { NavigationItem } from './index.h'
 
 const HMMBurger = styled(MenuButton)`
   cursor: pointer;
@@ -21,7 +22,7 @@ const HMMBurger = styled(MenuButton)`
     background: var(--color-primary);
     color: var(--color-text-black);
   `
-      : ""}
+      : ''}
 
   svg {
     vertical-align: middle;
@@ -38,7 +39,7 @@ const HMMBurger = styled(MenuButton)`
 
 const HMMTOuterContainer = styled(Menu)`
   z-index: 100;
-  transform: translate3d(0px, 66px, 0px)!important;
+  transform: translate3d(0px, 66px, 0px) !important;
 `
 
 const HMMContainer = styled.div`
@@ -83,7 +84,7 @@ export const HeaderMobileMenu: FunctionComponent<{
       </HMMBurger>
       <HMMTOuterContainer {...menu}>
         <HMMContainer>
-          {navigation.map(({ external, url, title, current }) => (
+          {navigation.map(({ external, url, title }) => (
             <MenuItem key={url} as="div">
               {external ? (
                 <a href={url}>{title}</a>

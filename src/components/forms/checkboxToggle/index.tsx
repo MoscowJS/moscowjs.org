@@ -1,8 +1,8 @@
-import React from "react"
-import styled from "styled-components"
-import { FunctionComponent } from "react"
-import { rhythm } from "utils/typography"
-import { Checkbox, CheckboxProps } from "reakit/Checkbox"
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+import { Checkbox, CheckboxProps } from 'reakit/Checkbox'
+
+import { rhythm } from '../../../utils/typography'
 
 const CheckboxToggleContainer = styled.label<{
   imageOn?: string
@@ -31,7 +31,7 @@ const CheckboxToggleContainer = styled.label<{
     position: relative;
 
     &:after {
-      content: "";
+      content: '';
       top: 0px;
       bottom: 0px;
       margin: auto;
@@ -44,7 +44,7 @@ const CheckboxToggleContainer = styled.label<{
       background-position: center;
       background-repeat: no-repeat;
       background-image: ${({ imageOff }) =>
-        imageOff ? `url(${imageOff})` : "none"};
+        imageOff ? `url(${imageOff})` : 'none'};
       position: absolute;
       box-sizing: border-box;
       transform: translateX(0);
@@ -58,7 +58,7 @@ const CheckboxToggleContainer = styled.label<{
       box-shadow: none;
       transform: translateX(${rhythm(0.6)});
       background-image: ${({ imageOn }) =>
-        imageOn ? `url(${imageOn})` : "none"};
+        imageOn ? `url(${imageOn})` : 'none'};
     }
   }
 

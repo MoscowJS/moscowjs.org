@@ -1,43 +1,76 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header } from "components/layout"
-import { graphql, PageProps } from "gatsby"
-import { Talk } from "features/talks/talk"
-import { TalkData } from "models"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import SEO from '../../utils/seo'
+import type {
+  Paper,
+  Meetup,
+  Speaker,
+  Talk as TalkType,
+  WrappedWithDirectus,
+} from '../../models'
+import { Container, Header, Footer } from '../../components/layout'
+import { Talk } from '../../features/talks/talk'
 
 const TalkPage: FunctionComponent<
-  PageProps<{
-    airtabletalks: { data: TalkData }
-  }>
+  PageProps<WrappedWithDirectus<GraphqlDirectusTalks>>
 > = ({ data, location }) => {
-  const talk = data.airtabletalks.data
+  const talk = data.directus.talks_by_id
+  const meetup = talk.meetup_id!
+
+  const event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'> = {
+    id: meetup.id,
+    slug: meetup.slug,
+    title: meetup.title,
+    date_start: meetup.date_start,
+  }
 
   return (
     <>
-      <SEO title={talk.Title} />
+      <SEO title={talk.paper.title} />
       <Header location={location} />
       <Container as="main">
-        <Talk talk={talk} level={1} />
+        <Talk event={event} talk={talk} level={1} />
       </Container>
       <Footer />
     </>
   )
 }
 
+type GraphqlDirectusTalks = {
+  talks_by_id: Pick<
+    TalkType<
+      Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+      Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+      Pick<Paper, 'id' | 'title' | 'theses'>
+    >,
+    'meetup_id' | 'speakers' | 'paper' | 'company' | 'slides_url' | 'record'
+  >
+}
+
 export const query = graphql`
-  query ($id: String!) {
-    airtabletalks(id: { eq: $id }) {
-      data {
-        Date
-        Title
-        Record
-        Slides_URL
-        Publish
-        Speakers {
-          data {
-            Name
-            Photo {
-              localFiles {
+  query ($id: ID!) {
+    directus {
+      talks_by_id(id: $id) {
+        id
+        paper {
+          id
+          title
+          theses
+        }
+        slides_url
+        record
+        type
+        publish
+        company
+        scene
+        speakers {
+          persons_id {
+            id
+            name
+            photo {
+              id
+              imageFile {
                 childImageSharp {
                   fluid(
                     cropFocus: CENTER
@@ -52,18 +85,19 @@ export const query = graphql`
                 }
               }
             }
-            Company
+            talks {
+              talks_id {
+                company
+              }
+            }
           }
         }
-        Meetup {
-          data {
-            Date
-            Video_link
-            Title
-            Slug
-          }
+        meetup_id {
+          id
+          slug
+          title
+          date_start
         }
-        Theses
       }
     }
   }

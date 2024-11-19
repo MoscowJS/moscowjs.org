@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react"
-import { Dialog, DialogStateReturn, DialogBackdrop } from "reakit/Dialog"
-import styled from "styled-components"
+import React, { type FunctionComponent, type ReactNode } from 'react'
+import { Dialog, DialogStateReturn, DialogBackdrop } from 'reakit/Dialog'
+import styled from 'styled-components'
 
 const BackdropStyled = styled(DialogBackdrop)`
   background: rgba(0, 0, 0, 0.7);
@@ -31,7 +31,7 @@ const DialogContainer = styled.div`
   &:after {
     width: 0;
     height: 100%;
-    content: "";
+    content: '';
     display: inline-block;
     vertical-align: middle;
   }
@@ -58,6 +58,7 @@ const DialogStyled = styled(Dialog)`
 
 export const Modal: FunctionComponent<{
   dialog: DialogStateReturn
+  children: ReactNode
 }> = ({ dialog, ...props }) => {
   return (
     <>

@@ -1,19 +1,20 @@
-import React, { FunctionComponent } from "react"
-import { EventData } from "models"
-import { eventPath } from "utils/paths"
-import { Link } from "gatsby"
-import { Markdown } from "components/layout"
+import React, { FunctionComponent } from 'react'
+import { Link } from 'gatsby'
 
-export const EventLink: FunctionComponent<{ event: EventData }> = ({
-  event,
-}) => {
-  const path = eventPath(event.Slug)
+import type { Meetup } from '../../../models'
+import { eventPath } from '../../../utils/paths'
+import { Markdown } from '../../../components/layout'
 
-  return event.Formatted_title ? (
+export const EventLink: FunctionComponent<{
+  event: Pick<Meetup, 'id' | 'slug' | 'title' | 'title_formatted'>
+}> = ({ event }) => {
+  const path = eventPath(event.slug)
+
+  return event.title_formatted ? (
     <Link key="title" to={path}>
-      <Markdown>{event.Formatted_title}</Markdown>
+      <Markdown>{event.title_formatted}</Markdown>
     </Link>
   ) : (
-    <Link to={path}>{event.Title}</Link>
+    <Link to={path}>{event.title}</Link>
   )
 }
