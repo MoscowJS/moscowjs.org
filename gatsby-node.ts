@@ -13,6 +13,8 @@ import type {
   WrappedWithDirectus,
 } from './src/models'
 
+const FETCH_GRAPHQL_QUERY_LIMIT = config.isBuildMode ? 100 : 10
+
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
   actions,
   stage,
@@ -47,12 +49,11 @@ async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
   buildQueryFunction: Function,
   arrayField: keyof TQueryResult
 ): AsyncGenerator<TQueryResult[keyof TQueryResult]> {
-  const limit = 100
   let hasNextPage = true
   let currentPage = 0
 
   while (hasNextPage) {
-    const query = buildQueryFunction(limit, currentPage)
+    const query = buildQueryFunction(FETCH_GRAPHQL_QUERY_LIMIT, currentPage)
     const result = await graphql<WrappedWithDirectus<TQueryResult>>(query)
 
     assert(result.data, 'GraphqlDataError')
@@ -63,12 +64,16 @@ async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
 
     console.log(`fetched ${arrayFieldData.length} ${String(arrayField)}`)
 
-    if (arrayFieldData.length < limit) {
+    if (!config.isBuildMode) {
+      hasNextPage = false
+      continue
+    }
+
+    if (arrayFieldData.length < FETCH_GRAPHQL_QUERY_LIMIT) {
       hasNextPage = false
       continue
     } else {
       currentPage += arrayFieldData.length
-      // hasNextPage = currentPage > 20
     }
   }
 }

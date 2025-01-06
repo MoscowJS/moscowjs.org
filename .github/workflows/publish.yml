@@ -29,6 +29,7 @@ jobs:
           gatsby-args: --prefix-paths
         env:
           NODE_ENV: production
+          GITHUB_ACTIONS_PR: 0
           GATSBY_SRC_ROOT: src
           GATSBY_PRINT_CONFIG: true
           SITE_URL: ${{ secrets.SITE_URL }}

@@ -12,6 +12,7 @@ if (typeof process.env['DIRECTUS_TOKEN'] !== 'string') {
 }
 
 export const config = {
+  isBuildMode: process.env['GITHUB_ACTIONS_PR'] === '1' ? false : true,
   directus: {
     url: process.env['DIRECTUS_URL'],
     token: process.env['DIRECTUS_TOKEN'],
