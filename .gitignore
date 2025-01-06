@@ -72,4 +72,5 @@ yarn-error.log
 
 
 .history
+.vscode
 tsconfig.tsbuildinfo

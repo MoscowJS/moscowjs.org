@@ -34,7 +34,7 @@ if (
   const obfuscatedConfig = {
     ...config,
     directus: {
-      ...config.directus,
+      url: obfuscateString(config.directus.url, 8),
       token: obfuscateString(config.directus.token, 10),
     },
   }
