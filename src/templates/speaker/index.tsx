@@ -24,7 +24,10 @@ import { Talk } from '../../features/talks/talk'
 const transformContacts = (speaker: PersonsByIdSpeaker) => {
   const result = []
 
-  if (speaker.telegram) {
+  if (
+    typeof speaker.telegram === 'string' &&
+    !speaker.telegram.startsWith('no-tg_')
+  ) {
     result.push({
       title: 'telegram',
       href: `https://t.me/${speaker.telegram}`,
