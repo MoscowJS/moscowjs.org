@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, Suspense } from 'react'
 import { graphql, PageProps } from 'gatsby'
 
 import type {
@@ -9,6 +9,8 @@ import type {
 import { Container, Footer, Header, Markdown } from '../../components/layout'
 import { transformConfig } from '../../utils/transformConfig'
 import SEO from '../../utils/seo'
+
+const CfpAsyncContainer = React.lazy(() => import('../../features/cfp'))
 
 const CFP: FunctionComponent<
   PageProps<
@@ -21,13 +23,18 @@ const CFP: FunctionComponent<
   const { pages_by_id: page, config } = data.directus
 
   const transformedConfig = transformConfig(config)
-  const formType = transformedConfig?.cfpform?.value ?? 'airtable'
+  const formType = transformedConfig?.cfpform?.value ?? 'directus'
 
   return (
     <>
       <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
+        {formType === 'directus' && (
+          <Suspense fallback={<p>Загрузка...</p>}>
+            <CfpAsyncContainer />
+          </Suspense>
+        )}
         {formType === 'airtable' && (
           <iframe
             src="https://airtable.com/embed/appV8iIxl39lc20bh/pag57KTKlKuiOgmvH/form"
