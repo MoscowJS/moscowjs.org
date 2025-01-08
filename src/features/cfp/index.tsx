@@ -1,4 +1,4 @@
-import React, { type FunctionComponent } from 'react'
+import React, { useState, type FunctionComponent } from 'react'
 import styled from 'styled-components'
 
 import { Button, CheckboxToggle, Input, Textarea } from '../../components/forms'
@@ -8,6 +8,12 @@ const YellowStar = styled.sup`
 `
 
 const CfpAsyncContainer: FunctionComponent = () => {
+  const [isChecked, setIsChecked] = useState(false)
+
+  const handleCheckboxChange = () => {
+    setIsChecked(prevState => !prevState)
+  }
+
   return (
     <>
       <h2>Call for Papers</h2>
@@ -107,7 +113,8 @@ const CfpAsyncContainer: FunctionComponent = () => {
           </label>
           <br />
           <CheckboxToggle
-            checked={false}
+            checked={isChecked}
+            onChange={handleCheckboxChange}
             required={true}
             name="accept"
             id="cfp-accept"
