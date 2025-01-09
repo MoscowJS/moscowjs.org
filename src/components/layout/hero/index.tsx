@@ -1,28 +1,29 @@
-import Img from "gatsby-image/withIEPolyfill"
-import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-import { rhythm } from "../../../utils/typography"
-import { Container } from "components/layout"
-import { FluidObject } from "gatsby-image"
+import React, { type FunctionComponent, type ReactNode } from 'react'
+import styled from 'styled-components'
+import { FluidObject } from 'gatsby-image'
+import Img from 'gatsby-image/withIEPolyfill'
+
+import { rhythm } from '../../../utils/typography'
+import { Container } from '../container'
 
 enum flexAlign {
-  auto = "auto",
-  top = "flex-start",
-  bottom = "flex-end",
-  center = "center",
+  auto = 'auto',
+  top = 'flex-start',
+  bottom = 'flex-end',
+  center = 'center',
 }
 
 type HeroBackdropProps = {
   height?: string
-  mode?: "dark" | "light"
+  mode?: 'dark' | 'light'
 }
 
 type HeroContainerProps = {
   verticalAlign?: keyof typeof flexAlign
 }
 
-const defaultHeight = "800px"
-const darkFilter = "blur(4px) brightness(0.3)"
+const defaultHeight = '800px'
+const darkFilter = 'blur(4px) brightness(0.3)'
 
 const HeroBackground = styled.article<{
   height?: string
@@ -60,26 +61,29 @@ const HeroContainer = styled(Container)<HeroContainerProps>`
 
   flex: 1 1 auto;
 
-  justify-content: ${({ verticalAlign = "auto" }) => flexAlign[verticalAlign]};
+  justify-content: ${({ verticalAlign = 'auto' }) => flexAlign[verticalAlign]};
 `
 
 export const Hero: FunctionComponent<{
+  children: ReactNode
   height?: string
-  image: FluidObject | FluidObject[]
+  image?: FluidObject | FluidObject[]
 }> & {
   Container: typeof HeroContainer
 } = ({ children, height, image }) => {
   return (
     <HeroBackground height={height}>
       <HeroImage>
-        <Img
-          css={`
-            height: 100%;
-          `}
-          fluid={image}
-          objectFit="cover"
-          objectPosition="50% 50%"
-        />
+        {image && (
+          <Img
+            css={`
+              height: 100%;
+            `}
+            fluid={image}
+            objectFit="cover"
+            objectPosition="50% 50%"
+          />
+        )}
       </HeroImage>
 
       <HeroBackdrop height={height}>{children}</HeroBackdrop>

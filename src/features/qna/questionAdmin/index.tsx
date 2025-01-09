@@ -1,7 +1,9 @@
-import { BadgeButton } from "components/elements"
-import React, { FunctionComponent, useCallback } from "react"
-import { useIsAdmin, useAdminActions } from "features/qna"
-import { QuestionData } from "models"
+import React, { FunctionComponent, useCallback } from 'react'
+
+import { BadgeButton } from '../../../components/elements'
+import type { QuestionData } from '../../../models'
+import { useAdminActions } from '../hooks/useAdminActions'
+import { useIsAdmin } from '../hooks/useIsAdmin'
 
 const useConfirm = (fn: Function, message: string) => {
   return useCallback(() => {
@@ -20,11 +22,11 @@ export const QuestionAdmin: FunctionComponent<QuestionData> = ({
   const isAdmin = useIsAdmin()
   const { remove, publish, setAnswered } = useAdminActions(id!)
 
-  const removeConfirm = useConfirm(remove, "Точно удалить?")
-  const publishConfirm = useConfirm(publish, "Точно опубликовать?")
+  const removeConfirm = useConfirm(remove, 'Точно удалить?')
+  const publishConfirm = useConfirm(publish, 'Точно опубликовать?')
   const answeredConfirm = useConfirm(
     setAnswered,
-    "Точно пометить, как отвеченный?"
+    'Точно пометить, как отвеченный?'
   )
 
   if (!isAdmin) {

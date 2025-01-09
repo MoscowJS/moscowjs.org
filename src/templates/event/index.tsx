@@ -1,21 +1,25 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header } from "components/layout"
-import { Event } from "features/events/event"
-import { EventData } from "models"
-import { graphql, PageProps } from "gatsby"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import type { Meetup, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header } from '../../components/layout'
+import { Event } from '../../features/events/event'
+import SEO from '../../utils/seo'
+
+type GraphqlDirectusMeetup = {
+  meetups_by_id: Meetup
+}
 
 const MeetupPage: FunctionComponent<
-  PageProps<{
-    airtablemeetups: { data: EventData }
-  }>
+  PageProps<WrappedWithDirectus<GraphqlDirectusMeetup>>
 > = ({ data, location }) => {
+  const { meetups_by_id: meetup } = data.directus
   return (
     <>
-      <SEO title={data.airtablemeetups.data.Title} />
+      <SEO title={meetup.title} />
       <Header location={location} />
       <Container as="main">
-        <Event event={data.airtablemeetups.data} />
+        <Event event={meetup} />
       </Container>
       <Footer />
     </>
@@ -23,77 +27,61 @@ const MeetupPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablemeetups(id: { eq: $id }) {
-      data {
-        Address
-        Company {
-          data {
-            Name
-            Slug
+  query ($id: ID!) {
+    directus {
+      meetups_by_id(id: $id) {
+        id
+        title
+        type
+        address
+        status
+        date_start
+        date_end
+        title_formatted
+        registration_link
+        announcement_short
+        announcement_long
+        timetable
+        slug
+        stream_link
+        video_link
+        talks {
+          id
+          paper {
+            id
+            title
+            theses
           }
-        }
-        Completed
-        Date
-        DateEnd
-        Formatted_title
-        Long_Announcement
-        Publish
-        Registration_link
-        Timetable
-        Short_Announcement
-        Slug
-        Stream_link
-        Partners {
-          data {
-            Name
-            Link
-            Description
-            Logo {
-              localFiles {
-                childImageSharp {
-                  fixed(width: 60, quality: 80) {
-                    ...GatsbyImageSharpFixed
+          company
+          scene
+          start_time
+          slides_url
+          record
+          speakers {
+            persons_id {
+              name
+              talks {
+                talks_id {
+                  id
+                  company
+                  paper {
+                    title
                   }
                 }
               }
-            }
-          }
-        }
-        Talks {
-          data {
-            Title
-            Slides_URL
-            Theses
-            Record
-            Date
-            Start
-            Scene
-            Meetup {
-              data {
-                Date
-                Video_link
-                Title
-                Slug
-              }
-            }
-            Speakers {
-              data {
-                Name
-                Company
-                Photo {
-                  localFiles {
-                    childImageSharp {
-                      fluid(
-                        cropFocus: CENTER
-                        quality: 80
-                        grayscale: true
-                        maxWidth: 150
-                        maxHeight: 150
-                        fit: COVER
-                      ) {
-                        ...GatsbyImageSharpFluid
-                      }
+              photo {
+                id
+                imageFile {
+                  childImageSharp {
+                    fluid(
+                      cropFocus: CENTER
+                      quality: 80
+                      grayscale: true
+                      maxWidth: 150
+                      maxHeight: 150
+                      fit: COVER
+                    ) {
+                      ...GatsbyImageSharpFluid
                     }
                   }
                 }
@@ -101,13 +89,24 @@ export const query = graphql`
             }
           }
         }
-        Title
-        Type
-        Video_link
-        Venue {
-          data {
-            Slug
-            Name
+        venue {
+          id
+          name
+          slug
+        }
+        companies {
+          companies_id {
+            id
+            name
+            slug
+          }
+        }
+        partners {
+          partners_id {
+            id
+            name
+            link
+            description
           }
         }
       }

@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from "react"
-import { IconRound } from "../iconRound"
+import React, { FunctionComponent } from 'react'
+
+import { IconRound } from '../iconRound'
 
 const transformNumber = (n: number) => {
   if (n >= 99_500_000) return `∞`

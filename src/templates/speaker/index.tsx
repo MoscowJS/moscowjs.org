@@ -1,53 +1,61 @@
-import Img from "gatsby-image"
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Item, Markdown } from "components/layout"
-import { EventLogo } from "features/events/eventLogo"
-import { graphql, PageProps } from "gatsby"
-import { SpeakerData } from "models"
-import { Talk } from "features/talks/talk"
-import { UserX } from "react-feather"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+import Img from 'gatsby-image'
+import { UserX } from 'react-feather'
 
-const transformContacts = (speaker: SpeakerData) => {
+import SEO from '../../utils/seo'
+import type {
+  WrappedWithDirectus,
+  Speaker,
+  Meetup,
+  Paper,
+  Talk as TalkType,
+} from '../../models'
+import {
+  Container,
+  Footer,
+  Header,
+  Item,
+  Markdown,
+} from '../../components/layout'
+import { EventLogo } from '../../features/events/eventLogo'
+import { Talk } from '../../features/talks/talk'
+
+const transformContacts = (speaker: PersonsByIdSpeaker) => {
   const result = []
 
-  if (speaker.Telegram) {
+  if (
+    typeof speaker.telegram === 'string' &&
+    !speaker.telegram.startsWith('no-tg_')
+  ) {
     result.push({
-      title: "telegram",
-      href: `https://t.me/${speaker.Telegram}`,
-      text: `t.me/${speaker.Telegram}`,
+      title: 'telegram',
+      href: `https://t.me/${speaker.telegram}`,
+      text: `t.me/${speaker.telegram}`,
     })
   }
 
-  if (speaker.Email) {
+  if (speaker.email) {
     result.push({
-      title: "email",
-      href: `mailto:${speaker.Email}`,
-      text: speaker.Email,
+      title: 'email',
+      href: `mailto:${speaker.email}`,
+      text: speaker.email,
     })
   }
 
-  if (speaker.Twitter) {
+  if (speaker.github) {
     result.push({
-      title: "twitter",
-      href: `https://twitter.com/${speaker.Twitter}`,
-      text: `@${speaker.Twitter}`,
+      title: 'github',
+      href: `https://github.com/${speaker.github}`,
+      text: `@${speaker.github}`,
     })
   }
 
-  if (speaker.Github___Bitbucket) {
+  if (speaker.link) {
     result.push({
-      title: "github",
-      href: `https://github.com/${speaker.Github___Bitbucket}`,
-      text: `@${speaker.Github___Bitbucket}`,
-    })
-  }
-
-  if (speaker.Personal_link) {
-    result.push({
-      title: "personal",
-      href: speaker.Personal_link,
-      text: speaker.Personal_link,
+      title: 'personal',
+      href: speaker.link,
+      text: speaker.link,
     })
   }
 
@@ -55,32 +63,39 @@ const transformContacts = (speaker: SpeakerData) => {
 }
 
 const SpeakerPage: FunctionComponent<
-  PageProps<{
-    airtablespeakers: { data: SpeakerData }
-  }>
+  PageProps<WrappedWithDirectus<GraphqlDirectusSpeakerById>>
 > = ({ data, location }) => {
-  const speaker = data.airtablespeakers.data
+  const speaker = data.directus.persons_by_id
   const contacts = transformContacts(speaker)
+
+  const talks = (speaker.talks ?? [])
+    .filter(talk => Boolean(talk.talks_id.meetup_id))
+    .sort((talkA, talkB) => {
+      return (
+        new Date(talkB.talks_id.meetup_id!.date_start).valueOf() -
+        new Date(talkA.talks_id.meetup_id!.date_start).valueOf()
+      )
+    })
 
   return (
     <>
-      <SEO title={speaker.Name} />
+      <SEO title={speaker.name} />
       <Header location={location} />
       <Container as="main">
         <Item>
           <Item.ImageContainer size="xl">
-            {speaker.Photo ? (
+            {speaker.photo ? (
               <Img
-                fluid={speaker.Photo.localFiles[0].childImageSharp.fluid}
-                alt={speaker.Name}
+                fluid={speaker.photo.imageFile.childImageSharp.fluid}
+                alt={speaker.name}
               />
             ) : (
               <UserX size="100%" />
             )}
           </Item.ImageContainer>
           <Item.Content>
-            <h1>{speaker.Name}</h1>
-            <Markdown>{speaker.About}</Markdown>
+            <h1>{speaker.name}</h1>
+            <Markdown>{speaker.about}</Markdown>
             {contacts.length > 0 && (
               <>
                 {contacts.map(({ title, href, text }) => {
@@ -95,18 +110,24 @@ const SpeakerPage: FunctionComponent<
           </Item.Content>
         </Item>
         <h2>Доклады</h2>
-        {speaker.Talks?.sort((a, b) => {
-          return +new Date(b.data.Date) - +new Date(a.data.Date)
-        }).map(({ data }) => {
-          const meetup = data.Meetup[0].data
+        {talks.map(meetupData => {
+          const talk = meetupData['talks_id']
+          const meetup = talk.meetup_id!
+
+          const event: Pick<Meetup, 'id' | 'title' | 'slug' | 'date_start'> = {
+            id: meetup.id,
+            slug: meetup.slug,
+            title: meetup.title,
+            date_start: meetup.date_start,
+          }
 
           return (
             <Item>
               <Item.ImageContainer size="xs">
-                <EventLogo size="xs" title={meetup.Title} />
+                <EventLogo size="xs" title={talk.meetup_id?.title ?? ''} />
               </Item.ImageContainer>
               <Item.Content verticalAlign="center">
-                <Talk.Description talk={data} level={2} />
+                <Talk.Description event={event} talk={talk} level={2} />
               </Item.Content>
             </Item>
           )
@@ -117,49 +138,62 @@ const SpeakerPage: FunctionComponent<
   )
 }
 
+type PersonsByIdSpeaker = Speaker<
+  TalkType<
+    Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+    never,
+    Pick<Paper, 'id' | 'title' | 'theses'>
+  >
+>
+
+type GraphqlDirectusSpeakerById = {
+  persons_by_id: PersonsByIdSpeaker
+}
+
 export const query = graphql`
-  query ($id: String!) {
-    airtablespeakers(id: { eq: $id }) {
-      data {
-        Name
-        About
-        Company
-        Telegram
-        Email
-        Twitter
-        Github___Bitbucket
-        Personal_link
-        Talks {
-          data {
-            Date
-            Title
-            Record
-            Slides_URL
-            Publish
-            Meetup {
-              data {
-                Date
-                Video_link
-                Title
-                Slug
-              }
-            }
-            Theses
-          }
-        }
-        Photo {
-          localFiles {
+  query ($id: ID!) {
+    directus {
+      persons_by_id(id: $id) {
+        id
+        status
+        telegram
+        name
+        role
+        phone
+        email
+        about
+        github
+        link
+        photo {
+          id
+          imageFile {
             childImageSharp {
               fluid(
                 cropFocus: CENTER
                 quality: 80
                 grayscale: true
-                maxWidth: 300
-                maxHeight: 300
+                maxWidth: 150
+                maxHeight: 150
                 fit: COVER
               ) {
                 ...GatsbyImageSharpFluid
               }
+            }
+          }
+        }
+        talks {
+          talks_id {
+            id
+            paper {
+              id
+              title
+              theses
+            }
+            meetup_id {
+              id
+              slug
+              title
+              date_start
             }
           }
         }

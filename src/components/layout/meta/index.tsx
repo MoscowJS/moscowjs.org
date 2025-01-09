@@ -1,14 +1,16 @@
-import React, { FunctionComponent } from "react"
-import { Icon } from "react-feather"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
-import { Item } from "../item"
+import React, { type FunctionComponent, type ReactNode } from 'react'
+import { Icon } from 'react-feather'
+import styled from 'styled-components'
+
+import { rhythm } from '../../../utils/typography'
+import { Item } from '../item'
 
 const SmallHeader = styled(Item.Header)`
   font-size: ${rhythm(0.75)};
   margin-bottom: 0;
 `
 export const Meta: FunctionComponent<{
+  children: ReactNode
   Icon?: Icon
   image?: string
   title: string

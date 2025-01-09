@@ -1,22 +1,22 @@
-import Typography from "typography"
+import Typography from 'typography'
 
 const typography = new Typography({
-  baseFontSize: "20px",
+  baseFontSize: '20px',
   baseLineHeight: 1.5,
   scaleRatio: 2,
   googleFonts: [
     {
-      name: "Source Sans Pro",
-      styles: ["600"],
+      name: 'Source Sans Pro',
+      styles: ['600'],
     },
     {
-      name: "Ubuntu",
-      styles: ["300", "700"],
+      name: 'Ubuntu',
+      styles: ['300', '700'],
     },
   ],
-  headerFontFamily: ["Source Sans Pro", "sans-serif"],
+  headerFontFamily: ['Source Sans Pro', 'sans-serif'],
   headerWeight: 600,
-  bodyFontFamily: ["Ubuntu", "sans-serif"],
+  bodyFontFamily: ['Ubuntu', 'sans-serif'],
   bodyWeight: 300,
   boldWeight: 700,
   includeNormalize: true,
@@ -36,5 +36,5 @@ export const sizes: { [K: string]: string } = {
   xxl: rhythm(12),
 }
 
-export const getSize = (size: string = "xs") => sizes[size] || size
+export const getSize = (size: string = 'xs') => sizes[size] || size
 export default typography

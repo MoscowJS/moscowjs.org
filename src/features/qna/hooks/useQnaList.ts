@@ -1,11 +1,12 @@
-import { QuestionData } from "models/question.h"
-import { database, auth } from "features/firebase"
-import { useList } from "react-firebase-hooks/database"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useContext, useEffect, useState } from "react"
-import firebase from "firebase"
-import { useIsAdmin } from "./useIsAdmin"
-import { SessionContext } from ".."
+import { useContext, useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useList } from 'react-firebase-hooks/database'
+import firebase from 'firebase'
+
+import { database, auth } from '../../firebase'
+import { SessionContext } from '../sessionContext'
+import { useIsAdmin } from './useIsAdmin'
+import type { QuestionData } from '../../../models'
 
 type Talk = {
   title: string
@@ -14,23 +15,23 @@ type Talk = {
 }
 const allTalks: Talk[] = [
   {
-    title: "Адаптируй это",
-    speaker: "Геннадий Ватитов",
+    title: 'Адаптируй это',
+    speaker: 'Геннадий Ватитов',
     timeEnd: 1732219200000,
   },
   {
-    title: "1000 и 1 способ оптимизировать медиафайлы",
-    speaker: "Денис Филипкин",
+    title: '1000 и 1 способ оптимизировать медиафайлы',
+    speaker: 'Денис Филипкин',
     timeEnd: 1732219200000,
   },
   {
-    title: "Идеальная команда. Какая она?",
-    speaker: "Александр Ермолов",
+    title: 'Идеальная команда. Какая она?',
+    speaker: 'Александр Ермолов',
     timeEnd: 1732219200000,
   },
   {
-    title: "1 + 1 > 2: Парное программирование в реальности",
-    speaker: "Аврора Ренард",
+    title: '1 + 1 > 2: Парное программирование в реальности',
+    speaker: 'Аврора Ренард',
     timeEnd: 1732219200000,
   },
 ]
@@ -134,11 +135,11 @@ type QnaData = [
 
 export const useQnaList = (): QnaData => {
   const sessionId = useContext(SessionContext)
-  const sessionRef = "questions/" + sessionId
+  const sessionRef = 'questions/' + sessionId
   const questions = database().ref(sessionRef)
 
-  const [user, userLoading, userError] = useAuthState(auth())
-  const [snapshots, snapshotsLoading, error] = useList(questions)
+  const [user, userLoading] = useAuthState(auth())
+  const [snapshots, snapshotsLoading] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
   const isAdmin = useIsAdmin()
 
@@ -151,9 +152,9 @@ export const useQnaList = (): QnaData => {
     const onUpdate = (result: any) => {
       setVotes(result.val() || {})
     }
-    votesRef.on("value", onUpdate)
+    votesRef.on('value', onUpdate)
 
-    return () => votesRef.off("value", onUpdate)
+    return () => votesRef.off('value', onUpdate)
   }, [user])
 
   const isLoading = snapshotsLoading || userLoading

@@ -1,35 +1,39 @@
-import React, { FunctionComponent, Suspense } from "react"
-import { graphql, PageProps } from "gatsby"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Markdown } from "components/layout"
-import { ConfigData, PagesData } from "models"
-import { transformConfig } from "utils/transformConfig"
-import { SessionContext } from "features/qna"
+import React, { FunctionComponent, Suspense } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import SEO from '../../utils/seo'
+import { transformConfig } from '../../utils/transformConfig'
+import type {
+  Config,
+  Page as PageType,
+  WrappedWithDirectus,
+} from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { SessionContext } from '../../features/qna'
 
 const QnaAsyncContainer = React.lazy(
-  () => import("../../features/qna/qnaAsyncContainer")
+  () => import('../../features/qna/qnaAsyncContainer')
 )
 
 const Page: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-    allAirtableconfig: {
-      nodes: Array<{
-        data: ConfigData
-      }>
-    }
-  }>
+  PageProps<
+    WrappedWithDirectus<{
+      config: Array<Pick<Config, 'name' | 'value'>>
+      pages_by_id: Pick<PageType, 'title' | 'content'>
+    }>
+  >
 > = ({ data, location }) => {
-  const config = transformConfig(data.allAirtableconfig.nodes)
+  const { pages_by_id: page, config } = data.directus
+  const transformedConfig = transformConfig(config)
 
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
-        <Markdown>{data.airtablepages.data.content}</Markdown>
-        {typeof window !== "undefined" && (
-          <SessionContext.Provider value={config.session.value}>
+        <Markdown>{page.content}</Markdown>
+        {typeof window !== 'undefined' && (
+          <SessionContext.Provider value={transformedConfig?.session?.value}>
             <Suspense fallback={<p>Загрузка...</p>}>
               <QnaAsyncContainer />
             </Suspense>
@@ -42,21 +46,15 @@ const Page: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
-        title
-        slug
-        content
-        description
+  query ($id: ID!) {
+    directus {
+      config(filter: { type: { _eq: "qna" } }) {
+        name
+        value
       }
-    }
-    allAirtableconfig(filter: { data: { type: { eq: "qna" } } }) {
-      nodes {
-        data {
-          name
-          value
-        }
+      pages_by_id(id: $id) {
+        title
+        content
       }
     }
   }

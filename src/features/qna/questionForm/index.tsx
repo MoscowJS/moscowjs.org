@@ -3,33 +3,34 @@ import React, {
   FunctionComponent,
   useRef,
   useState,
-} from "react"
-import { Textarea, Input, Button, Select } from "components/forms"
-import { Modal } from "components/layout"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
-import { useDialogState, DialogDisclosure } from "reakit/Dialog"
-import { useAdd } from "features/qna"
+} from 'react'
+import styled from 'styled-components'
+import { useDialogState, DialogDisclosure } from 'reakit/Dialog'
+
+import { Textarea, Input, Button, Select } from '../../../components/forms'
+import { Modal } from '../../../components/layout'
+import { rhythm } from '../../../utils/typography'
+import { useAdd } from '../hooks/useAdd'
 
 const allTalks = [
   {
-    title: "Адаптируй это",
-    speaker: "Геннадий Ватитов",
+    title: 'Адаптируй это',
+    speaker: 'Геннадий Ватитов',
     timeEnd: 1732219200000,
   },
   {
-    title: "1000 и 1 способ оптимизировать медиафайлы",
-    speaker: "Денис Филипкин",
+    title: '1000 и 1 способ оптимизировать медиафайлы',
+    speaker: 'Денис Филипкин',
     timeEnd: 1732219200000,
   },
   {
-    title: "Идеальная команда. Какая она?",
-    speaker: "Александр Ермолов",
+    title: 'Идеальная команда. Какая она?',
+    speaker: 'Александр Ермолов',
     timeEnd: 1732219200000,
   },
   {
-    title: "1 + 1 > 2: Парное программирование в реальности",
-    speaker: "Аврора Ренард",
+    title: '1 + 1 > 2: Парное программирование в реальности',
+    speaker: 'Аврора Ренард',
     timeEnd: 1732219200000,
   },
 ]
@@ -69,7 +70,7 @@ export const QuestionForm: FunctionComponent = () => {
     const formData = new FormData(event.currentTarget)
     const result: any = {}
 
-    formData.forEach((value, name) => (result[name] = value || ""))
+    formData.forEach((value, name) => (result[name] = value || ''))
     event.currentTarget.reset()
 
     add &&
@@ -84,15 +85,15 @@ export const QuestionForm: FunctionComponent = () => {
   if (!add) {
     return null
   }
-
   return (
     <>
+      {/* @ts-ignore */}
       <DialogDisclosure {...dialog}>
         {disclosureProps => (
+          // @ts-ignore
           <FakeTextarea {...disclosureProps}> Добавь свой вопрос</FakeTextarea>
         )}
       </DialogDisclosure>
-
       <Modal dialog={dialog}>
         <form role="form" ref={form} action="/" onSubmit={handleSubmit}>
           <p>
@@ -110,7 +111,7 @@ export const QuestionForm: FunctionComponent = () => {
 
           <p>
             <label htmlFor="talk">Выбери доклад:</label>
-            <Select id="talk" placeholder={"Доклад"} name="talk" required>
+            <Select id="talk" aria-placeholder={'Доклад'} name="talk" required>
               {talks.map(talk => (
                 <option key={talk.title} id={talk.title}>
                   {talk.title}, {talk.speaker}

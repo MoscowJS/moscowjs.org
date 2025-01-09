@@ -1,5 +1,5 @@
-import React from "react"
-import { Icon } from "react-feather"
+import React from 'react'
+import { Icon } from 'react-feather'
 
 export const Telegram: Icon = ({ size, color }) => {
   return (
@@ -9,11 +9,11 @@ export const Telegram: Icon = ({ size, color }) => {
       x="0px"
       y="0px"
       viewBox="0 0 189.473 189.473"
-      stroke={color || "currentColor"}
+      stroke={color || 'currentColor'}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      fill={color || "currentColor"}
+      fill={color || 'currentColor'}
       width={size || 24}
       height={size || 24}
     >
