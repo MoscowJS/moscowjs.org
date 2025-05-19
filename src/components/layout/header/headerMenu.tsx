@@ -43,9 +43,11 @@ const HeaderMenuLink = styled.li<{
   }
 `
 
-export const HeaderMenu: FunctionComponent<{
+type Props = {
   navigation: NavigationItem[]
-}> = ({ navigation }) => {
+}
+
+export const HeaderMenu = ({ navigation }: Props) => {
   return (
     <HeaderMenuContainer role="navigation">
       {navigation.map(({ external, url, title, current }) => (

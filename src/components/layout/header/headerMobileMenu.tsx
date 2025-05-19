@@ -71,9 +71,12 @@ const HMMContainer = styled.div`
   }
 `
 
-export const HeaderMobileMenu: FunctionComponent<{
+
+type Props = {
   navigation: NavigationItem[]
-}> = ({ navigation }) => {
+}
+
+export const HeaderMobileMenu =  ({ navigation }: Props) => {
   const menu = useMenuState({ animated: 250 })
 
   return (
