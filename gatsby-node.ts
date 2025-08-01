@@ -47,7 +47,8 @@ type GraphqlDirectusData = {
 async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
   graphql: CreatePagesArgs['graphql'],
   buildQueryFunction: Function,
-  arrayField: keyof TQueryResult
+  arrayField: keyof TQueryResult,
+  buildMode = config.isBuildMode
 ): AsyncGenerator<TQueryResult[keyof TQueryResult]> {
   let hasNextPage = true
   let currentPage = 0
@@ -64,7 +65,7 @@ async function* fetchGraphqlQuery<TQueryResult extends GraphqlDirectusData>(
 
     console.log(`fetched ${arrayFieldData.length} ${String(arrayField)}`)
 
-    if (!config.isBuildMode) {
+    if (!buildMode) {
       hasNextPage = false
       continue
     }
@@ -205,7 +206,8 @@ export const createPages: GatsbyNode['createPages'] = async ({
   for await (const pages of fetchGraphqlQuery<GraphqlDirectusPages>(
     graphql,
     pagesQuery,
-    'pages'
+    'pages',
+    true
   )) {
     pages.forEach(page => {
       createPage({
