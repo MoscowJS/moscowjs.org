@@ -16,7 +16,7 @@ const CfpAsyncContainer: FunctionComponent = () => {
     title: '',
     theses: '',
     message: '',
-    accept: false,
+    accept: 'false',
   })
   const [submitStatus, setSubmitStatus] = useState<{
     success?: boolean
@@ -25,7 +25,7 @@ const CfpAsyncContainer: FunctionComponent = () => {
 
   const handleCheckboxChange = () => {
     setIsChecked(prevState => !prevState)
-    setFormData(prev => ({ ...prev, accept: !prev.accept }))
+    setFormData(prev => ({ ...prev, accept: isChecked ? 'false' : 'true' }))
   }
 
   const handleInputChange = (
@@ -77,7 +77,7 @@ const CfpAsyncContainer: FunctionComponent = () => {
           title: '',
           theses: '',
           message: '',
-          accept: false,
+          accept: 'false',
         })
         setIsChecked(false)
       } else {
