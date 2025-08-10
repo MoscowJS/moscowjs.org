@@ -1,11 +1,12 @@
-import { QuestionData } from "models/question.h"
-import { database, auth } from "features/firebase"
-import { useList } from "react-firebase-hooks/database"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useContext, useEffect, useState } from "react"
-import firebase from "firebase"
-import { useIsAdmin } from "./useIsAdmin"
-import { SessionContext } from ".."
+import { useContext, useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useList } from 'react-firebase-hooks/database'
+import firebase from 'firebase'
+
+import { database, auth } from '../../firebase'
+import { SessionContext } from '../sessionContext'
+import { useIsAdmin } from './useIsAdmin'
+import type { QuestionData } from '../../../models'
 
 type Talk = {
   title: string
@@ -14,23 +15,23 @@ type Talk = {
 }
 const allTalks: Talk[] = [
   {
-    title: "Свой бот — проще, чем кажется",
-    speaker: "Сергей Осипов",
+    title: 'Свой бот — проще, чем кажется',
+    speaker: 'Сергей Осипов',
     timeEnd: 1751569200000,
   },
   {
-    title: "В чём польза LangChain.js",
-    speaker: "Антон Непша",
+    title: 'В чём польза LangChain.js',
+    speaker: 'Антон Непша',
     timeEnd: 1751569200000,
   },
   {
-    title: "Один интерфейс, чтобы править всеми",
-    speaker: "Дарья Двуреченская",
+    title: 'Один интерфейс, чтобы править всеми',
+    speaker: 'Дарья Двуреченская',
     timeEnd: 1751569200000,
   },
   {
-    title: "Особенности тестирования типов: нужно ли оно вам?",
-    speaker: "Константин Логиновских",
+    title: 'Особенности тестирования типов: нужно ли оно вам?',
+    speaker: 'Константин Логиновских',
     timeEnd: 1751569200000,
   },
 ]
@@ -134,11 +135,11 @@ type QnaData = [
 
 export const useQnaList = (): QnaData => {
   const sessionId = useContext(SessionContext)
-  const sessionRef = "questions/" + sessionId
+  const sessionRef = 'questions/' + sessionId
   const questions = database().ref(sessionRef)
 
-  const [user, userLoading, userError] = useAuthState(auth())
-  const [snapshots, snapshotsLoading, error] = useList(questions)
+  const [user, userLoading] = useAuthState(auth())
+  const [snapshots, snapshotsLoading] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
   const isAdmin = useIsAdmin()
 
@@ -151,9 +152,9 @@ export const useQnaList = (): QnaData => {
     const onUpdate = (result: any) => {
       setVotes(result.val() || {})
     }
-    votesRef.on("value", onUpdate)
+    votesRef.on('value', onUpdate)
 
-    return () => votesRef.off("value", onUpdate)
+    return () => votesRef.off('value', onUpdate)
   }, [user])
 
   const isLoading = snapshotsLoading || userLoading

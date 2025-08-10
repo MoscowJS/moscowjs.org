@@ -1,12 +1,23 @@
-import Img from "gatsby-image"
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Item, Markdown } from "components/layout"
-import { graphql, PageProps } from "gatsby"
-import { OrgData, PagesData } from "models"
-import { UserX } from "react-feather"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+import styled from 'styled-components'
+import { UserX } from 'react-feather'
+import Img from 'gatsby-image'
+
+import type {
+  Page as PageType,
+  Speaker,
+  WrappedWithDirectus,
+} from '../../models'
+import {
+  Container,
+  Footer,
+  Header,
+  Item,
+  Markdown,
+} from '../../components/layout'
+import { rhythm } from '../../utils/typography'
+import SEO from '../../utils/seo'
 
 const Grid = styled.ul`
   --item-width: ${rhythm(4)};
@@ -26,60 +37,70 @@ const GridItem = styled.li`
   margin: 0;
 `
 
+type OrgPerson = Pick<
+  Speaker,
+  'name' | 'role' | 'photo' | 'about' | 'telegram' | 'email'
+>
+
 const Page: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-    allAirtableorgs: {
-      nodes: Array<{
-        data: OrgData
-      }>
-    }
-  }>
+  PageProps<
+    WrappedWithDirectus<{
+      pages_by_id: Pick<PageType, 'title' | 'content'>
+      persons: Array<OrgPerson>
+    }>
+  >
 > = ({ data, location }) => {
-  const orgs = data.allAirtableorgs.nodes.reduce(
-    (result, { data }) => {
-      result[data.Status].push(data)
-      return result
+  const { pages_by_id: page, persons } = data.directus
+  const orgs = persons.reduce(
+    (accumulator, person) => {
+      if (person.role === 'organizer') {
+        accumulator.organizer.push(person)
+      } else if (person.role === 'alumni_organizer') {
+        accumulator.alumni.push(person)
+      } else if (person.role === 'volunteer') {
+        accumulator.volunteer.push(person)
+      }
+      return accumulator
     },
     {
-      current: [] as OrgData[],
-      former: [] as OrgData[],
-      volunteer: [] as OrgData[],
-    }
+      organizer: [],
+      alumni: [],
+      volunteer: [],
+    } as Record<'organizer' | 'alumni' | 'volunteer', Array<OrgPerson>>
   )
 
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
-        <Markdown>{data.airtablepages.data.content}</Markdown>
+        <Markdown>{page.content}</Markdown>
 
         <h3>Организаторы</h3>
-        {orgs.current.map(data => {
+        {orgs.organizer.map(data => {
           return (
-            <Item key={data.Display_name}>
+            <Item key={data.name}>
               <Item.ImageContainer size="s">
-                {data.Photo ? (
+                {data.photo ? (
                   <Img
-                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
-                    alt={data.Display_name}
+                    fluid={data.photo.imageFile.childImageSharp.fluid}
+                    alt={data.name}
                   />
                 ) : (
                   <UserX size="100%" />
                 )}
               </Item.ImageContainer>
               <Item.Content>
-                <Item.Header>{data.Display_name}</Item.Header>
-                {data.About && <Markdown>{data.About}</Markdown>}
+                <Item.Header>{data.name}</Item.Header>
+                {data.about && <Markdown>{data.about}</Markdown>}
                 <div>
-                  telegram:{" "}
-                  <a href={`https://t.me/${data.Telegram}`}>
-                    t.me/{data.Telegram}
+                  telegram:{' '}
+                  <a href={`https://t.me/${data.telegram}`}>
+                    t.me/{data.telegram}
                   </a>
                 </div>
                 <div>
-                  email: <a href={`mailto:${data.Email}`}>{data.Email}</a>
+                  email: <a href={`mailto:${data.email}`}>{data.email}</a>
                 </div>
               </Item.Content>
             </Item>
@@ -88,13 +109,13 @@ const Page: FunctionComponent<
 
         <h3>Бывшие организаторы</h3>
         <Grid>
-          {orgs.former.map(data => (
-            <GridItem key={data.Display_name}>
+          {orgs.alumni.map(data => (
+            <GridItem key={data.name}>
               <div>
-                {data.Photo ? (
+                {data.photo ? (
                   <Img
-                    fluid={data.Photo.localFiles[0].childImageSharp.fluid}
-                    alt={data.Display_name}
+                    fluid={data.photo.imageFile.childImageSharp.fluid}
+                    alt={data.name}
                   />
                 ) : (
                   <div
@@ -111,7 +132,7 @@ const Page: FunctionComponent<
                     font-size: ${rhythm(0.4)};
                   `}
                 >
-                  {data.Display_name}
+                  {data.name}
                 </p>
               </div>
             </GridItem>
@@ -121,7 +142,7 @@ const Page: FunctionComponent<
         <h3>Волонтеры</h3>
         <ul>
           {orgs.volunteer.map(data => (
-            <li>{data.Display_name}</li>
+            <li>{data.name}</li>
           ))}
         </ul>
       </Container>
@@ -131,37 +152,38 @@ const Page: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
+  query ($id: ID!) {
+    directus {
+      pages_by_id(id: $id) {
         title
-        slug
         content
-        description
       }
-    }
-    allAirtableorgs(sort: { fields: data___Display_name, order: ASC }) {
-      nodes {
-        data {
-          Display_name
-          About
-          Email
-          Telegram
-          Status
-          Company
-          Photo {
-            localFiles {
-              childImageSharp {
-                fluid(
-                  cropFocus: CENTER
-                  quality: 80
-                  grayscale: true
-                  maxWidth: 300
-                  maxHeight: 300
-                  fit: COVER
-                ) {
-                  ...GatsbyImageSharpFluid
-                }
+      persons(
+        filter: {
+          role: { _in: ["organizer", "alumni_organizer", "volunteer"] }
+        }
+        sort: ["name"]
+        limit: -1
+      ) {
+        id
+        name
+        role
+        about
+        email
+        telegram
+        photo {
+          id
+          imageFile {
+            childImageSharp {
+              fluid(
+                cropFocus: CENTER
+                quality: 80
+                grayscale: true
+                maxWidth: 150
+                maxHeight: 150
+                fit: COVER
+              ) {
+                ...GatsbyImageSharpFluid
               }
             }
           }

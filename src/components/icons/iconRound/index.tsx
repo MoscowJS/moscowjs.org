@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-import { getSize } from "utils/typography"
+import styled from 'styled-components'
+
+import { getSize } from '../../../utils/typography'
 
 const getFontSize = (children: any, size?: string) => {
-  if (typeof children !== "string") {
+  if (typeof children !== 'string') {
     return `calc(${getSize(size)} / 1.7)`
   }
 

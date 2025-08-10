@@ -1,1 +1,1 @@
-export { Talk } from "./talk"
+export { Talk } from './talk'

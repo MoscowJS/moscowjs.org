@@ -1,7 +1,8 @@
-import React from "react"
-import styled from "styled-components"
-import { Badge } from "components/elements"
-import { rhythm } from "utils/typography"
+import React from 'react'
+import styled from 'styled-components'
+
+import { rhythm } from '../../../utils/typography'
+import { Badge } from '../badge'
 
 const BadgeButtonStyled = styled(Badge)<{ active?: boolean }>`
   border-color: ${({ active }) =>

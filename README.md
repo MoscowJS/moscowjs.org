@@ -22,7 +22,7 @@ npm install
 
 ## Development
 
-To start local development, you need a personal access token for Airtable. Create the one on https://airtable.com/create/tokens (you need read access 
+To start local development, you need a personal access token for Airtable. Create the one on https://airtable.com/create/tokens (you need read access
 for Meetups and MoscowJS.org bases).
 
 Add created token to the file `.env.development.local`

@@ -1,12 +1,9 @@
-import { AirtableImage, EventData, ImageSharp } from "models"
+import { Meetup } from './meetup.h'
 
-export type PartnersData = {
-  Name: string
-  Link: string
-  Description?: string
-  Logo?: {
-    localFiles: ImageSharp[]
-    raw: AirtableImage[]
-  }
-  Meetups?: Array<{ data: EventData }>
+export type Partner<TMeetup extends Partial<Meetup> = never> = {
+  id: string
+  name: string
+  link: string
+  description?: string
+  meetups: Array<TMeetup>
 }

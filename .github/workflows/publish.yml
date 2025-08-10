@@ -2,9 +2,8 @@ name: Publish
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,22 +15,24 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: '15'
+          node-version: 20
       - name: Gatsby Publish
         uses: enriikke/gatsby-gh-pages-action@v2
         with:
           access-token: x-access-token:${{ secrets.ACCESS_TOKEN }}
           deploy-branch: gh-pages
           gatsby-args: --prefix-paths
-
         env:
           NODE_ENV: production
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-          AIRTABLE_META_BASE_ID: ${{ secrets.AIRTABLE_META_BASE_ID }}
+          GITHUB_ACTIONS_PR: 0
+          GATSBY_SRC_ROOT: src
+          GATSBY_PRINT_CONFIG: true
+          GATSBY_BFF_API_URL: https://bff.moscowjs.org
           SITE_URL: ${{ secrets.SITE_URL }}
-          PATH_PREFIX: ${{ secrets.PATH_PREFIX }}
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
