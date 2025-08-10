@@ -10,6 +10,9 @@ if (typeof process.env['DIRECTUS_URL'] !== 'string') {
 if (typeof process.env['DIRECTUS_TOKEN'] !== 'string') {
   throw new Error('ENV DIRECTUS_TOKEN is required')
 }
+if (typeof process.env['GATSBY_BFF_API_URL'] !== 'string') {
+  throw new Error('ENV GATSBY_BFF_API_URL is required')
+}
 
 export const config = {
   isBuildMode: process.env['GITHUB_ACTIONS_PR'] === '1' ? false : true,

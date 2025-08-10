@@ -32,6 +32,7 @@ jobs:
           GITHUB_ACTIONS_PR: 0
           GATSBY_SRC_ROOT: src
           GATSBY_PRINT_CONFIG: true
+          GATSBY_BFF_API_URL: https://bff.moscowjs.org
           SITE_URL: ${{ secrets.SITE_URL }}
           DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
           DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
