@@ -4,12 +4,12 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Textarea, Input, Button, Select } from 'components/forms'
-import { Modal } from 'components/layout'
+import { Textarea, Input, Button, Select } from '../../../components/forms'
+import { Modal } from '../../../components/layout'
 import styled from 'styled-components'
-import { rhythm } from 'utils/typography'
+import { rhythm } from '../../../utils/typography'
 import { useDialogState, DialogDisclosure } from 'reakit/Dialog'
-import { useAdd } from 'features/qna'
+import { useAdd } from '../../../features/qna'
 
 const allTalks = [
   {
@@ -88,10 +88,8 @@ export const QuestionForm: FunctionComponent = () => {
 
   return (
     <>
-      <DialogDisclosure {...dialog}>
-        {disclosureProps => (
-          <FakeTextarea {...disclosureProps}> Добавь свой вопрос</FakeTextarea>
-        )}
+      <DialogDisclosure {...dialog} as={FakeTextarea}>
+        Добавь свой вопрос
       </DialogDisclosure>
 
       <Modal dialog={dialog}>
@@ -111,7 +109,7 @@ export const QuestionForm: FunctionComponent = () => {
 
           <p>
             <label htmlFor="talk">Выбери доклад:</label>
-            <Select id="talk" placeholder={'Доклад'} name="talk" required>
+            <Select id="talk" aria-placeholder={'Доклад'} name="talk" required>
               {talks.map(talk => (
                 <option key={talk.title} id={talk.title}>
                   {talk.title}, {talk.speaker}

@@ -1,5 +1,5 @@
-import { QuestionData } from 'models/question.h'
-import { database, auth } from 'features/firebase'
+import { QuestionData } from '../../../models'
+import { database, auth } from '../../firebase'
 import { useList } from 'react-firebase-hooks/database'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useContext, useEffect, useState } from 'react'
@@ -138,8 +138,8 @@ export const useQnaList = (): QnaData => {
   const sessionRef = 'questions/' + sessionId
   const questions = database().ref(sessionRef)
 
-  const [user, userLoading, userError] = useAuthState(auth())
-  const [snapshots, snapshotsLoading, error] = useList(questions)
+  const [user, userLoading] = useAuthState(auth())
+  const [snapshots, snapshotsLoading] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
   const isAdmin = useIsAdmin()
 
