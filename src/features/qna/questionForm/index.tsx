@@ -4,34 +4,34 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { Textarea, Input, Button, Select } from 'components/forms'
+import { Modal } from 'components/layout'
 import styled from 'styled-components'
+import { rhythm } from 'utils/typography'
 import { useDialogState, DialogDisclosure } from 'reakit/Dialog'
-
-import { Textarea, Input, Button, Select } from '../../../components/forms'
-import { Modal } from '../../../components/layout'
-import { rhythm } from '../../../utils/typography'
-import { useAdd } from '../hooks/useAdd'
+import { useAdd } from 'features/qna'
 
 const allTalks = [
   {
-    title: 'Свой бот — проще, чем кажется',
-    speaker: 'Сергей Осипов',
-    timeEnd: 1751569200000,
+    title: 'Как мы запретили писать код с багами в локализации',
+    speaker: 'Данил Анапрейчик',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'В чём польза LangChain.js',
-    speaker: 'Антон Непша',
-    timeEnd: 1751569200000,
+    title: 'React и функциональные шаблоны. Паттерн FACC',
+    speaker: 'Роман Ганин',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'Один интерфейс, чтобы править всеми',
-    speaker: 'Дарья Двуреченская',
-    timeEnd: 1751569200000,
+    title: '10⁸ клеток: алгоритмы и производительность в JavaScript',
+    speaker: 'Александр Моргунов',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'Особенности тестирования типов: нужно ли оно вам?',
-    speaker: 'Константин Логиновских',
-    timeEnd: 1751569200000,
+    title:
+      'Предохранители от выгорания, или почему «Устал? Отдохни» не работает',
+    speaker: 'Никита Ульшин',
+    timeEnd: 1758837600000,
   },
 ]
 
@@ -85,15 +85,15 @@ export const QuestionForm: FunctionComponent = () => {
   if (!add) {
     return null
   }
+
   return (
     <>
-      {/* @ts-ignore */}
       <DialogDisclosure {...dialog}>
         {disclosureProps => (
-          // @ts-ignore
           <FakeTextarea {...disclosureProps}> Добавь свой вопрос</FakeTextarea>
         )}
       </DialogDisclosure>
+
       <Modal dialog={dialog}>
         <form role="form" ref={form} action="/" onSubmit={handleSubmit}>
           <p>
@@ -111,7 +111,7 @@ export const QuestionForm: FunctionComponent = () => {
 
           <p>
             <label htmlFor="talk">Выбери доклад:</label>
-            <Select id="talk" aria-placeholder={'Доклад'} name="talk" required>
+            <Select id="talk" placeholder={'Доклад'} name="talk" required>
               {talks.map(talk => (
                 <option key={talk.title} id={talk.title}>
                   {talk.title}, {talk.speaker}

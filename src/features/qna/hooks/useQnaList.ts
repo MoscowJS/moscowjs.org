@@ -1,12 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { QuestionData } from 'models/question.h'
+import { database, auth } from 'features/firebase'
 import { useList } from 'react-firebase-hooks/database'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useContext, useEffect, useState } from 'react'
 import firebase from 'firebase'
-
-import { database, auth } from '../../firebase'
-import { SessionContext } from '../sessionContext'
 import { useIsAdmin } from './useIsAdmin'
-import type { QuestionData } from '../../../models'
+import { SessionContext } from '..'
 
 type Talk = {
   title: string
@@ -15,24 +14,25 @@ type Talk = {
 }
 const allTalks: Talk[] = [
   {
-    title: 'Свой бот — проще, чем кажется',
-    speaker: 'Сергей Осипов',
-    timeEnd: 1751569200000,
+    title: 'Как мы запретили писать код с багами в локализации',
+    speaker: 'Данил Анапрейчик',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'В чём польза LangChain.js',
-    speaker: 'Антон Непша',
-    timeEnd: 1751569200000,
+    title: 'React и функциональные шаблоны. Паттерн FACC',
+    speaker: 'Роман Ганин',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'Один интерфейс, чтобы править всеми',
-    speaker: 'Дарья Двуреченская',
-    timeEnd: 1751569200000,
+    title: '10⁸ клеток: алгоритмы и производительность в JavaScript',
+    speaker: 'Александр Моргунов',
+    timeEnd: 1758837600000,
   },
   {
-    title: 'Особенности тестирования типов: нужно ли оно вам?',
-    speaker: 'Константин Логиновских',
-    timeEnd: 1751569200000,
+    title:
+      'Предохранители от выгорания, или почему «Устал? Отдохни» не работает',
+    speaker: 'Никита Ульшин',
+    timeEnd: 1758837600000,
   },
 ]
 
@@ -138,8 +138,8 @@ export const useQnaList = (): QnaData => {
   const sessionRef = 'questions/' + sessionId
   const questions = database().ref(sessionRef)
 
-  const [user, userLoading] = useAuthState(auth())
-  const [snapshots, snapshotsLoading] = useList(questions)
+  const [user, userLoading, userError] = useAuthState(auth())
+  const [snapshots, snapshotsLoading, error] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
   const isAdmin = useIsAdmin()
 
