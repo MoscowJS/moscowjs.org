@@ -164,11 +164,25 @@ const TalksList = ({ event }: EventProps) => {
             ? 'О чём говорили'
             : 'О чём будем говорить'}
         </h3>
-        {event.talks.map(talk => {
-          return (
-            <Talk event={event} talk={talk} level={2} key={talk.paper.title} />
-          )
-        })}
+        {event.talks
+          .sort((a, b) => {
+            const aStartTime = a.start_time
+            const bStartTime = b.start_time
+            if (!(aStartTime && bStartTime)) {
+              return 0
+            }
+            return aStartTime > bStartTime ? 1 : -1
+          })
+          .map(talk => {
+            return (
+              <Talk
+                event={event}
+                talk={talk}
+                level={2}
+                key={talk.paper.title}
+              />
+            )
+          })}
       </>
     )
   }
