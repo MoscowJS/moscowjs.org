@@ -1,16 +1,16 @@
-import { Icon } from "react-feather"
+import { Icon } from 'react-feather'
 
 export enum flexAlign {
-  auto = "auto",
-  top = "flex-start",
-  bottom = "flex-end",
-  center = "center",
+  auto = 'auto',
+  top = 'flex-start',
+  bottom = 'flex-end',
+  center = 'center',
 }
 
 export type ImageContainerProps = {
   size?: string
   verticalAlign?: keyof typeof flexAlign
-  position?: "left" | "right"
+  position?: 'left' | 'right'
 }
 
 export type ImageProps = {
@@ -18,14 +18,14 @@ export type ImageProps = {
   verticalAlign?: keyof typeof flexAlign
   src: string
   alt: string
-  position?: "left" | "right"
+  position?: 'left' | 'right'
 }
 
 export type IconProps = {
   size?: string
   verticalAlign?: keyof typeof flexAlign
   Icon: Icon
-  position?: "left" | "right"
+  position?: 'left' | 'right'
 }
 
 export type ItemContentProps = {

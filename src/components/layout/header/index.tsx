@@ -1,15 +1,17 @@
-import moon from "./moon.svg"
-import React, { FunctionComponent, useState } from "react"
-import styled from "styled-components"
-import sun from "./sun.svg"
-import { ImageSharp, NavigationData } from "models"
-import { pagePath } from "utils/paths"
-import { rhythm } from "utils/typography"
-import { CheckboxToggle } from "components/forms/checkboxToggle"
-import { Container } from "components/layout"
-import { graphql, Link, PageProps, useStaticQuery } from "gatsby"
-import { HeaderMenu } from "./headerMenu"
-import { HeaderMobileMenu } from "./headerMobileMenu"
+import React, { type FunctionComponent } from 'react'
+import styled from 'styled-components'
+import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
+
+import type { WrappedWithDirectus, Navigation } from '../../../models'
+import { pagePath } from '../../../utils/paths'
+import { rhythm } from '../../../utils/typography'
+import { Container } from '../container'
+import { HeaderMenu } from './headerMenu'
+import { HeaderMobileMenu } from './headerMobileMenu'
+import { FixedObject } from 'gatsby-image'
+
+// import moon from './moon.svg'
+// import sun from './sun.svg'
 
 const HeaderContainer = styled.header`
   border-bottom: 5px solid var(--color-primary);
@@ -21,7 +23,7 @@ const Grid = styled(Container)`
   grid-template-columns: auto max-content;
   grid-template-rows: auto;
   gap: 1rem;
-  grid-template-areas: "logo navigation";
+  grid-template-areas: 'logo navigation';
   position: relative;
 
   margin-bottom: 0;
@@ -71,49 +73,57 @@ const ThemeToggle = () => {
 }
 
 export const Header: FunctionComponent<{
-  location: PageProps["location"]
+  location: PageProps['location']
 }> = ({ location }) => {
   const {
-    allAirtablenavigation: { nodes },
-    logo: {
-      childImageSharp: { fixed },
-    },
-  } = useStaticQuery<{
-    logo: ImageSharp
-    allAirtablenavigation: {
-      nodes: Array<{
-        data: NavigationData
-      }>
-    }
-  }>(graphql`
-    {
-      logo: file(relativePath: { eq: "logo.png" }) {
-        childImageSharp {
-          fixed(width: 120, quality: 100) {
-            ...GatsbyImageSharpFixed
+    directus: { navigation },
+    directus_system: { files_by_id: logo },
+  } = useStaticQuery<
+    WrappedWithDirectus<
+      { navigation: Array<Navigation> },
+      {
+        files_by_id: { imageFile: { childImageSharp: { fixed: FixedObject } } }
+      }
+    >
+  >(graphql`
+    query {
+      directus {
+        navigation(
+          filter: {
+            status: { _eq: "published" }
+            navigation: { _eq: "header" }
           }
+          sort: ["order"]
+        ) {
+          id
+          customUrl
+          slug
+          title
+          order
         }
       }
-      allAirtablenavigation(
-        filter: { data: { navigation: { eq: "header" }, show: { eq: true } } }
-        sort: { fields: data___order, order: ASC }
-      ) {
-        nodes {
-          data {
-            customUrl
-            slug
-            title
+      directus_system {
+        files_by_id(id: "ba4413cc-8879-4786-b325-dc6ceca4ae41") {
+          id
+          imageFile {
+            childImageSharp {
+              fixed(width: 120, quality: 100) {
+                ...GatsbyImageSharpFixed
+              }
+            }
           }
         }
       }
     }
   `)
 
-  const navigation = nodes.map(({ data }) => ({
-    external: !!data.customUrl,
-    url: data.customUrl || pagePath(data.slug[0]),
-    title: data.title,
-    current: data.customUrl ? false : pagePath(data.slug[0]) === location.pathname,
+  const navigations = navigation.map(nav => ({
+    external: !!nav.customUrl,
+    url: nav.customUrl || pagePath(nav.slug[0]),
+    title: nav.title,
+    current: nav.customUrl
+      ? false
+      : pagePath(nav.slug[0]) === location.pathname,
   }))
 
   return (
@@ -121,16 +131,16 @@ export const Header: FunctionComponent<{
       <Grid>
         <HeaderLink to="/">
           <HeaderTitle
-            as={location.pathname === "/" ? "h1" : "h2"}
-            logo={fixed.src}
+            as={location.pathname === '/' ? 'h1' : 'h2'}
+            logo={logo.imageFile.childImageSharp.fixed.src}
           >
             MoscowJS
           </HeaderTitle>
         </HeaderLink>
         <MenuContainer role="navigation" $open={false}>
           <ThemeToggle />
-          <HeaderMenu navigation={navigation} />
-          <HeaderMobileMenu navigation={navigation} />
+          <HeaderMenu navigation={navigations} />
+          <HeaderMobileMenu navigation={navigations} />
         </MenuContainer>
       </Grid>
     </HeaderContainer>

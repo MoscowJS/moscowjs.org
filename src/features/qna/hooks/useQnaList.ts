@@ -1,11 +1,11 @@
-import { QuestionData } from "models/question.h"
-import { database, auth } from "features/firebase"
-import { useList } from "react-firebase-hooks/database"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useContext, useEffect, useState } from "react"
-import firebase from "firebase"
-import { useIsAdmin } from "./useIsAdmin"
-import { SessionContext } from ".."
+import { QuestionData } from '../../../models'
+import { database, auth } from '../../firebase'
+import { useList } from 'react-firebase-hooks/database'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useContext, useEffect, useState } from 'react'
+import firebase from 'firebase'
+import { useIsAdmin } from './useIsAdmin'
+import { SessionContext } from '..'
 
 type Talk = {
   title: string
@@ -14,23 +14,24 @@ type Talk = {
 }
 const allTalks: Talk[] = [
   {
-    title: "Не ошибается тот, кто ничего не делает, или как падать правильно",
-    speaker: "Елена Евтифьева",
+    title: 'Не ошибается тот, кто ничего не делает, или как падать правильно',
+    speaker: 'Елена Евтифьева',
     timeEnd: 1761246000000,
   },
   {
-    title: "Разработка мигратора кода с использованием AI на примере миграции с Linaria на CSS modules",
-    speaker: "Михаил Витик",
+    title:
+      'Разработка мигратора кода с использованием AI на примере миграции с Linaria на CSS modules',
+    speaker: 'Михаил Витик',
     timeEnd: 1761246000000,
   },
   {
-    title: "Vike: Один фреймворк, чтобы править всеми",
-    speaker: "Илья Оловянников",
+    title: 'Vike: Один фреймворк, чтобы править всеми',
+    speaker: 'Илья Оловянников',
     timeEnd: 1761246000000,
   },
   {
-    title: "Я сделал reactuse и мне есть, что рассказать",
-    speaker: "Дмитрий Бабин",
+    title: 'Я сделал reactuse и мне есть, что рассказать',
+    speaker: 'Дмитрий Бабин',
     timeEnd: 1761246000000,
   },
 ]
@@ -134,11 +135,11 @@ type QnaData = [
 
 export const useQnaList = (): QnaData => {
   const sessionId = useContext(SessionContext)
-  const sessionRef = "questions/" + sessionId
+  const sessionRef = 'questions/' + sessionId
   const questions = database().ref(sessionRef)
 
-  const [user, userLoading, userError] = useAuthState(auth())
-  const [snapshots, snapshotsLoading, error] = useList(questions)
+  const [user, userLoading] = useAuthState(auth())
+  const [snapshots, snapshotsLoading] = useList(questions)
   const [userVotes, setVotes] = useState<Record<string, string>>()
   const isAdmin = useIsAdmin()
 
@@ -151,9 +152,9 @@ export const useQnaList = (): QnaData => {
     const onUpdate = (result: any) => {
       setVotes(result.val() || {})
     }
-    votesRef.on("value", onUpdate)
+    votesRef.on('value', onUpdate)
 
-    return () => votesRef.off("value", onUpdate)
+    return () => votesRef.off('value', onUpdate)
   }, [user])
 
   const isLoading = snapshotsLoading || userLoading

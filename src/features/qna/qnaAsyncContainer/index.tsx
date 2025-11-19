@@ -1,16 +1,14 @@
-import React, { FunctionComponent, useContext } from "react"
-import {
-  QuestionForm,
-  QuestionsList,
-  useIsAdmin,
-  useQnaList,
-} from "features/qna"
-import { useTabState, Tab, TabList, TabPanel } from "reakit/Tab"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
-import { SessionContext } from "../sessionContext"
-import { useState } from "react"
-import { Select } from "components/forms"
+import React, { FunctionComponent, useContext, useState } from 'react'
+import { useTabState, Tab, TabList, TabPanel } from 'reakit/Tab'
+import styled from 'styled-components'
+
+import { rhythm } from '../../../utils/typography'
+import { Select } from '../../../components/forms'
+import { SessionContext } from '../sessionContext'
+import { QuestionForm } from '../questionForm'
+import { QuestionsList } from '../questionsList'
+import { useIsAdmin } from '../hooks/useIsAdmin'
+import { useQnaList } from '../hooks/useQnaList'
 
 const QnaTabList = styled(TabList)`
   border-bottom: 5px solid var(--color-primary);
@@ -24,7 +22,7 @@ const QnaTab = styled(Tab)`
   padding: 0 ${rhythm(0.5)};
   line-height: ${rhythm(2)};
 
-  &[aria-selected="true"] {
+  &[aria-selected='true'] {
     background-color: var(--color-primary);
     color: #000;
   }
@@ -35,7 +33,7 @@ const QnaAsyncContainer: FunctionComponent = () => {
   const tab = useTabState()
   const isAdmin = useIsAdmin()
   const sessionId = useContext(SessionContext)
-  const [selectedTalk, selectTalk] = useState("Все вопросы")
+  const [selectedTalk, selectTalk] = useState('Все вопросы')
   const handleTalkChange = (event: any) => {
     selectTalk(event.target.value)
   }
@@ -44,7 +42,7 @@ const QnaAsyncContainer: FunctionComponent = () => {
     return <p>В настоящий момент вопросы не принимаются.</p>
   }
 
-  if (selectedTalk !== "Все вопросы") {
+  if (selectedTalk !== 'Все вопросы') {
     list.answered = list.answered.filter(
       question => question.talk === selectedTalk
     )
@@ -61,7 +59,10 @@ const QnaAsyncContainer: FunctionComponent = () => {
       ) : (
         <>
           <p>
-            <Select placeholder={"Фильтр вопросов"} onChange={handleTalkChange}>
+            <Select
+              aria-placeholder={'Фильтр вопросов'}
+              onChange={handleTalkChange}
+            >
               <option>Все вопросы</option>
               {allTalks.map(talk => (
                 <option key={talk.title} id={talk.title}>

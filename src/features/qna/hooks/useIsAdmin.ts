@@ -1,6 +1,7 @@
-import { auth, database } from "features/firebase"
-import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
+import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+import { auth, database } from '../../firebase'
 
 export const useIsAdmin = () => {
   const [user] = useAuthState(auth())
@@ -14,7 +15,7 @@ export const useIsAdmin = () => {
     setIsAdmin(false)
     database()
       .ref(`admins/${user.uid}`)
-      .once("value")
+      .once('value')
       .then(snapshot => {
         if (snapshot.val()) {
           setIsAdmin(true)

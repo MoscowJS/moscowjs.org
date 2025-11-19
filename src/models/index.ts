@@ -1,15 +1,16 @@
-import {} from "styled-components/cssprop"
+export * from './speaker.h'
+export * from './talk.h'
+export * from './config.h'
+export * from './meetup.h'
+export * from './venue.h'
+export * from './company.h'
+export * from './page.h'
+export * from './paper.h'
+export * from './navigation.h'
+export * from './question.h'
+export * from './partners.h'
 
-export { AirtableImage } from "./airtable.h"
-export { CompanyData } from "./company.h"
-export { ConfigData } from "./config.h"
-export { EventData } from "./event.h"
-export { ImageSharp } from "./gatsby.h"
-export { NavigationData } from "./navigation.h"
-export { OrgData } from "./org.h"
-export { PagesData } from "./pages.h"
-export { QuestionData } from "./question.h"
-export { SpeakerData } from "./speaker.h"
-export { TalkData } from "./talk.h"
-export { VenueData } from "./venue.h"
-export { PartnersData } from "./partners.h"
+export type WrappedWithDirectus<TDirectusType, TDirectusSystemType = never> = {
+  directus: TDirectusType
+  directus_system: TDirectusSystemType
+}

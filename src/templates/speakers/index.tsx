@@ -1,28 +1,30 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Markdown } from "components/layout"
-import { graphql, PageProps } from "gatsby"
-import { PagesData, SpeakerData } from "models"
-import { SpeakersGrid } from "features/speakers/speakersGrid"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import SEO from '../../utils/seo'
+import type { Page, Speaker, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { SpeakersGrid } from '../../features/speakers/speakersGrid'
 
 const SpeakersPage: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-    allAirtablespeakers: {
-      totalCount: number
-      nodes: Array<{
-        data: SpeakerData
-      }>
-    }
-  }>
+  PageProps<
+    WrappedWithDirectus<{
+      pages_by_id: Pick<Page, 'title' | 'content'>
+      persons: Array<Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>>
+    }>
+  >
 > = ({ data, location }) => {
+  const {
+    persons: speakers,
+    pages_by_id: { content, title },
+  } = data.directus
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={title} />
       <Header location={location} />
       <Container as="main">
-        <Markdown>{data.airtablepages.data.content}</Markdown>
-        <SpeakersGrid speakers={data.allAirtablespeakers.nodes} />
+        <Markdown>{content}</Markdown>
+        <SpeakersGrid speakers={speakers} />
       </Container>
       <Footer />
     </>
@@ -30,42 +32,44 @@ const SpeakersPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
+  query ($id: ID!) {
+    directus {
+      pages_by_id(id: $id) {
         title
-        slug
         content
-        description
       }
-    }
-    allAirtablespeakers(
-      sort: { fields: data___Talks___data___Date, order: DESC }
-    ) {
-      nodes {
+      persons(
+        filter: {
+          talks: { talks_id: { meetup_id: { publish: { _eq: true } } } }
+        }
+        sort: ["-talks.talks_id.meetup_id.date_start"]
+        limit: -1
+      ) {
         id
-        data {
-          Name
-          Company
-          Photo {
-            localFiles {
-              childImageSharp {
-                fluid(
-                  cropFocus: CENTER
-                  quality: 80
-                  grayscale: true
-                  maxWidth: 150
-                  maxHeight: 150
-                  fit: COVER
-                ) {
-                  ...GatsbyImageSharpFluid
-                }
+        name
+        talks(filter: { talks_id: { meetup_id: { id: { _nnull: true } } } }) {
+          talks_id {
+            company
+          }
+        }
+        photo {
+          id
+          imageFile {
+            childImageSharp {
+              fluid(
+                cropFocus: CENTER
+                quality: 80
+                grayscale: true
+                maxWidth: 150
+                maxHeight: 150
+                fit: COVER
+              ) {
+                ...GatsbyImageSharpFluid
               }
             }
           }
         }
       }
-      totalCount
     }
   }
 `

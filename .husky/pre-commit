@@ -1,0 +1,2 @@
+npx tsc --noEmit
+npx --no-install lint-staged

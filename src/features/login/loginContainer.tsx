@@ -1,29 +1,31 @@
-import React, { useEffect, useRef } from "react"
-import { auth, getApp } from "features/firebase"
-import * as fbui from "firebaseui"
-import firebase from "firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
-import "firebaseui/dist/firebaseui.css"
+import React, { useEffect, useRef } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import * as fbui from 'firebaseui'
+import firebase from 'firebase'
 
-auth().languageCode = "ru"
+import 'firebaseui/dist/firebaseui.css'
+
+import { auth } from '../firebase'
+
+auth().languageCode = 'ru'
 
 const uiConfig = {
   signInSuccessUrl: process.env.SITE_URL, //This URL is used to return to that page when we got success response for phone authentication.
   signInOptions: [
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      defaultCountry: "RU",
-      whitelistedCountries: ["+7"],
+      defaultCountry: 'RU',
+      whitelistedCountries: ['+7'],
     },
     fbui.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
-  tosUrl: process.env.SITE_URL + "coc",
+  tosUrl: process.env.SITE_URL + 'coc',
   autoUpgradeAnonymousUsers: true,
   callbacks: {
     signInFailure: function (error: any) {
       // For merge conflicts, the error.code will be
       // 'firebaseui/anonymous-upgrade-merge-conflict'.
-      if (error.code != "firebaseui/anonymous-upgrade-merge-conflict") {
+      if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
         return Promise.resolve()
       }
 
@@ -36,8 +38,8 @@ const uiConfig = {
       // Save anonymous user data first.
       return app
         .database()
-        .ref("users/" + currentUser.uid)
-        .once("value")
+        .ref('users/' + currentUser.uid)
+        .once('value')
         .then(function (snapshot) {
           data = snapshot.val()
           return firebase.auth().signInWithCredential(cred)
@@ -45,7 +47,7 @@ const uiConfig = {
         .then(function (user) {
           return app
             .database()
-            .ref("users/" + user.user?.uid)
+            .ref('users/' + user.user?.uid)
             .set(data)
         })
         .then(function () {
@@ -69,7 +71,7 @@ const LoginContainer = () => {
     if (!authRef.current) return
 
     uiRef.current = uiRef.current || new fbui.auth.AuthUI(auth())
-    uiRef.current.start("#firebase-auth", uiConfig)
+    uiRef.current.start('#firebase-auth', uiConfig)
 
     return () => {
       uiRef.current?.delete()

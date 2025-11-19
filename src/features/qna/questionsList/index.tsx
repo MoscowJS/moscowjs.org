@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from "react"
-import styled from "styled-components"
-import { Flipped, Flipper } from "react-flip-toolkit"
-import { QuestionData } from "models"
-import { rhythm } from "utils/typography"
-import { QuestionListItem } from "../questionListItem"
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+import { Flipped, Flipper } from 'react-flip-toolkit'
+
+import { QuestionData } from '../../../models'
+import { rhythm } from '../../../utils/typography'
+import { QuestionListItem } from '../questionListItem'
 
 const QuestionsListContainer = styled.ul`
   list-style: none;
@@ -20,7 +21,7 @@ const QuestionsListContainer = styled.ul`
     }
 
     &::after {
-      content: "";
+      content: '';
       display: table;
       clear: both;
     }
@@ -39,7 +40,7 @@ export const QuestionsList: FunctionComponent<{
   return (
     <>
       <QuestionsListContainer>
-        <Flipper flipKey={questions.map(({ id }) => id).join(", ")}>
+        <Flipper flipKey={questions.map(({ id }) => id).join(', ')}>
           {questions.map(question => (
             <Flipped key={question.id} flipId={question.id}>
               <QuestionListItem {...question} />

@@ -1,14 +1,16 @@
-import { Meta, Panel } from "components/layout"
-import React, { FunctionComponent } from "react"
-import { User, ThumbsUp } from "react-feather"
-import { useIsAdmin, useUpvote } from "features/qna"
-import { QuestionData } from "models"
-import { format } from "date-fns"
-import { ru } from "date-fns/locale"
-import { rhythm } from "utils/typography"
-import styled from "styled-components"
-import { QuestionAdmin } from "../questionAdmin"
-import { BadgeButton } from "components/elements/badgeButton"
+import React, { FunctionComponent } from 'react'
+import { User, ThumbsUp } from 'react-feather'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
+import styled from 'styled-components'
+
+import { BadgeButton } from '../../../components/elements'
+import { Panel, Meta } from '../../../components/layout'
+import { QuestionData } from '../../../models'
+import { rhythm } from '../../../utils/typography'
+import { useIsAdmin } from '../hooks/useIsAdmin'
+import { useUpvote } from '../hooks/useUpvote'
+import { QuestionAdmin } from '../questionAdmin'
 
 const QuestionContainer = styled.li`
   ${Panel} {
@@ -66,9 +68,9 @@ export const QuestionListItem: FunctionComponent<QuestionData> = props => {
           </p>
         )}
         <QuestionHeader>
-          <Meta title={author || "Анонимно"} Icon={User}>
+          <Meta title={author || 'Анонимно'} Icon={User}>
             <p>
-              {format(new Date(created || 0), "d MMMM y, HH:mm", {
+              {format(new Date(created || 0), 'd MMMM y, HH:mm', {
                 locale: ru,
               })}
               <br />

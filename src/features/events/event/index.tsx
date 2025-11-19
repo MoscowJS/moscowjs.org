@@ -1,19 +1,66 @@
-import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-import { Calendar, MapPin, PenTool, Video } from "react-feather"
-import { EventData } from "models/event.h"
-import { EventLink } from "features/events/eventLink"
-import { EventTimeTable } from "features/events/eventTimeTable"
-import { Markdown, Meta } from "components/layout"
-import { Talk } from "features/talks/talk"
-import { PartnerLink } from "features/partners"
-import { format } from "date-fns"
-import { ru } from "date-fns/locale"
-import { airtableDateFix } from "utils/airtableDateFix"
-import { rhythm } from "utils/typography"
+import React, { FunctionComponent } from 'react'
+import { Calendar, MapPin, PenTool, Video } from 'react-feather'
+import styled from 'styled-components'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
+
+import type {
+  Company,
+  Meetup,
+  Paper,
+  Partner,
+  Speaker,
+  Talk as TalkType,
+} from '../../../models'
+import { Markdown, Meta } from '../../../components/layout'
+import { rhythm } from '../../../utils/typography'
+import { PartnerLink } from '../../partners'
+import { Talk } from '../../talks'
+import { EventTimeTable } from '../eventTimeTable'
+import { EventLink } from '../eventLink'
 
 type EventProps = {
-  event: EventData
+  event: Pick<
+    Meetup<
+      Pick<
+        TalkType<
+          Pick<Meetup, 'id' | 'slug' | 'title' | 'date_start'>,
+          Pick<Speaker, 'id' | 'name' | 'photo' | 'talks'>,
+          Pick<Paper, 'id' | 'title' | 'theses'>
+        >,
+        | 'id'
+        | 'paper'
+        | 'company'
+        | 'scene'
+        | 'start_time'
+        | 'speakers'
+        | 'meetup_id'
+        | 'slides_url'
+        | 'record'
+      >,
+      never,
+      Pick<Company, 'id' | 'name'>,
+      Pick<Partner, 'id' | 'name' | 'link' | 'description'>
+    >,
+    | 'id'
+    | 'type'
+    | 'slug'
+    | 'title'
+    | 'title_formatted'
+    | 'talks'
+    | 'status'
+    | 'address'
+    | 'partners'
+    | 'date_start'
+    | 'date_end'
+    | 'companies'
+    | 'timetable'
+    | 'stream_link'
+    | 'video_link'
+    | 'registration_link'
+    | 'announcement_short'
+    | 'announcement_long'
+  >
   short?: boolean
   isIndexPage?: boolean
 }
@@ -27,8 +74,8 @@ const Section = styled.section`
 `
 
 const MetaDate = ({ event }: EventProps) => {
-  const date = airtableDateFix(new Date(event.Date))
-  const formattedDate = format(date, "d MMMM y, HH:mm", {
+  const date = new Date(event.date_start)
+  const formattedDate = format(date, 'd MMMM y, HH:mm', {
     locale: ru,
   })
 
@@ -42,18 +89,22 @@ const MetaDate = ({ event }: EventProps) => {
 }
 
 const MetaAddress = ({ event }: EventProps) => {
-  if (!event.Address) {
+  if (!event.address) {
     return null
   }
 
   return (
     <Meta Icon={MapPin} title="Где">
       <p>
-        {event.Address}
-        {event.Company && (
+        {event.address}
+        {event.companies && (
           <>
             <br />
-            <em>{event.Company.map(({ data }) => data.Name).join(", ")}</em>
+            <em>
+              {event.companies
+                .map(({ companies_id: company }) => company.name)
+                .join(', ')}
+            </em>
           </>
         )}
       </p>
@@ -62,16 +113,16 @@ const MetaAddress = ({ event }: EventProps) => {
 }
 
 const MetaVideo = ({ event }: EventProps) => {
-  const videoLink = event.Stream_link || event.Video_link
-  const videoTitle = event.Completed ? "Запись" : "Трансляция"
+  const videoLink = event.stream_link || event.video_link
+  const videoTitle = event.status === 'завершен' ? 'Запись' : 'Трансляция'
 
   return (
     <Meta Icon={Video} title={videoTitle}>
       <p>
         {videoLink ? (
-          <a href={videoLink}>{videoLink!.replace("https://", "")}</a>
+          <a href={videoLink}>{videoLink!.replace('https://', '')}</a>
         ) : (
-          "Скоро будет"
+          'Скоро будет'
         )}
       </p>
     </Meta>
@@ -79,15 +130,15 @@ const MetaVideo = ({ event }: EventProps) => {
 }
 
 const MetaRegistration = ({ event }: EventProps) => {
-  if (event.Completed) {
+  if (event.status === 'завершен') {
     return null
   }
 
-  if (event.Type === "Online") {
+  if (event.type === 'online') {
     return null
   }
 
-  if (!event.Registration_link) {
+  if (!event.registration_link) {
     return (
       <Meta Icon={PenTool} title="Регистрация">
         <p>Скоро будет</p>
@@ -98,20 +149,40 @@ const MetaRegistration = ({ event }: EventProps) => {
   return (
     <Meta Icon={PenTool} title="Регистрация">
       <p>
-        <a href={event.Registration_link}>{event.Registration_link}</a>
+        <a href={event.registration_link}>{event.registration_link}</a>
       </p>
     </Meta>
   )
 }
 
 const TalksList = ({ event }: EventProps) => {
-  if (event.Talks) {
+  if (event.talks) {
     return (
       <>
-        <h3>{event.Completed ? "О чём говорили" : "О чём будем говорить"}</h3>
-        {event.Talks.map(({ data }) => {
-          return <Talk talk={data} level={2} key={data.Title} />
-        })}
+        <h3>
+          {event.status === 'завершен'
+            ? 'О чём говорили'
+            : 'О чём будем говорить'}
+        </h3>
+        {event.talks
+          .sort((a, b) => {
+            const aStartTime = a.start_time
+            const bStartTime = b.start_time
+            if (!(aStartTime && bStartTime)) {
+              return 0
+            }
+            return aStartTime > bStartTime ? 1 : -1
+          })
+          .map(talk => {
+            return (
+              <Talk
+                event={event}
+                talk={talk}
+                level={2}
+                key={talk.paper.title}
+              />
+            )
+          })}
       </>
     )
   }
@@ -126,12 +197,12 @@ export const Event: FunctionComponent<EventProps> = ({
 }) => {
   return (
     <article>
-      <EventTitle as={isIndexPage ? "h2" : "h1"}>
+      <EventTitle as={isIndexPage ? 'h2' : 'h1'}>
         <EventLink event={event} />
       </EventTitle>
 
       <Section>
-        <Markdown>{event.Short_Announcement}</Markdown>
+        <Markdown>{event.announcement_short}</Markdown>
       </Section>
 
       <Section>
@@ -143,17 +214,17 @@ export const Event: FunctionComponent<EventProps> = ({
 
       {!short && (
         <>
-          {event.Long_Announcement && (
+          {event.announcement_long && (
             <Section>
-              <Markdown>{event.Long_Announcement}</Markdown>
+              <Markdown>{event.announcement_long}</Markdown>
             </Section>
           )}
-          {event.Timetable && (
+          {event.timetable && (
             <Section>
               <EventTimeTable event={event} />
             </Section>
           )}
-          {event.Talks && (
+          {event.talks && (
             <Section>
               <TalksList event={event} />
             </Section>
@@ -161,11 +232,11 @@ export const Event: FunctionComponent<EventProps> = ({
         </>
       )}
 
-      {!short && event.Partners && (
+      {!short && event.partners && event.partners.length !== 0 && (
         <Section>
           <h3>Партнеры мероприятия</h3>
-          {event.Partners.map(({ data }) => (
-            <PartnerLink partnerData={data} />
+          {event.partners.map(({ partners_id: partner }) => (
+            <PartnerLink partner={partner} />
           ))}
         </Section>
       )}

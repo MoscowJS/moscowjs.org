@@ -1,5 +1,6 @@
-import styled from "styled-components"
-import { getSize, rhythm } from "utils/typography"
+import styled from 'styled-components'
+
+import { getSize, rhythm } from '../../../utils/typography'
 
 export const Badge = styled.button<{ size?: string }>`
   padding: 0 5px;
@@ -9,8 +10,8 @@ export const Badge = styled.button<{ size?: string }>`
   background: none;
 
   font-size: ${rhythm(0.75)};
-  line-height: calc(${({ size }) => getSize(size || "xxxs")} - 4px);
-  min-width: ${({ size }) => getSize(size || "xxxs")};
+  line-height: calc(${({ size }) => getSize(size || 'xxxs')} - 4px);
+  min-width: ${({ size }) => getSize(size || 'xxxs')};
 
   cursor: pointer;
 

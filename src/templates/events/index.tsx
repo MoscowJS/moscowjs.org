@@ -1,28 +1,28 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Markdown } from "components/layout"
-import { EventData, PagesData } from "models"
-import { EventsFeed } from "features/events/eventsFeed"
-import { graphql, PageProps } from "gatsby"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import type { Page, Meetup, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { EventsFeed } from '../../features/events/eventsFeed'
+import SEO from '../../utils/seo'
 
 const EventsPage: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-    allAirtablemeetups: {
-      totalCount: number
-      nodes: Array<{
-        data: EventData
-      }>
-    }
-  }>
+  PageProps<
+    WrappedWithDirectus<{
+      pages_by_id: Pick<Page, 'title' | 'content'>
+      meetups: Array<Meetup>
+    }>
+  >
 > = ({ data, location }) => {
+  const { pages_by_id: page, meetups } = data.directus
+
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
-        <Markdown>{data.airtablepages.data.content}</Markdown>
-        <EventsFeed events={data.allAirtablemeetups.nodes} />
+        <Markdown>{page.content}</Markdown>
+        <EventsFeed events={meetups} />
       </Container>
       <Footer />
     </>
@@ -30,74 +30,53 @@ const EventsPage: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
+  query ($id: ID!) {
+    directus {
+      pages_by_id(id: $id) {
         title
-        slug
         content
-        description
       }
-    }
-    allAirtablemeetups(sort: { fields: data___Date, order: DESC }) {
-      totalCount
-      nodes {
-        data {
-          Address
-          Company {
-            data {
-              Name
-              Slug
-            }
+      meetups(
+        filter: { publish: { _eq: true } }
+        sort: ["-date_start"]
+        limit: -1
+      ) {
+        id
+        title
+        type
+        address
+        status
+        date_start
+        date_end
+        title_formatted
+        registration_link
+        announcement_short
+        announcement_long
+        slug
+        stream_link
+        video_link
+        talks {
+          id
+          company
+        }
+        venue {
+          id
+          name
+          slug
+        }
+        companies {
+          companies_id {
+            id
+            name
+            slug
           }
-          Completed
-          Date
-          DateEnd
-          Formatted_title
-          Long_Announcement
-          Publish
-          Registration_link
-          Short_Announcement
-          Slug
-          Stream_link
-          Talks {
-            data {
-              Title
-              Slides_URL
-              Theses
-              Record
-              Speakers {
-                data {
-                  Name
-                  Company
-                  Photo {
-                    localFiles {
-                      childImageSharp {
-                        fluid(
-                          cropFocus: CENTER
-                          quality: 80
-                          grayscale: true
-                          maxWidth: 300
-                          maxHeight: 300
-                          fit: COVER
-                        ) {
-                          ...GatsbyImageSharpFluid
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          Title
-          Type
-          Video_link
-          Venue {
-            data {
-              Slug
-              Name
-            }
+        }
+        partners {
+          partners_id {
+            id
+            name
+            link
+            description
           }
         }
       }

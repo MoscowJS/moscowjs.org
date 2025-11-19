@@ -1,46 +1,57 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Markdown } from "components/layout"
-import { graphql, PageProps } from "gatsby"
-import { transformConfig } from "utils/transformConfig"
-import { ConfigData, PagesData } from "models"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import type {
+  Config,
+  Page as PageType,
+  WrappedWithDirectus,
+} from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import { transformConfig } from '../../utils/transformConfig'
+import CfpForm from '../../features/cfp'
+import SEO from '../../utils/seo'
 
 const CFP: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-    allAirtableconfig: {
-      nodes: Array<{
-        data: ConfigData
-      }>
-    }
-  }>
+  PageProps<
+    WrappedWithDirectus<{
+      config: Array<Pick<Config, 'name' | 'value'>>
+      pages_by_id: Pick<PageType, 'title' | 'content'>
+    }>
+  >
 > = ({ data, location }) => {
-  const config = transformConfig(data.allAirtableconfig.nodes)
-  const formType = config?.cfpform?.value || "airtable"
+  const { pages_by_id: page, config } = data.directus
+
+  const transformedConfig = transformConfig(config)
+  const formType = transformedConfig?.cfpform?.value ?? 'directus'
 
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
-        {formType === "airtable" && <iframe
-          src="https://airtable.com/embed/appV8iIxl39lc20bh/pag57KTKlKuiOgmvH/form"
-          style={{
-            width: "100%",
-            height: "533px",
-            border: "none",
-          }}
-        />}
-        {formType === "typeform" && <iframe
-          src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet"
-          style={{
-            width: "100%",
-            height: "500px",
-            border: "none",
-          }}
-        />}
+        {formType === 'directus' && <CfpForm />}
+        {formType === 'airtable' && (
+          <iframe
+            src="https://airtable.com/embed/appV8iIxl39lc20bh/pag57KTKlKuiOgmvH/form"
+            style={{
+              width: '100%',
+              height: '533px',
+              border: 'none',
+            }}
+          />
+        )}
+        {formType === 'typeform' && (
+          <iframe
+            src="https://form.typeform.com/to/ogjLwQex?typeform-medium=embed-snippet"
+            style={{
+              width: '100%',
+              height: '500px',
+              border: 'none',
+            }}
+          />
+        )}
 
-        <Markdown>{data.airtablepages.data.content}</Markdown>
+        <Markdown>{page.content}</Markdown>
       </Container>
       <Footer />
     </>
@@ -48,21 +59,15 @@ const CFP: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
-        title
-        slug
-        content
-        description
+  query ($id: ID!) {
+    directus {
+      config(filter: { type: { _eq: "qna" } }) {
+        name
+        value
       }
-    }
-    allAirtableconfig(filter: { data: { type: { eq: "qna" } } }) {
-      nodes {
-        data {
-          name
-          value
-        }
+      pages_by_id(id: $id) {
+        title
+        content
       }
     }
   }

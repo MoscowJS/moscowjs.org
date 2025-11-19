@@ -1,11 +1,12 @@
-import { database, auth } from "features/firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useContext, useEffect, useState } from "react"
-import { SessionContext } from ".."
+import { useContext, useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+import { SessionContext } from '../sessionContext'
+import { database, auth } from '../../firebase'
 
 export const useUpvote = () => {
   const sessionId = useContext(SessionContext)
-  const sessionRef = "questions/" + sessionId
+  const sessionRef = 'questions/' + sessionId
 
   const [user] = useAuthState(auth())
   const [userVotes, setVotes] = useState<Record<string, string>>()
@@ -19,9 +20,9 @@ export const useUpvote = () => {
     const onUpdate = (result: any) => {
       setVotes(result.val() || {})
     }
-    votesRef.on("value", onUpdate)
+    votesRef.on('value', onUpdate)
 
-    return () => votesRef.off("value", onUpdate)
+    return () => votesRef.off('value', onUpdate)
   }, [user])
 
   const upvote = async (questionId: string) => {

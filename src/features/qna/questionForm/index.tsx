@@ -3,33 +3,34 @@ import React, {
   FunctionComponent,
   useRef,
   useState,
-} from "react"
-import { Textarea, Input, Button, Select } from "components/forms"
-import { Modal } from "components/layout"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
-import { useDialogState, DialogDisclosure } from "reakit/Dialog"
-import { useAdd } from "features/qna"
+} from 'react'
+import { Textarea, Input, Button, Select } from '../../../components/forms'
+import { Modal } from '../../../components/layout'
+import styled from 'styled-components'
+import { rhythm } from '../../../utils/typography'
+import { useDialogState, DialogDisclosure } from 'reakit/Dialog'
+import { useAdd } from '../../../features/qna'
 
 const allTalks = [
   {
-    title: "Не ошибается тот, кто ничего не делает, или как падать правильно",
-    speaker: "Елена Евтифьева",
+    title: 'Не ошибается тот, кто ничего не делает, или как падать правильно',
+    speaker: 'Елена Евтифьева',
     timeEnd: 1761246000000,
   },
   {
-    title: "Разработка мигратора кода с использованием AI на примере миграции с Linaria на CSS modules",
-    speaker: "Михаил Витик",
+    title:
+      'Разработка мигратора кода с использованием AI на примере миграции с Linaria на CSS modules',
+    speaker: 'Михаил Витик',
     timeEnd: 1761246000000,
   },
   {
-    title: "Vike: Один фреймворк, чтобы править всеми",
-    speaker: "Илья Оловянников",
+    title: 'Vike: Один фреймворк, чтобы править всеми',
+    speaker: 'Илья Оловянников',
     timeEnd: 1761246000000,
   },
   {
-    title: "Я сделал reactuse и мне есть, что рассказать",
-    speaker: "Дмитрий Бабин",
+    title: 'Я сделал reactuse и мне есть, что рассказать',
+    speaker: 'Дмитрий Бабин',
     timeEnd: 1761246000000,
   },
 ]
@@ -69,7 +70,7 @@ export const QuestionForm: FunctionComponent = () => {
     const formData = new FormData(event.currentTarget)
     const result: any = {}
 
-    formData.forEach((value, name) => (result[name] = value || ""))
+    formData.forEach((value, name) => (result[name] = value || ''))
     event.currentTarget.reset()
 
     add &&
@@ -87,10 +88,8 @@ export const QuestionForm: FunctionComponent = () => {
 
   return (
     <>
-      <DialogDisclosure {...dialog}>
-        {disclosureProps => (
-          <FakeTextarea {...disclosureProps}> Добавь свой вопрос</FakeTextarea>
-        )}
+      <DialogDisclosure {...dialog} as={FakeTextarea}>
+        Добавь свой вопрос
       </DialogDisclosure>
 
       <Modal dialog={dialog}>
@@ -110,7 +109,7 @@ export const QuestionForm: FunctionComponent = () => {
 
           <p>
             <label htmlFor="talk">Выбери доклад:</label>
-            <Select id="talk" placeholder={"Доклад"} name="talk" required>
+            <Select id="talk" aria-placeholder={'Доклад'} name="talk" required>
               {talks.map(talk => (
                 <option key={talk.title} id={talk.title}>
                   {talk.title}, {talk.speaker}

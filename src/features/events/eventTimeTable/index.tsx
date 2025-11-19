@@ -1,36 +1,40 @@
-import React, { FunctionComponent } from "react"
-import { EventData, TalkData } from "models"
-import { format, add } from "date-fns"
-import { airtableDateFix } from "utils/airtableDateFix"
-import { speakerPath, talkPath } from "utils/paths"
-import { Link } from "gatsby"
-import { Container, Markdown } from "components/layout"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+import { format } from 'date-fns'
+import { Link } from 'gatsby'
+
+import { talkPath } from '../../../utils/paths'
+import type { Meetup, Talk, Speaker, Paper } from '../../../models'
+import { rhythm } from '../../../utils/typography'
 
 const sceneOrder: {
   [k: string]: number
 } = {
-  "Главный зал": 0,
-  "Основная сцена": 0,
-  "Первый зал": 10,
-  "Дополнительная сцена": 10,
-  "Малая сцена": 10,
-  "Второй зал": 20,
-  "Третий зал": 30,
+  'Главный зал': 0,
+  'Основная сцена': 0,
+  'Первый зал': 10,
+  'Дополнительная сцена': 10,
+  'Малая сцена': 10,
+  'Второй зал': 20,
+  'Третий зал': 30,
 }
+
+type TimeTableTalk = Pick<
+  Talk<never, Pick<Speaker, 'id' | 'name'>, Pick<Paper, 'id' | 'title'>>,
+  'id' | 'paper' | 'company' | 'scene' | 'start_time' | 'speakers'
+>
 
 type TableRows = {
   [K: string]:
     | {
         keynote: false
         talks: {
-          [K: string]: TalkData
+          [K: string]: TimeTableTalk
         }
       }
     | {
         keynote: true
-        talk: TalkData
+        talk: TimeTableTalk
       }
 }
 
@@ -63,39 +67,39 @@ const TimetableContainer = styled.div`
   }
 `
 
-const Meta = styled.a`
-  display: inline-block;
-  margin-right: ${rhythm(0.5)};
-`
-
-const TalkCell = (props: { talk: TalkData }) => {
+const TalkCell = (props: { talk: TimeTableTalk }) => {
   const { talk } = props
 
   return (
     <>
-      <h5>{talk.Speakers.map(({ data }) => `${data.Name}`).join(", ")}</h5>
+      <h5>
+        {talk.speakers
+          .map(({ persons_id: speaker }) => `${speaker.name}`)
+
+          .join(', ')}
+      </h5>
       <h4>
-        <Link to={talkPath(talk.Title)}>{talk.Title}</Link>
+        <Link to={talkPath(talk.paper.title)}>{talk.paper.title}</Link>
       </h4>
     </>
   )
 }
 
-const formatHoursMins = (date: string) =>
-  format(airtableDateFix(new Date(date)), "HH:mm")
+const formatHoursMins = (date: string) => format(new Date(date), 'HH:mm')
 
-export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
-  event,
-}) => {
-  if (!event.Timetable || !event.Talks) {
+export const EventTimeTable: FunctionComponent<{
+  event: Pick<
+    Meetup<TimeTableTalk>,
+    'timetable' | 'date_start' | 'date_end' | 'type' | 'talks'
+  >
+}> = ({ event }) => {
+  if (!event.timetable || !event.talks) {
     return null
   }
 
-  const talks = event.Talks.map(({ data }) => data)
-
-  const scenes: string[] = [...new Set(talks.map(talk => talk.Scene))].filter(
-    x => x
-  ) as string[]
+  const scenes: Array<string> = [
+    ...new Set(event.talks.map(talk => talk.scene)),
+  ].filter(x => Boolean(x)) as Array<string>
 
   scenes.sort((a, b) => {
     const ao = sceneOrder[a] || 0
@@ -104,20 +108,20 @@ export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
     return ao - bo
   })
 
-  const times: string[] = [...new Set(talks.map(talk => talk.Start))].filter(
-    x => x
-  ) as string[]
+  const times: Array<string> = [
+    ...new Set(event.talks.map(talk => talk.start_time)),
+  ]
+    .filter((time): time is string => Boolean(time))
+    .sort((a, b) => {
+      const [ah, am] = a.split(':').map(x => +x)
+      const [bh, bm] = b.split(':').map(x => +x)
 
-  times.sort((a, b) => {
-    const [ah, am] = a!.split(":").map(x => +x)
-    const [bh, bm] = b!.split(":").map(x => +x)
+      return ah - bh || am - bm
+    })
 
-    return ah - bh || am - bm
-  })
-
-  const tableRows: TableRows = talks.reduce((result, talk) => {
-    const time = talk.Start!
-    const scene = talk.Scene
+  const tableRows: TableRows = event.talks.reduce((result, talk) => {
+    const time = talk.start_time!
+    const scene = talk.scene
 
     if (!scene) {
       result[time] = { keynote: true, talk }
@@ -148,20 +152,21 @@ export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
           </thead>
           <tbody>
             <tr>
-              <td>{formatHoursMins(event.Date)}</td>
+              <td>{formatHoursMins(event.date_start)}</td>
               <td colSpan={scenes.length}>
-                {event.Type === "Offline"
-                  ? "Регистрация, кофе, открытие"
-                  : "Открытие"}
+                {event.type === 'offline'
+                  ? 'Регистрация, кофе, открытие'
+                  : 'Открытие'}
               </td>
             </tr>
             {times.map(time => {
+              const timeHhMm = time.replace(/:00$/, '')
               const talks = tableRows[time]
 
               if (talks.keynote) {
                 return (
                   <tr>
-                    <td>{time}</td>
+                    <td>{timeHhMm}</td>
                     <td colSpan={scenes.length}>
                       <TalkCell talk={talks.talk} />
                     </td>
@@ -171,7 +176,7 @@ export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
 
               return (
                 <tr>
-                  <td>{time}</td>
+                  <td>{timeHhMm}</td>
                   {scenes.map(scene => {
                     const talk = talks.talks[scene]
 
@@ -188,9 +193,9 @@ export const EventTimeTable: FunctionComponent<{ event: EventData }> = ({
                 </tr>
               )
             })}
-            {event.Type === "Offline" ? (
+            {event.type === 'offline' ? (
               <tr>
-                <td>{formatHoursMins(event.DateEnd)}</td>
+                <td>{formatHoursMins(event.date_end)}</td>
                 <td colSpan={scenes.length}>Афтепати</td>
               </tr>
             ) : null}

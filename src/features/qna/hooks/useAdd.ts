@@ -1,13 +1,14 @@
-import { QuestionData } from "models/question.h"
-import { database, auth } from "features/firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { QuestionFormData } from "../questionForm"
-import { useContext } from "react"
-import { SessionContext } from "../sessionContext"
+import { useContext } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+import type { QuestionData } from '../../../models'
+import { database, auth } from '../../firebase'
+import { QuestionFormData } from '../questionForm'
+import { SessionContext } from '../sessionContext'
 
 export const useAdd = () => {
   const sessionId = useContext(SessionContext)
-  const ref = "questions/" + sessionId
+  const ref = 'questions/' + sessionId
   const questions = database().ref(ref)
 
   const [user] = useAuthState(auth())

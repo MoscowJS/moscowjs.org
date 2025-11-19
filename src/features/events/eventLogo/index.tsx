@@ -1,8 +1,9 @@
-import logo from "static/logo.png"
-import React, { FunctionComponent } from "react"
-import starry from "static/starry_background.png"
-import styled from "styled-components"
-import { getSize } from "utils/typography"
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+
+import logo from '../../../static/logo.png'
+import starry from '../../../static/starry_background.png'
+import { getSize } from '../../../utils/typography'
 
 const Number = styled.span<{
   size: string
@@ -12,7 +13,7 @@ const Number = styled.span<{
   line-height: 1;
   font-size: calc(
     ${({ size, number }) =>
-      `${getSize(size)} / ${number.length > 2 ? "2" : "1.7"}`}
+      `${getSize(size)} / ${number.length > 2 ? '2' : '1.7'}`}
   );
   font-weight: 700;
   color: black;

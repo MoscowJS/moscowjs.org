@@ -1,21 +1,37 @@
-import { AirtableImage } from "./airtable.h"
-import { EventData } from "./event.h"
-import { ImageSharp } from "./gatsby.h"
-import { TalkData } from "./talk.h"
+import type { Meetup } from './meetup.h'
+import type { Paper } from './paper.h'
+import type { Talk } from './talk.h'
 
-export type SpeakerData = {
-  Name: string
-  Photo?: {
-    localFiles: ImageSharp[]
-    raw: AirtableImage[]
-  }
-  Company: string
-  About: string
-  Email: string
-  Talks?: Array<{ data: TalkData }>
-  Telegram: string
-  Personal_link: string
-  Github___Bitbucket: string
-  Twitter: string
-  Meetup: Array<{ data: EventData }>
+export type Speaker<
+  TTalk extends Partial<
+    Talk<Partial<Meetup>, Partial<Speaker>, Partial<Paper>>
+  > = never
+> = {
+  id: string
+  status: string
+  telegram: string
+  name: string
+  role: string
+  phone?: string
+  email?: string
+  about?: string
+  github?: string
+  link?: string
+  photo: {
+    id: string
+    imageFile: {
+      childImageSharp: {
+        fluid: {
+          base64: string
+          aspectRatio: number
+          src: string
+          srcSet: string
+          sizes: string
+        }
+      }
+    }
+  } | null
+  talks: Array<{
+    talks_id: TTalk
+  }>
 }

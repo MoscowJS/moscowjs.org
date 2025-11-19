@@ -1,19 +1,19 @@
-declare module "*.png" {
+declare module '*.png' {
   const value: string
   export = value
 }
 
-declare module "*.jpg" {
+declare module '*.jpg' {
   const value: string
   export = value
 }
 
-declare module "*.svg" {
+declare module '*.svg' {
   const value: string
   export = value
 }
 
-declare module "remark-slug" {
+declare module 'remark-slug' {
   const value: any
   export = value
 }

@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from "react"
-import { Link } from "gatsby"
-import { NavigationItem } from "./index.h"
-import styled from "styled-components"
-import { rhythm } from "utils/typography"
+import React, { FunctionComponent } from 'react'
+import { Link } from 'gatsby'
+import styled from 'styled-components'
+
+import type { NavigationItem } from './index.h'
+import { rhythm } from '../../../utils/typography'
 
 const HeaderMenuContainer = styled.ul`
   display: none;
@@ -25,7 +26,7 @@ const HeaderMenuLink = styled.li<{
     padding: 0 ${rhythm(0.5)};
 
     background-color: ${({ $current }) =>
-      $current ? "var(--color-primary)" : "none"};
+      $current ? 'var(--color-primary)' : 'none'};
     text-transform: uppercase;
     text-decoration: none;
     font-size: 0.8rem;
@@ -38,13 +39,13 @@ const HeaderMenuLink = styled.li<{
     display: inline-block;
 
     a {
-      color: ${({ $current }) => ($current ? "#000" : "var(--color-text)")};
+      color: ${({ $current }) => ($current ? '#000' : 'var(--color-text)')};
     }
   }
 `
 
 export const HeaderMenu: FunctionComponent<{
-  navigation: NavigationItem[]
+  navigation: Array<NavigationItem>
 }> = ({ navigation }) => {
   return (
     <HeaderMenuContainer role="navigation">

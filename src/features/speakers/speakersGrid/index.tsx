@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from "react"
-import styled from "styled-components"
-import { rhythm } from "../../../utils/typography"
-import { SpeakerData } from "../../../models/speaker.h"
-import { SpeakerPhoto } from "../speakerPhoto"
+import React, { FunctionComponent } from 'react'
+import styled from 'styled-components'
+
+import type { Speaker, Talk } from '../../../models'
+import { rhythm } from '../../../utils/typography'
+import { SpeakerPhoto } from '../speakerPhoto'
 
 const SpeakersContainer = styled.ul`
   --item-width: ${rhythm(5)};
@@ -23,16 +24,25 @@ const Speaker = styled.li`
 `
 
 export const SpeakersGrid: FunctionComponent<{
-  speakers: Array<{
-    data: SpeakerData
-  }>
+  speakers: Array<
+    Pick<Speaker<Pick<Talk, 'id' | 'company'>>, 'name' | 'photo' | 'talks'>
+  >
 }> = ({ speakers }) => {
   return (
     <SpeakersContainer>
-      {speakers.map(({ data }) => {
+      {speakers.map(speaker => {
+        const companies: Array<string> = Array.from(
+          new Set(
+            speaker.talks
+              .map(({ talks_id }) =>
+                String(talks_id.company).normalize().trim()
+              )
+              .filter(company => Boolean(company))
+          ).keys()
+        )
         return (
-          <Speaker key={data.Name}>
-            <SpeakerPhoto speaker={data} />
+          <Speaker key={speaker.name}>
+            <SpeakerPhoto speaker={speaker} companies={companies} />
           </Speaker>
         )
       })}

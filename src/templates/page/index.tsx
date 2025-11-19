@@ -1,20 +1,20 @@
-import React, { FunctionComponent } from "react"
-import SEO from "utils/seo"
-import { Container, Footer, Header, Markdown } from "components/layout"
-import { graphql, PageProps } from "gatsby"
-import { PagesData } from "models"
+import React, { FunctionComponent } from 'react'
+import { graphql, PageProps } from 'gatsby'
+
+import type { Page as PageType, WrappedWithDirectus } from '../../models'
+import { Container, Footer, Header, Markdown } from '../../components/layout'
+import SEO from '../../utils/seo'
 
 const Page: FunctionComponent<
-  PageProps<{
-    airtablepages: { data: PagesData }
-  }>
+  PageProps<WrappedWithDirectus<{ pages_by_id: PageType }>>
 > = ({ data, location }) => {
+  const page = data.directus.pages_by_id
   return (
     <>
-      <SEO title={data.airtablepages.data.title} />
+      <SEO title={page.title} />
       <Header location={location} />
       <Container as="main">
-        <Markdown>{data.airtablepages.data.content}</Markdown>
+        <Markdown>{page.content}</Markdown>
       </Container>
       <Footer />
     </>
@@ -22,13 +22,12 @@ const Page: FunctionComponent<
 }
 
 export const query = graphql`
-  query ($id: String!) {
-    airtablepages(id: { eq: $id }) {
-      data {
+  query ($id: ID!) {
+    directus {
+      pages_by_id(id: $id) {
         title
         slug
         content
-        description
       }
     }
   }
