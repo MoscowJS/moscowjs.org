@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmoscowjs_org=self.webpackChunkmoscowjs_org||[]).push([[911],{4303:function(e,t,n){n.r(t);var l=n(6540),a=n(9328),c=n(2392),r=n(6137);t.default=e=>{let{data:t,location:n}=e;const{meetups_by_id:s}=t.directus;return l.createElement(l.Fragment,null,l.createElement(r.A,{title:s.title}),l.createElement(a.Y9,{location:n}),l.createElement(a.mc,{as:"main"},l.createElement(c.J,{event:s})),l.createElement(a.wi,null))}}}]);
+//# sourceMappingURL=component---src-templates-event-index-tsx-19c31e956a8e0ffa2baa.js.map
