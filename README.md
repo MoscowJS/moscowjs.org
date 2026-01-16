@@ -13,6 +13,7 @@ By contributing to moscowjs.org, you agree to abide by the [code of conduct](/co
 ```
 git clone https://github.com/MoscowJS/moscowjs.org
 cd moscowjs.org
+n auto # or nvm use
 npm install
 ```
 
@@ -22,19 +23,20 @@ npm install
 
 ## Development
 
-To start local development, you need a personal access token for Airtable. Create the one on https://airtable.com/create/tokens (you need read access
-for Meetups and MoscowJS.org bases).
+### How to develop locally
 
-Add created token to the file `.env.development.local`
+1. Create env file
+   - Retrieve directus token from Directus admin panel and put it to DIRECTUS_TOKEN value
 
-## Data sources
+```
+cp .env.example .env
+```
 
-1. Pages — https://airtable.com/shrESYQUdFwE3B9Pw
-2. Navigation — https://airtable.com/shrVjBdqtUMxPXkI4
-3. Events — https://airtable.com/shrriv6tz5JOHmO8g
-4. Talks — https://airtable.com/shrxodFEExyrch9A6
-5. Speakers — https://airtable.com/shrDgVtkzHCh8wKv1
-6. Companies — https://airtable.com/shrspKnmfnArZ3XQJ
+2. Run develop script
+
+```
+node --require dotenv/config node_modules/.bin/gatsby build -- --verbose
+```
 
 ## License
 
