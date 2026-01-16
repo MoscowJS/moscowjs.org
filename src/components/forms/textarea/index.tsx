@@ -66,6 +66,7 @@ export const Textarea: FunctionComponent<{
 
   return (
     <Input {...(props as any)} onChange={handleChange}>
+      {/* @ts-ignore */}
       {inputProps => (
         <TextareaInner
           {...inputProps}
