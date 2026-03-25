@@ -149,7 +149,7 @@ const MetaRegistration = ({ event }: EventProps) => {
   return (
     <Meta Icon={PenTool} title="Регистрация">
       <p>
-        <a href={event.registration_link}>{event.registration_link}</a>
+        <Markdown>{event.registration_link}</Markdown>
       </p>
     </Meta>
   )

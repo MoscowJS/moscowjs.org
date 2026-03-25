@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
 import slug from 'remark-slug'
 import toc from 'remark-toc'
 import { Link } from 'gatsby'
@@ -44,7 +45,7 @@ export const Markdown: FunctionComponent<{
   ]
 
   return (
-    <ReactMarkdown remarkPlugins={plugins} components={renderers}>
+    <ReactMarkdown remarkPlugins={plugins} rehypePlugins={[rehypeRaw as any]} components={renderers}>
       {children || markdown || ''}
     </ReactMarkdown>
   )
