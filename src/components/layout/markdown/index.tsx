@@ -45,7 +45,11 @@ export const Markdown: FunctionComponent<{
   ]
 
   return (
-    <ReactMarkdown remarkPlugins={plugins} rehypePlugins={[rehypeRaw as any]} components={renderers}>
+    <ReactMarkdown
+      remarkPlugins={plugins}
+      rehypePlugins={[rehypeRaw as any]}
+      components={renderers}
+    >
       {children || markdown || ''}
     </ReactMarkdown>
   )
