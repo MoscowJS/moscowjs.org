@@ -10,30 +10,7 @@ import styled from 'styled-components'
 import { rhythm } from '../../../utils/typography'
 import { useDialogState, DialogDisclosure } from 'reakit/Dialog'
 import { useAdd } from '../../../features/qna'
-
-const allTalks = [
-  {
-    title: 'Не ошибается тот, кто ничего не делает, или как падать правильно',
-    speaker: 'Елена Евтифьева',
-    timeEnd: 1761246000000,
-  },
-  {
-    title:
-      'Разработка мигратора кода с использованием AI на примере миграции с Linaria на CSS modules',
-    speaker: 'Михаил Витик',
-    timeEnd: 1761246000000,
-  },
-  {
-    title: 'Vike: Один фреймворк, чтобы править всеми',
-    speaker: 'Илья Оловянников',
-    timeEnd: 1761246000000,
-  },
-  {
-    title: 'Я сделал reactuse и мне есть, что рассказать',
-    speaker: 'Дмитрий Бабин',
-    timeEnd: 1761246000000,
-  },
-]
+import { allTalks } from '../talks'
 
 const FakeTextarea = styled.div`
   cursor: text;
