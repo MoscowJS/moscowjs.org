@@ -12,11 +12,7 @@ auth().languageCode = 'ru'
 const uiConfig = {
   signInSuccessUrl: process.env.SITE_URL, //This URL is used to return to that page when we got success response for phone authentication.
   signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      defaultCountry: 'RU',
-      whitelistedCountries: ['+7'],
-    },
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
     fbui.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
   tosUrl: process.env.SITE_URL + 'coc',
@@ -70,13 +66,14 @@ const LoginContainer = () => {
   useEffect(() => {
     if (!authRef.current) return
 
-    uiRef.current = uiRef.current || new fbui.auth.AuthUI(auth())
+    uiRef.current =
+      fbui.auth.AuthUI.getInstance() ?? new fbui.auth.AuthUI(auth())
     uiRef.current.start('#firebase-auth', uiConfig)
 
     return () => {
-      uiRef.current?.delete()
+      uiRef.current?.reset()
     }
-  }, [authRef.current, user])
+  }, [userLoading, user])
 
   if (userLoading) {
     return <p>Загрузка...</p>
