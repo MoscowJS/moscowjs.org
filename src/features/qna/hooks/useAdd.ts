@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import type { QuestionData } from '../../../models'
