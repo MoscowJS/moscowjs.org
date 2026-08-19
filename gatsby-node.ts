@@ -3,7 +3,14 @@ import assert from 'node:assert/strict'
 import type { CreatePagesArgs, GatsbyNode } from 'gatsby'
 
 import { config } from './config'
-import { speakerPath, talkPath, pagePath, eventPath } from './src/utils/paths'
+import {
+  speakerPath,
+  talkPath,
+  pagePath,
+  eventPath,
+  qnaTalkPath,
+} from './src/utils/paths'
+import { allTalks } from './src/features/qna/talks'
 import type {
   Page,
   Paper,
@@ -220,4 +227,12 @@ export const createPages: GatsbyNode['createPages'] = async ({
       })
     })
   }
+
+  allTalks.forEach((_, index) => {
+    createPage({
+      path: qnaTalkPath(index),
+      component: path.resolve(config.gatsby.src, 'templates/qnaTalk/index.tsx'),
+      context: { index },
+    })
+  })
 }

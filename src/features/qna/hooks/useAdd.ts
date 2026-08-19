@@ -35,6 +35,7 @@ export const useAdd = () => {
       published: false,
       answered: false,
       talk: question.talk,
+      hasContacts: Boolean(question.contacts?.trim()),
     }
 
     return Promise.all([

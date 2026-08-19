@@ -50,3 +50,5 @@ export const talkPath = (title: string) => {
 
   return `/talks/${slugify(title)}/`.toLowerCase()
 }
+
+export const qnaTalkPath = (index: number) => `/qna/talk/${index}/`

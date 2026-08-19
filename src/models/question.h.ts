@@ -9,6 +9,7 @@ export type QuestionData = Partial<{
   published: boolean
   author: string
   talk: string
+  hasContacts: boolean
 
   // generated
   userCanVote: boolean
