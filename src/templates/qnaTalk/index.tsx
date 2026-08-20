@@ -26,11 +26,12 @@ const Page: FunctionComponent<
   const transformedConfig = transformConfig(config)
   const sessionId = transformedConfig?.session?.value
   const talk = allTalks[pageContext.index]
+  const noindexMeta = [{ name: 'robots', content: 'noindex, nofollow' }]
 
   if (!talk) {
     return (
       <>
-        <SEO title="Доклад не найден" />
+        <SEO title="Доклад не найден" meta={noindexMeta} />
         <Header location={location} />
         <Container as="main">
           <p>Доклад не найден.</p>
@@ -44,7 +45,7 @@ const Page: FunctionComponent<
 
   return (
     <>
-      <SEO title={`Вопросы: ${talk.title}`} />
+      <SEO title={`Вопросы: ${talk.title}`} meta={noindexMeta} />
       <Header location={location} />
       <Container as="main">
         <h2>{talk.title}</h2>
